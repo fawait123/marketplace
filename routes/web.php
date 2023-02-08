@@ -18,7 +18,15 @@ Route::get('/register',function(){
 Route::post('/login',[AuthController::class,'login'])->name('login.action');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
-Route::view('/', 'layouts.landing_pages.app')->name('welcome');
+Route::get('/', function(){
+    return view('layouts.landing_pages.home');
+})->name('welcome');
+Route::get('/product', function(){
+    return view('layouts.landing_pages.product');
+})->name('product');
+Route::get('/product/{id}', function(){
+    return view('layouts.landing_pages.product_detail');
+})->name('product');
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
