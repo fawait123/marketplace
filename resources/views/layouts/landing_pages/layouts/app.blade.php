@@ -722,7 +722,7 @@
     <script src="{{ asset('assets/landing_page/js') }}/plugins.js"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
-
+    @stack('customjs')
 </body>
 
 </html>

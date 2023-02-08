@@ -26,7 +26,7 @@ Route::get('/product', function(){
 })->name('product');
 Route::get('/product/{id}', function(){
     return view('layouts.landing_pages.product_detail');
-})->name('product');
+})->name('product.show');
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');

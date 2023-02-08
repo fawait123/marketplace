@@ -26,7 +26,7 @@
 </head>
 
 <body>
-
+    {{ $slot }}
     <!-- Begin page -->
     <div id="layout-wrapper">
         <div class="header-border"></div>
