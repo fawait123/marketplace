@@ -1,3 +1,8 @@
+@php
+    
+    use App\Models\Cart;
+    use App\Models\Product;
+@endphp
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -57,10 +62,11 @@
                                 </div>
                                 <!-- header-search-2 -->
                                 <div class="header-search-2">
-                                    <form id="#123" method="get" action="#">
-                                        <input type="text" name="search" value=""
-                                            placeholder="Search here..." />
-                                        <button type="submit">
+                                    <form id="#123" method="get" action="{{ route('product') }}"
+                                        id="form1-search">
+                                        <input type="text" name="search" id="input1-search"
+                                            value="{{ request('search') }}" placeholder="Search here..." />
+                                        <button type="button" id="btn1-search">
                                             <span><i class="icon-magnifier"></i></span>
                                         </button>
                                     </form>
@@ -127,19 +133,31 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li>
-                                        <!-- mini-cart 2 -->
-                                        <div class="mini-cart-icon mini-cart-icon-2">
-                                            <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
-                                                <span class="mini-cart-icon">
-                                                    <i class="icon-handbag"></i>
-                                                    <sup>2</sup>
-                                                </span>
-                                                <h6><span>Your Cart</span> <span
-                                                        class="ltn__secondary-color">$89.25</span></h6>
-                                            </a>
-                                        </div>
-                                    </li>
+                                    @if (auth()->user())
+                                        <li>
+                                            @php
+                                                $count = Cart::with('product')
+                                                    ->where('user_id', auth()->user()->id)
+                                                    ->get();
+                                                $totals = 0;
+                                                foreach ($count as $item) {
+                                                    $totals += $item->total * $item->product->harga;
+                                                }
+                                            @endphp
+                                            <!-- mini-cart 2 -->
+                                            <div class="mini-cart-icon mini-cart-icon-2">
+                                                <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
+                                                    <span class="mini-cart-icon">
+                                                        <i class="icon-handbag"></i>
+                                                        <sup>{{ count($count) }}</sup>
+                                                    </span>
+                                                    <h6><span>Your Cart</span> <span
+                                                            class="ltn__secondary-color">{{ number_format($totals, 2, ',', '.') }}</span>
+                                                    </h6>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endif
                                     <li>
                                         <!-- Mobile Menu Button -->
                                         <div class="mobile-menu-toggle d-lg-none">
@@ -181,20 +199,7 @@
                             <div class="header-menu header-menu-2">
                                 <nav>
                                     <div class="ltn__main-menu">
-                                        <ul>
-                                            <li><a href="contact.html">Home</a></li>
-                                            <li><a href="contact.html">Products</a></li>
-                                            <li><a href="contact.html">Contact</a></li>
-                                            <li class="menu-icon"><a href="#">My Account</a>
-                                                <ul>
-                                                    <li><a href="blog.html">News</a></li>
-                                                    <li><a href="blog-grid.html">News Grid</a></li>
-                                                    <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
-                                                    <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
-                                                    <li><a href="blog-details.html">News details</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        @include('layouts.landing_pages.layouts.menus')
                                     </div>
                                 </nav>
                             </div>
@@ -206,40 +211,54 @@
         </header>
         <!-- HEADER AREA END -->
 
-        <!-- Utilize Cart Menu Start -->
-        <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
-            <div class="ltn__utilize-menu-inner ltn__scrollbar">
-                <div class="ltn__utilize-menu-head">
-                    <span class="ltn__utilize-menu-title">Cart</span>
-                    <button class="ltn__utilize-close">×</button>
-                </div>
-                <div class="mini-cart-product-area ltn__scrollbar">
-                    <div class="mini-cart-item clearfix">
-                        <div class="mini-cart-img">
-                            <a href="#"><img src="{{ asset('assets/landing_page/img') }}/product/1.png"
-                                    alt="Image"></a>
-                            <span class="mini-cart-item-delete"><i class="icon-trash"></i></span>
+        @if (auth()->user())
+            @php
+                $data = Cart::with('product')
+                    ->where('user_id', auth()->user()->id)
+                    ->latest()
+                    ->get();
+                $total = 0;
+            @endphp
+            <!-- Utilize Cart Menu Start -->
+            <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
+                <div class="ltn__utilize-menu-inner ltn__scrollbar">
+                    <div class="ltn__utilize-menu-head">
+                        <span class="ltn__utilize-menu-title">Cart</span>
+                        <button class="ltn__utilize-close">×</button>
+                    </div>
+                    <div class="mini-cart-product-area ltn__scrollbar">
+                        @foreach ($data as $item)
+                            @php
+                                $total += ($item->product->harga ?? 0) * $item->total;
+                            @endphp
+                            <div class="mini-cart-item clearfix">
+                                <div class="mini-cart-img">
+                                    <a href="{{ route('product.detail', $item->id) }}"><img
+                                            src="{{ $item->product->foto ?? '' }}" alt="Image"></a>
+                                    <a href="{{ route('cart.remove', $item->id) }}"><span
+                                            class="mini-cart-item-delete"><i class="icon-trash"></i></span></a>
+                                </div>
+                                <div class="mini-cart-info">
+                                    <h6><a href="#">{{ $item->product->name ?? '' }}</a></h6>
+                                    <span class="mini-cart-quantity">{{ $item->total }} x
+                                        {{ number_format($item->product->harga ?? '', 2, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="mini-cart-footer">
+                        <div class="mini-cart-sub-total">
+                            <h5>Subtotal: <span>{{ number_format($total, 2, ',', '.') }}</span></h5>
                         </div>
-                        <div class="mini-cart-info">
-                            <h6><a href="#">Premium Joyful</a></h6>
-                            <span class="mini-cart-quantity">1 x $65.00</span>
+                        <div class="btn-wrapper modal-footer">
+                            <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                         </div>
                     </div>
-                </div>
-                <div class="mini-cart-footer">
-                    <div class="mini-cart-sub-total">
-                        <h5>Subtotal: <span>$310.00</span></h5>
-                    </div>
-                    <div class="btn-wrapper modal-footer">
-                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1 view-cart">Add To Cart</a>
-                        <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                    </div>
-                    <p>Free Shipping on All Orders Over $100!</p>
-                </div>
 
+                </div>
             </div>
-        </div>
-        <!-- Utilize Cart Menu End -->
+            <!-- Utilize Cart Menu End -->
+        @endif
 
         <!-- Utilize Mobile Menu Start -->
         <div id="ltn__utilize-mobile-menu" class="ltn__utilize ltn__utilize-mobile-menu">
@@ -252,100 +271,14 @@
                     <button class="ltn__utilize-close">×</button>
                 </div>
                 <div class="ltn__utilize-menu-search-form">
-                    <form action="#">
-                        <input type="text" placeholder="Search...">
-                        <button><i class="icon-magnifier"></i></button>
+                    <form action="{{ route('product') }}" method="GET">
+                        <input type="text" name="search" id="input2-search" value="{{ request('search') }}"
+                            placeholder="Search...">
+                        <button type="button" id="btn2-search"><i class="icon-magnifier"></i></button>
                     </form>
                 </div>
                 <div class="ltn__utilize-menu">
-                    <ul>
-                        <li><a href="#">Home</a>
-                            <ul class="sub-menu">
-                                <li><a href="index.html">Home Style - 01</a></li>
-                                <li><a href="index-2.html">Home Style - 02</a></li>
-                                <li><a href="index-3.html">Home Style - 03</a></li>
-                                <li><a href="index-4.html">Home Style - 04</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#">Shop</a>
-                            <ul class="sub-menu">
-                                <li><a href="shop.html">Shop</a></li>
-                                <li><a href="shop-grid.html">Shop Grid</a></li>
-                                <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                <li><a href="product-details.html">Shop details </a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="order-tracking.html">Order Tracking</a></li>
-                                <li><a href="account.html">My Account</a></li>
-                                <li><a href="login.html">Sign in</a></li>
-                                <li><a href="register.html">Register</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">News</a>
-                            <ul class="sub-menu">
-                                <li><a href="blog.html">News</a></li>
-                                <li><a href="blog-grid.html">News Grid</a></li>
-                                <li><a href="blog-left-sidebar.html">News Left sidebar</a></li>
-                                <li><a href="blog-right-sidebar.html">News Right sidebar</a></li>
-                                <li><a href="blog-details.html">News details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Pages</a>
-                            <ul class="sub-menu">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="portfolio.html">Portfolio</a></li>
-                                <li><a href="portfolio-2.html">Portfolio - 02</a></li>
-                                <li><a href="portfolio-details.html">Portfolio Details</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                                <li><a href="locations.html">Google Map Locations</a></li>
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="contact.html">Contact</a></li>
-                                <li><a href="coming-soon.html">Coming Soon</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
-                    <ul>
-                        <li>
-                            <a href="account.html" title="My Account">
-                                <span class="utilize-btn-icon">
-                                    <i class="icon-user"></i>
-                                </span>
-                                My Account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="wishlist.html" title="Wishlist">
-                                <span class="utilize-btn-icon">
-                                    <i class="icon-heart"></i>
-                                    <sup>3</sup>
-                                </span>
-                                Wishlist
-                            </a>
-                        </li>
-                        <li>
-                            <a href="cart.html" title="Shoping Cart">
-                                <span class="utilize-btn-icon">
-                                    <i class="icon-handbag"></i>
-                                    <sup>5</sup>
-                                </span>
-                                Shoping Cart
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="ltn__social-media-2">
-                    <ul>
-                        <li><a href="#" title="Facebook"><i class="icon-social-facebook"></i></a></li>
-                        <li><a href="#" title="Twitter"><i class="icon-social-twitter"></i></a></li>
-                        <li><a href="#" title="Pinterest"><i class="icon-social-pinterest"></i></a></li>
-                        <li><a href="#" title="Instagram"><i class="icon-social-instagram"></i></a></li>
-                    </ul>
+                    @include('layouts.landing_pages.layouts.menus')
                 </div>
             </div>
         </div>
@@ -724,21 +657,63 @@
     <script src="{{ asset('assets/landing_page/js') }}/plugins.js"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
+    <script>
+        function customUrl(search, val) {
+            let currentURL = document.URL
+            currentURL = currentURL.split('?').join(',').split('&').join(',').split(',')
+            let arr = [
+                ...currentURL
+            ]
+            let findIndex = arr.findIndex((el) => el.toLowerCase().includes(search))
+            console.log(findIndex)
+            if (findIndex > 0) {
+                arr[findIndex] = search + '=' + val
+            } else {
+                arr.push(search + '=' + val)
+            }
+            let url = ''
+            arr.map((el, index) => {
+                url += index === 0 ? el : index === 1 ? '?' + el : '&' + el;
+            })
+
+            return url;
+        }
+    </script>
     @stack('customjs')
     <script>
-        $('#add_to_cart_modal').on('show.bs.modal', function(e) {
-            let target = e.relatedTarget
-            let id = $(target).data('id')
-            let image = $(target).data('image')
-            let name = $(target).data('name')
-            let price = $(target).data('price')
-            console.log(price)
-            let url = "{{ route('cart.create', '::id') }}";
-            url = url.replace('::id', id)
-            $('#add-to-cart').prop('href', url)
-            $("#modal-image").prop('src', image)
-            $("#modal-title").html(name)
-            $("#modal-price").html('Rp. ' + parseInt(price).toLocaleString('ID', 'id'))
+        $(document).ready(function() {
+            $(document).keypress(
+                function(event) {
+                    if (event.which == '13') {
+                        event.preventDefault();
+                    }
+                });
+            $('#add_to_cart_modal').on('show.bs.modal', function(e) {
+                let target = e.relatedTarget
+                let id = $(target).data('id')
+                let image = $(target).data('image')
+                let name = $(target).data('name')
+                let price = $(target).data('price')
+                console.log(price)
+                let url = "{{ route('cart.create', '::id') }}";
+                url = url.replace('::id', id)
+                $('#add-to-cart').prop('href', url)
+                $("#modal-image").prop('src', image)
+                $("#modal-title").html(name)
+                $("#modal-price").html('Rp. ' + parseInt(price).toLocaleString('ID', 'id'))
+            })
+            $("#btn1-search").click(function() {
+                let val = $("#input1-search").val();
+                let url = customUrl('search', val)
+                // console.log(url);
+                window.location.href = url;
+            })
+            $("#btn2-search").click(function() {
+                let val = $("#input2-search").val();
+                let url = customUrl('search', val)
+                // console.log(url);
+                window.location.href = url;
+            })
         })
     </script>
 </body>

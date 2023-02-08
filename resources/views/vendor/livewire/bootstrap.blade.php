@@ -2,19 +2,20 @@
     @if ($paginator->hasPages())
         @php(isset($this->numberOfPaginatorsRendered[$paginator->getPageName()]) ? $this->numberOfPaginatorsRendered[$paginator->getPageName()]++ : ($this->numberOfPaginatorsRendered[$paginator->getPageName()] = 1))
 
-        <nav class="ltn__pagination ltn__pagination-2">
-            <ul class="pagination">
+        <div class="ltn__pagination ltn__pagination-2">
+            <ul>
                 {{-- Previous Page Link --}}
                 @if ($paginator->onFirstPage())
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                        <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                        <span class="page-link" aria-hidden="true"><i class="icon-arrow-left"></i></span>
                     </li>
                 @else
                     <li class="page-item" data-page="{{ $paginator->currentPage() }}" data-link="prev">
                         <button type="button"
                             dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
                             class="page-link" wire:click="previousPage('{{ $paginator->getPageName() }}')"
-                            wire:loading.attr="disabled" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</button>
+                            wire:loading.attr="disabled" rel="prev" aria-label="@lang('pagination.previous')"><i
+                                class="icon-arrow-left"></i></button>
                     </li>
                 @endif
 
@@ -52,15 +53,16 @@
                         <button type="button"
                             dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
                             class="page-link" wire:click="nextPage('{{ $paginator->getPageName() }}')"
-                            wire:loading.attr="disabled" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</button>
+                            wire:loading.attr="disabled" rel="next" aria-label="@lang('pagination.next')"><i
+                                class="icon-arrow-right"></i></button>
                     </li>
                 @else
                     <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                        <span class="page-link" aria-hidden="true">&rsaquo;</span>
+                        <span class="page-link" aria-hidden="true"><i class="icon-arrow-right"></i></span>
                     </li>
                 @endif
             </ul>
-        </nav>
+        </div>
     @endif
 </div>
 @push('customjs')
@@ -72,11 +74,15 @@
                 let page = $(target).data('page');
                 if (typeof link !== 'undefined' && typeof page !== 'undefined') {
                     if (link === 'next') {
-                        window.location.href = "{{ route('product') }}?page=" + page++
+                        let url = customUrl('page', page++)
+                        console.log(url)
+                        window.location.href = url
                     } else if (link === 'prev') {
-                        window.location.href = "{{ route('product') }}?page=" + page--
+                        let url = customUrl('page', page--)
+                        window.location.href = url
                     } else {
-                        window.location.href = "{{ route('product') }}?page=" + page
+                        let url = customUrl('page', page)
+                        window.location.href = url
                     }
                 }
             })
