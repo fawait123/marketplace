@@ -6,6 +6,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Http\Request;
+
 
 Route::get('/login',function(){
     return view('auth.login');
@@ -16,12 +21,42 @@ Route::get('/register',function(){
 })->name('register');
 
 Route::post('/login',[AuthController::class,'login'])->name('login.action');
-Route::post('/logout',[AuthController::class,'logout'])->name('logout');
+Route::post('/register',[AuthController::class,'register'])->name('register.action');
+Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth');
+Route::post('/changePassword',[AuthController::class,'changePassword'])->name('changePassword')->middleware('auth');
 
-Route::view('/', 'layouts.landing_pages.app')->name('welcome');
+Route::get('/', function(){
+    $categories = Category::all();
+    return view('layouts.landing_pages.home',compact('categories'));
+})->name('welcome');
+Route::get('/product', function(){
+    return view('layouts.landing_pages.product');
+})->name('product');
+Route::get('/product/{id}', function(Request $request,$id){
+    $product = Product::find($id);
+    if($product){
+        return view('layouts.landing_pages.product_detail',compact('product'));
+    }
+    return abort(404);
+})->name('product.detail');
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
+
+Route::get('/contact',function(){
+    return view('layouts.landing_pages.contact');
+})->name('contact');
+
+Route::get('/account',function(){
+    return view('layouts.landing_pages.account');
+})->name('account')->middleware('auth');
+
+
+// cart
+Route::group(['prefix'=>'cart','middleware'=>'auth'],function(){
+    Route::get('/add/{id}',[CartController::class,'add'])->name('cart.create');
+    Route::get('/remove/{id}',[CartController::class,'remove'])->name('cart.remove');
+});
 
 Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
     Route::resource('category', CategoryController::class);
