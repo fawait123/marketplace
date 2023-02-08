@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 
 Route::get('/login',function(){
     return view('auth.login');
@@ -30,6 +31,12 @@ Route::get('/product/{id}', function(){
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
+
+
+// cart
+Route::group(['prefix'=>'cart'],function(){
+    Route::get('/add/{id}',[CartController::class,'add'])->name('cart.create');
+});
 
 Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
     Route::resource('category', CategoryController::class);

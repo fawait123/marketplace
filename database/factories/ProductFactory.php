@@ -21,8 +21,8 @@ class ProductFactory extends Factory
             'foto'=>$this->faker->imageUrl(640, 480, 'animals', true),
             'qrcode'=>$this->faker->ean13(),
             'deskripsi'=>$this->faker->text,
-            'harga'=>$this->faker->randomDigit(),
-            'harga_promo'=>$this->faker->randomDigit(),
+            'harga'=>$this->faker->randomNumber(5, true),
+            'harga_promo'=>$this->faker->randomNumber(5, true),
             'category_id'=>rand(1,2),
             'stok'=>rand(10,20)
         ];

@@ -230,8 +230,8 @@
                     <div class="mini-cart-sub-total">
                         <h5>Subtotal: <span>$310.00</span></h5>
                     </div>
-                    <div class="btn-wrapper">
-                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
+                    <div class="btn-wrapper modal-footer">
+                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1 view-cart">Add To Cart</a>
                         <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
                     </div>
                     <p>Free Shipping on All Orders Over $100!</p>
@@ -621,15 +621,17 @@
                                         <div class="col-12">
                                             <div class="modal-add-to-cart-content clearfix">
                                                 <div class="modal-product-img">
-                                                    <img src="{{ asset('assets/landing_page/img') }}/product/1.png"
+                                                    <img id="modal-image"
+                                                        src="{{ asset('assets/landing_page/img') }}/product/1.png"
                                                         alt="#">
                                                 </div>
                                                 <div class="modal-product-info">
-                                                    <h5><a href="product-details.html">Heart's Desire</a></h5>
-                                                    <p class="added-cart"><i class="fa fa-check-circle"></i>
-                                                        Successfully added to your Cart</p>
+                                                    <h5><a href="product-details.html" id="modal-title">Heart's
+                                                            Desire</a></h5>
+                                                    <p><span class="text-secondary" id="modal-price">Rp. 00</span></p>
                                                     <div class="btn-wrapper">
-                                                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View
+                                                        <a href="cart.html" class="theme-btn-1 btn btn-effect-1"
+                                                            id="add-to-cart">Add To
                                                             Cart</a>
                                                         <a href="checkout.html"
                                                             class="theme-btn-2 btn btn-effect-2">Checkout</a>
@@ -723,6 +725,22 @@
     <!-- Main JS -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
     @stack('customjs')
+    <script>
+        $('#add_to_cart_modal').on('show.bs.modal', function(e) {
+            let target = e.relatedTarget
+            let id = $(target).data('id')
+            let image = $(target).data('image')
+            let name = $(target).data('name')
+            let price = $(target).data('price')
+            console.log(price)
+            let url = "{{ route('cart.create', '::id') }}";
+            url = url.replace('::id', id)
+            $('#add-to-cart').prop('href', url)
+            $("#modal-image").prop('src', image)
+            $("#modal-title").html(name)
+            $("#modal-price").html('Rp. ' + parseInt(price).toLocaleString('ID', 'id'))
+        })
+    </script>
 </body>
 
 </html>

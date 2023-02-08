@@ -49,28 +49,18 @@
                                                     </div>
                                                     <div class="product-hover-action product-hover-action-2">
                                                         <ul>
-                                                            <li>
-                                                                <a href="#" title="Quick View"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#quick_view_modal">
-                                                                    <i class="icon-magnifier"></i>
-                                                                </a>
-                                                            </li>
                                                             <li class="add-to-cart">
                                                                 <a href="#" title="Add to Cart"
                                                                     data-bs-toggle="modal"
-                                                                    data-bs-target="#add_to_cart_modal">
+                                                                    data-bs-target="#add_to_cart_modal"
+                                                                    data-id="{{ $item->id }}"
+                                                                    data-image="{{ $item->foto }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    data-price="{{ $item->harga }}">
                                                                     <span class="cart-text d-none d-xl-block">Add to
                                                                         Cart</span>
                                                                     <span class="d-block d-xl-none"><i
                                                                             class="icon-handbag"></i></span>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" title="Quick View"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#quick_view_modal">
-                                                                    <i class="icon-shuffle"></i>
                                                                 </a>
                                                             </li>
                                                         </ul>
