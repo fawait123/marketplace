@@ -15,7 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('assets/images') }}/favicon.ico">
+
+    <!-- Dropify css -->
+    <link href="{{ asset('assets') }}/plugins/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
     <link href="{{ asset('assets/css') }}/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -26,7 +29,6 @@
 </head>
 
 <body>
-    {{ $slot }}
     <!-- Begin page -->
     <div id="layout-wrapper">
         <div class="header-border"></div>
@@ -105,28 +107,29 @@
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12">
+                                <img src="{{ asset('assets/images') }}/flags/spain.jpg" alt="user-image" class="mr-1"
+                                    height="12">
                                 <span class="align-middle">Spanish</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/germany.jpg" alt="user-image" class="mr-1"
-                                    height="12">
+                                <img src="{{ asset('assets/images') }}/flags/germany.jpg" alt="user-image"
+                                    class="mr-1" height="12">
                                 <span class="align-middle">German</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/italy.jpg" alt="user-image" class="mr-1"
-                                    height="12">
+                                <img src="{{ asset('assets/images') }}/flags/italy.jpg" alt="user-image"
+                                    class="mr-1" height="12">
                                 <span class="align-middle">Italian</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/russia.jpg" alt="user-image" class="mr-1"
-                                    height="12">
+                                <img src="{{ asset('assets/images') }}/flags/russia.jpg" alt="user-image"
+                                    class="mr-1" height="12">
                                 <span class="align-middle">Russian</span>
                             </a>
                         </div>
@@ -136,7 +139,7 @@
                         <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img class="rounded-circle header-profile-user"
-                                src="{{ auth()->user()->foto != null ? Storage::url('public/foto/' . auth()->user()->foto) : asset('assets/images/users/avatar-2.jpg') }}"
+                                src="{{ auth()->user()->foto != null ? Storage::url('public/foto/' . auth()->user()->foto) : null }}"
                                 alt="Header Avatar">
                             <span class="d-none d-sm-inline-block ml-1">{{ auth()->user()->name }}</span>
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
@@ -244,7 +247,7 @@
                     {{-- <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true"
                         data-toggle="toast">
                         <div class="toast-header">
-                            <img src="{{ asset('assets/images/users/avatar-2.jpg') }}" alt="brand-logo"
+                            <img src="{{ asset('{{asset('assets/images')}}/users/avatar-2.jpg') }}" alt="brand-logo"
                                 height="28" class="mr-1 rounded" />
                             <strong class="mr-auto">Myra</strong>
                             <small>11 mins ago</small>
@@ -302,7 +305,7 @@
     <script src="{{ asset('assets/plugins') }}/jquery-knob/jquery.knob.min.js"></script>
 
     <!-- Chart Custom Js-->
-    <script src="assets/pages/knob-chart-demo.js"></script>
+    <script src="{{ asset('assets') }}//pages/knob-chart-demo.js"></script>
 
 
     <!-- Morris Js-->
@@ -312,11 +315,61 @@
     <script src="{{ asset('assets/plugins') }}/raphael/raphael.min.js"></script>
 
     <!-- Custom Js -->
-    <script src="assets/pages/dashboard-demo.js"></script>
+    <script src="{{ asset('assets') }}//pages/dashboard-demo.js"></script>
 
     <!-- App js -->
     <script src="{{ asset('assets/js') }}/theme.js"></script>
+
+    <!--dropify-->
+    <script src="{{ asset('assets') }}/plugins/dropify/dropify.min.js"></script>
+    <!-- Init js-->
+    <script src="{{ asset('assets') }}/pages/fileuploads-demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script>
+        function getBase64(file, input) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                $(input).val(reader.result);
+            };
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
+            };
+        }
+
+        function resetPreview(name, src, fname = '') {
+            let input = $('#additionalImagePrev' + name);
+            console.log(name)
+            console.log(input)
+            let wrapper = input.closest('.dropify-wrapper');
+            let preview = wrapper.find('.dropify-preview');
+            let filename = wrapper.find('.dropify-filename-inner');
+            let render = wrapper.find('.dropify-render').html('');
+
+            input.val('').attr('title', fname);
+            wrapper.removeClass('has-error').addClass('has-preview');
+            filename.html(fname);
+
+            render.append($('<img />').attr('src', src).css('max-height', input.data('height') || ''));
+            preview.fadeIn();
+        }
+
+        function resetPreview2(name, src, fname = '') {
+            let input = $('input[name="' + name + '"]');
+            let wrapper = input.closest('.dropify-wrapper');
+            let preview = wrapper.find('.dropify-preview');
+            let filename = wrapper.find('.dropify-filename-inner');
+            let render = wrapper.find('.dropify-render').html('');
+
+            input.val('').attr('title', fname);
+            wrapper.removeClass('has-error').addClass('has-preview');
+            filename.html(fname);
+
+            render.append($('<img />').attr('src', src).css('max-height', input.data('height') || ''));
+            preview.fadeIn();
+        }
+    </script>
     @stack('customjs')
     @livewireScripts
     @if ($message = Session::get('message'))

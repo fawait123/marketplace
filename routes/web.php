@@ -60,6 +60,7 @@ Route::group(['prefix'=>'cart','middleware'=>'auth'],function(){
 });
 
 Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
+    Route::get('/product/ubah/{id}',[ProductController::class,'update'])->name('product.ubah');
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('user',UserController::class);

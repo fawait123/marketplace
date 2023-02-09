@@ -566,8 +566,8 @@
                                                         <a href="cart.html" class="theme-btn-1 btn btn-effect-1"
                                                             id="add-to-cart">Add To
                                                             Cart</a>
-                                                        <a href="checkout.html"
-                                                            class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                                                        {{-- <a href="checkout.html"
+                                                            class="theme-btn-2 btn btn-effect-2">Checkout</a> --}}
                                                     </div>
                                                 </div>
                                             </div>

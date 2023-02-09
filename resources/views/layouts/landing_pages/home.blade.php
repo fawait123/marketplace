@@ -30,9 +30,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                </div> -->
+                                                                                                                        <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                        <span class="call-to-circle-1"></span>
+                                                                                                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -65,9 +65,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                </div> -->
+                                                                                                                        <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                        <span class="call-to-circle-1"></span>
+                                                                                                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -185,7 +185,8 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                             <div class="ltn__product-item text-center">
                                 <div class="product-img">
-                                    <a href="product-details.html"><img src="{{ $row->foto }}" alt="#"></a>
+                                    <a href="{{ route('product.detail', $row->id) }}"><img src="{{ $row->foto }}"
+                                            alt="#"></a>
                                     <div class="product-badge">
                                         <ul>
                                             <li class="badge-2">10%</li>

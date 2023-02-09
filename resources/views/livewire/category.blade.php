@@ -75,7 +75,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {!! $query->links() !!}
+                    {{ $query->links('vendor.livewire.simple-bootstrap') }}
                 </div>
             </div>
         </div>
