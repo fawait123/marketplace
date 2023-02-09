@@ -183,21 +183,88 @@
                                         </div>
                                         <div class="tab-pane fade" id="liton_tab_1_5">
                                             <div class="ltn__myaccount-tab-content-inner mb-50">
-                                                <p>The following addresses will be used on the checkout page by default.</p>
+
                                                 @php
                                                     use App\Models\Member;
                                                     
                                                     $member = Member::where('user_id', auth()->user()->id)->first();
                                                 @endphp
                                                 @if ($member)
-                                                    <h1>ada member</h1>
+                                                    <p>Status member
+                                                        <span
+                                                            class="text-bold {{ $member->is_active === 0 ? 'text-danger' : 'text-primary' }}">{{ $member->is_active === 0 ? 'Inactive' : 'Active' }}</span>{{ $member->is_active === 0 ? ', please wait for admin confirmation' : '' }}
+                                                    </p>
+                                                    <div class="ltn__form-box">
+                                                        <form action="" id="form-member" method="POST">
+                                                            @csrf
+                                                            <div class="row mb-50">
+                                                                <div class="col-md-12">
+                                                                    <label>Full Name:</label>
+                                                                    <input type="text" name="name"
+                                                                        value="{{ $member->name }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>NIK:</label>
+                                                                    <input type="text" name="nik"
+                                                                        value="{{ $member->nik }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Email:</label>
+                                                                    <input type="email" name="email"
+                                                                        placeholder="example@example.com"
+                                                                        value="{{ $member->email }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Telp:</label>
+                                                                    <input type="text" name="telp"
+                                                                        placeholder="08212xxxx"
+                                                                        value="{{ $member->telp }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Gender:</label>
+                                                                    <br>
+                                                                    <select name="gender" id="gender" disabled
+                                                                        style="widows: 100%">
+                                                                        <option value="laki-laki"
+                                                                            {{ $member->gender == 'laki-laki' ? 'selected' : '' }}>
+                                                                            Laki Laki</option>
+                                                                        <option value="perempuan"
+                                                                            {{ $member->gender == 'perempuan' ? 'selected' : '' }}>
+                                                                            Perempuan</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Image:</label>
+                                                                    <br>
+                                                                    <input type="file" name="image"
+                                                                        placeholder="Input image">
+                                                                    <input type="hidden" name="foto" disabled>
+                                                                    <img src="{{ $member->foto }}" class="img-fluid"
+                                                                        alt="">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>Address:</label>
+                                                                    <textarea readonly name="address" id="" cols="30" rows="10">{{ $member->address }}</textarea>
+                                                                </div>
+                                                                .<div class="col-md-12">
+                                                                    <button type="submit" disabled
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 @else
                                                     <div class="ltn__form-box">
-                                                        <form action="#">
+                                                        <form action="" id="form-member" method="POST">
+                                                            @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-12">
                                                                     <label>Full Name:</label>
                                                                     <input type="text" name="name">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>NIK:</label>
+                                                                    <input type="text" name="nik">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label>Email:</label>
@@ -214,14 +281,24 @@
                                                                     <br>
                                                                     <select name="gender" id="gender"
                                                                         style="widows: 100%">
-                                                                        <option value="">select</option>
                                                                         <option value="laki-laki">Laki Laki</option>
                                                                         <option value="perempuan">Perempuan</option>
                                                                     </select>
                                                                 </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Image:</label>
+                                                                    <br>
+                                                                    <input type="file" name="image"
+                                                                        placeholder="Input image">
+                                                                    <input type="hidden" name="foto">
+                                                                </div>
                                                                 <div class="col-md-12">
                                                                     <label>Address:</label>
                                                                     <textarea name="address" id="" cols="30" rows="10"></textarea>
+                                                                </div>
+                                                                .<div class="col-md-12">
+                                                                    <button type="submit"
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -244,3 +321,88 @@
         @csrf
     </form>
 @endsection
+
+@push('customjs')
+    <script>
+        function getBase64(file, input) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                $(input).val(reader.result)
+            };
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
+            };
+        }
+        $(document).ready(function() {
+            $("#form-member").validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    telp: {
+                        required: true
+                    },
+                    address: {
+                        required: true
+                    },
+                    gender: {
+                        required: true
+                    },
+                    nik: {
+                        required: true
+                    },
+                    image: {
+                        required: true,
+                        extension: "jpg|jpeg|png|svg"
+                    }
+                },
+                highlight: function(element) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function(element) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+
+                //add
+                errorElement: 'span',
+                errorClass: 'text-danger',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.form-control').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function(form) {
+                    let formData = new FormData($(form)[0]);
+                    $.ajax({
+                        url: '{{ route('registerMember') }}',
+                        type: 'post',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(res) {
+                            console.log(res)
+                            if (res === 'success') {
+                                window.location.reload()
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr)
+                        }
+                    })
+                }
+            })
+
+
+            $("input[type=file]").on('change', function() {
+                let file = $(this)[0].files[0]
+                getBase64(file, $("input[name=foto]"))
+            })
+        })
+    </script>
+@endpush

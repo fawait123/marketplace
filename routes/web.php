@@ -24,6 +24,7 @@ Route::post('/login',[AuthController::class,'login'])->name('login.action');
 Route::post('/register',[AuthController::class,'register'])->name('register.action');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth');
 Route::post('/changePassword',[AuthController::class,'changePassword'])->name('changePassword')->middleware('auth');
+Route::post('/register/member',[AuthController::class,'registerMember'])->name('registerMember')->middleware('auth');
 
 Route::get('/', function(){
     $categories = Category::all();

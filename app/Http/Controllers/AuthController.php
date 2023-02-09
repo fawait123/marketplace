@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Member;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -80,6 +81,13 @@ class AuthController extends Controller
         ]);
         auth()->logout();
         return redirect()->route('login')->with(['message' => 'Password has been changed']);
+    }
+
+
+    public function registerMember(Request $request)
+    {
+        Member::create(array_merge($request->except('image'),['user_id'=>auth()->user()->id,'is_active'=>0]));
+        return 'success';
     }
 
 }

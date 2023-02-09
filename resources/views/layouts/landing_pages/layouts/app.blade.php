@@ -657,6 +657,7 @@
     <script src="{{ asset('assets/landing_page/js') }}/plugins.js"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script>
         function customUrl(search, val) {
             let currentURL = document.URL
