@@ -7,6 +7,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -24,6 +25,13 @@ Route::post('/login',[AuthController::class,'login'])->name('login.action');
 Route::post('/register',[AuthController::class,'register'])->name('register.action');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth');
 Route::post('/changePassword',[AuthController::class,'changePassword'])->name('changePassword')->middleware('auth');
+Route::post('/register/member',[AuthController::class,'registerMember'])->name('registerMember')->middleware('auth');
+
+
+// transaction
+Route::get('/checkout',[CheckoutController::class,'index'])->name('checkout.index');
+Route::post('/order',[CheckoutController::class,'order'])->name('checkout.order');
+
 
 Route::get('/', function(){
     $categories = Category::all();
@@ -59,6 +67,8 @@ Route::group(['prefix'=>'cart','middleware'=>'auth'],function(){
 });
 
 Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
+    Route::get('/product/ubah/{id}',[ProductController::class,'update'])->name('product.ubah');
+    Route::get('/member/status',[MemberController::class,'status'])->name('member.status');
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('user',UserController::class);

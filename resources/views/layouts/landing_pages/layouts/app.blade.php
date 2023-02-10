@@ -227,32 +227,39 @@
                         <button class="ltn__utilize-close">×</button>
                     </div>
                     <div class="mini-cart-product-area ltn__scrollbar">
-                        @foreach ($data as $item)
-                            @php
-                                $total += ($item->product->harga ?? 0) * $item->total;
-                            @endphp
-                            <div class="mini-cart-item clearfix">
-                                <div class="mini-cart-img">
-                                    <a href="{{ route('product.detail', $item->id) }}"><img
-                                            src="{{ $item->product->foto ?? '' }}" alt="Image"></a>
-                                    <a href="{{ route('cart.remove', $item->id) }}"><span
-                                            class="mini-cart-item-delete"><i class="icon-trash"></i></span></a>
+                        @if (count($data) > 0)
+                            @foreach ($data as $item)
+                                @php
+                                    $total += ($item->product->harga ?? 0) * $item->total;
+                                @endphp
+                                <div class="mini-cart-item clearfix">
+                                    <div class="mini-cart-img">
+                                        <a href="{{ route('product.detail', $item->id) }}"><img
+                                                src="{{ $item->product->foto ?? '' }}" alt="Image"></a>
+                                        <a href="{{ route('cart.remove', $item->id) }}"><span
+                                                class="mini-cart-item-delete"><i class="icon-trash"></i></span></a>
+                                    </div>
+                                    <div class="mini-cart-info">
+                                        <h6><a href="#">{{ $item->product->name ?? '' }}</a></h6>
+                                        <span class="mini-cart-quantity">{{ $item->total }} x
+                                            {{ number_format($item->product->harga ?? '', 2, ',', '.') }}</span>
+                                    </div>
                                 </div>
-                                <div class="mini-cart-info">
-                                    <h6><a href="#">{{ $item->product->name ?? '' }}</a></h6>
-                                    <span class="mini-cart-quantity">{{ $item->total }} x
-                                        {{ number_format($item->product->harga ?? '', 2, ',', '.') }}</span>
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <p>No data in your cart</p>
+                        @endif
                     </div>
                     <div class="mini-cart-footer">
-                        <div class="mini-cart-sub-total">
-                            <h5>Subtotal: <span>{{ number_format($total, 2, ',', '.') }}</span></h5>
-                        </div>
-                        <div class="btn-wrapper modal-footer">
-                            <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                        </div>
+                        @if (count($data) > 0)
+                            <div class="mini-cart-sub-total">
+                                <h5>Subtotal: <span>{{ number_format($total, 2, ',', '.') }}</span></h5>
+                            </div>
+                            <div class="btn-wrapper modal-footer">
+                                <a href="{{ route('checkout.index') }}"
+                                    class="theme-btn-2 btn btn-effect-2 btn-block">Checkout</a>
+                            </div>
+                        @endif
                     </div>
 
                 </div>
@@ -376,7 +383,7 @@
         <!-- MODAL AREA START (Quick View Modal) -->
         <div class="ltn__modal-area ltn__quick-view-modal-area">
             <div class="modal fade" id="quick_view_modal" tabindex="-1">
-                <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -385,150 +392,9 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="ltn__quick-view-modal-inner">
-                                <div class="modal-product-item">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <div class="modal-product-img">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/4.png"
-                                                    alt="#">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-12">
-                                            <div class="modal-product-info shop-details-info pl-0">
-                                                <h3>Pink Flower Tree Red</h3>
-                                                <div class="product-price-ratting mb-20">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="product-price">
-                                                                <span>$49.00</span>
-                                                                <del>$65.00</del>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="product-ratting">
-                                                                <ul>
-                                                                    <li><a href="#"><i
-                                                                                class="icon-star"></i></a></li>
-                                                                    <li><a href="#"><i
-                                                                                class="icon-star"></i></a></li>
-                                                                    <li><a href="#"><i
-                                                                                class="icon-star"></i></a></li>
-                                                                    <li><a href="#"><i
-                                                                                class="icon-star"></i></a></li>
-                                                                    <li><a href="#"><i
-                                                                                class="icon-star"></i></a></li>
-                                                                    <li class="review-total"> <a href="#"> (
-                                                                            95 Reviews )</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="modal-product-brief">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                        Dignissimos repellendus repudiandae incidunt quidem pariatur
-                                                        expedita, quo quis modi tempore non.</p>
-                                                </div>
-                                                <div class="modal-product-meta ltn__product-details-menu-1 mb-20">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="ltn__color-widget clearfix">
-                                                                <strong class="d-meta-title">Color</strong>
-                                                                <ul>
-                                                                    <li class="theme"><a href="#"></a></li>
-                                                                    <li class="green-2"><a href="#"></a></li>
-                                                                    <li class="blue-2"><a href="#"></a></li>
-                                                                    <li class="white"><a href="#"></a></li>
-                                                                    <li class="red"><a href="#"></a></li>
-                                                                    <li class="yellow"><a href="#"></a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="ltn__size-widget clearfix mt-25">
-                                                                <strong class="d-meta-title">Size</strong>
-                                                                <ul>
-                                                                    <li><a href="#">S</a></li>
-                                                                    <li><a href="#">M</a></li>
-                                                                    <li><a href="#">L</a></li>
-                                                                    <li><a href="#">XL</a></li>
-                                                                    <li><a href="#">XXL</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div
-                                                    class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="cart-plus-minus">
-                                                                <input type="text" value="02" name="qtybutton"
-                                                                    class="cart-plus-minus-box">
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"
-                                                                class="theme-btn-1 btn btn-effect-1 d-add-to-cart"
-                                                                title="Add to Cart" data-bs-toggle="modal"
-                                                                data-bs-target="#add_to_cart_modal">
-                                                                <span>ADD TO CART</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"
-                                                                class="btn btn-effect-1 d-add-to-wishlist"
-                                                                title="Add to Cart" data-bs-toggle="modal"
-                                                                data-bs-target="#liton_wishlist_modal">
-                                                                <i class="icon-heart"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="ltn__social-media mb-30">
-                                                    <ul>
-                                                        <li class="d-meta-title">Share:</li>
-                                                        <li><a href="#" title="Facebook"><i
-                                                                    class="icon-social-facebook"></i></a></li>
-                                                        <li><a href="#" title="Twitter"><i
-                                                                    class="icon-social-twitter"></i></a></li>
-                                                        <li><a href="#" title="Pinterest"><i
-                                                                    class="icon-social-pinterest"></i></a></li>
-                                                        <li><a href="#" title="Instagram"><i
-                                                                    class="icon-social-instagram"></i></a></li>
+                            <h6>Detail Transaction</h6>
+                            <div class="row" id="transaction-detail">
 
-                                                    </ul>
-                                                </div>
-                                                <div
-                                                    class="modal-product-meta ltn__product-details-menu-1 mb-30 d-none">
-                                                    <ul>
-                                                        <li><strong>SKU:</strong> <span>12345</span></li>
-                                                        <li>
-                                                            <strong>Categories:</strong>
-                                                            <span>
-                                                                <a href="#">Flower</a>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <strong>Tags:</strong>
-                                                            <span>
-                                                                <a href="#">Love</a>
-                                                                <a href="#">Flower</a>
-                                                                <a href="#">Heart</a>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="ltn__safe-checkout d-none">
-                                                    <h5>Guaranteed Safe Checkout</h5>
-                                                    <img src="{{ asset('assets/landing_page/img') }}/icons/payment-2.png"
-                                                        alt="Payment Image">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -566,8 +432,8 @@
                                                         <a href="cart.html" class="theme-btn-1 btn btn-effect-1"
                                                             id="add-to-cart">Add To
                                                             Cart</a>
-                                                        <a href="checkout.html"
-                                                            class="theme-btn-2 btn btn-effect-2">Checkout</a>
+                                                        {{-- <a href="checkout.html"
+                                                            class="theme-btn-2 btn btn-effect-2">Checkout</a> --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -657,6 +523,8 @@
     <script src="{{ asset('assets/landing_page/js') }}/plugins.js"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script>
         function customUrl(search, val) {
             let currentURL = document.URL
@@ -701,6 +569,125 @@
                 $("#modal-image").prop('src', image)
                 $("#modal-title").html(name)
                 $("#modal-price").html('Rp. ' + parseInt(price).toLocaleString('ID', 'id'))
+            })
+
+            $("#quick_view_modal").on('show.bs.modal', function(e) {
+                let target = e.relatedTarget;
+                let name = $(target).data('name')
+                let email = $(target).data('email')
+                let phone = $(target).data('phone')
+                let address = $(target).data('address')
+                let note = $(target).data('note')
+                let additional = $(target).data('additional')
+                let total = $(target).data('total')
+                let payment_method = $(target).data('payment_method')
+                let status = $(target).data('status')
+                let date = $(target).data('date')
+                let detail = $(target).data('detail')
+                var options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }
+                let html = ''
+                html += `
+                                <div class="col-6">
+                                    Date
+                                </div>
+                                <div class="col-6">
+                                    : ${moment(date).format('DD MMMM YYYY hh:mm:ss')}
+                                </div>
+                                <div class="col-6">
+                                    Name
+                                </div>
+                                <div class="col-6">
+                                    : ${name}
+                                </div>
+                                <div class="col-6">
+                                    Email
+                                </div>
+                                <div class="col-6">
+                                    : ${email}
+                                </div>
+                                <div class="col-6">
+                                    Phone
+                                </div>
+                                <div class="col-6">
+                                    : ${phone}
+                                </div>
+                                <div class="col-6">
+                                    Address
+                                </div>
+                                <div class="col-6">
+                                    : ${address}
+                                </div>
+                                <div class="col-6">
+                                    Payment Method
+                                </div>
+                                <div class="col-6">
+                                    : ${address}
+                                </div>
+                                <div class="col-6">
+                                    Status
+                                </div>
+                                <div class="col-6">
+                                    : <span class="text-bold text-primary" style="font-weight:bold;">${status}</span>
+                                </div>
+                                <hr>
+                `
+                detail.map((el, index) => {
+                    html += `
+                                <div class="col-4">
+                                    <li style="list-style:none"><b>${++index}.</b>&nbsp; ${el.product.name}</li>
+                                </div>
+                                <div class="col-4">
+                                    <li style="list-style:none">${el.amount} x Rp. ${parseInt(el.price).toLocaleString('id','ID')}</li>
+                                </div>
+                                <div class="col-4">
+                                    <li style="list-style:none">Rp. ${parseInt(el.sub_total).toLocaleString('id','ID')}</li>
+                                </div>
+                                <div class="col-4">
+                                    &nbsp;
+                                </div>
+                                <div class="col-4">
+                                    &nbsp;
+                                </div>
+                                <div class="col-4">
+                                    &nbsp;
+                                </div>            `
+                })
+
+                html += `
+                <div class="col-4">
+                                    &nbsp;
+                                </div>
+                                <div class="col-4">
+                                    <b>Sub Total</b>
+                                </div>
+                                <div class="col-4">
+                                    <b>Rp. ${parseInt(total).toLocaleString('id','ID')}</b>
+                                </div>
+                                <div class="col-4">
+                                    &nbsp;
+                                </div>
+                                <div class="col-4">
+                                    <b>${additional.payment_method === 'take_away' ? 'Take Away' : 'Cash On Delivery'}</b>
+                                </div>
+                                <div class="col-4">
+                                    <b>Rp. ${parseInt(additional.price).toLocaleString('id','ID')}</b>
+                                </div>
+                                <div class="col-4">
+                                    &nbsp;
+                                </div>
+                                <div class="col-4">
+                                    <b>Total</b>
+                                </div>
+                                <div class="col-4">
+                                    <b><span class="text-primary">Rp. ${parseInt(total + additional.price).toLocaleString('id','ID')}</span></b>
+                                </div>
+                `
+                $("#transaction-detail").html(html)
             })
             $("#btn1-search").click(function() {
                 let val = $("#input1-search").val();

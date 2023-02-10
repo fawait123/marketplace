@@ -74,41 +74,67 @@
                                                 </form>
                                             </div>
                                         </div>
+                                        @php
+                                            use App\Models\Transaction;
+                                            
+                                            $transactions = Transaction::with('detail.product')
+                                                ->where('user_id', auth()->user()->id)
+                                                ->latest()
+                                                ->get();
+                                        @endphp
                                         <div class="tab-pane fade" id="liton_tab_1_2">
                                             <div class="ltn__myaccount-tab-content-inner">
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <th>Order</th>
                                                                 <th>Date</th>
-                                                                <th>Status</th>
+                                                                <th>Payment Method</th>
                                                                 <th>Total</th>
+                                                                <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Jun 22, 2019</td>
-                                                                <td>Pending</td>
-                                                                <td>$3000</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>Nov 22, 2019</td>
-                                                                <td>Approved</td>
-                                                                <td>$200</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Jan 12, 2020</td>
-                                                                <td>On Hold</td>
-                                                                <td>$990</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
+                                                            @if (count($transactions) > 0)
+                                                                @foreach ($transactions as $item)
+                                                                    @php
+                                                                        $additional = json_decode($item->additional);
+                                                                        $total = $item->total + $additional->price;
+                                                                    @endphp
+                                                                    <tr>
+                                                                        <td>{{ date('d M Y H:i:s', strtotime($item->date)) }}
+                                                                        </td>
+                                                                        <td>{{ $item->payment_method == 'take_away' ? 'Take Away' : 'Cash on delivery' }}
+                                                                        </td>
+                                                                        <td>Rp.
+                                                                            {{ number_format($total, 2, ',', '.') }}
+                                                                        </td>
+                                                                        <td><span
+                                                                                class="badge bg-primary">{{ $item->status }}</span>
+                                                                        </td>
+                                                                        <td><a href="" data-bs-toggle="modal"
+                                                                                data-name="{{ $item->name }}"
+                                                                                data-email="{{ $item->email }}"
+                                                                                data-phone="{{ $item->phone }}"
+                                                                                data-address="{{ $item->address }}"
+                                                                                data-note="{{ $item->note }}"
+                                                                                data-additional="{{ $item->additional }}"
+                                                                                data-total="{{ $item->total }}"
+                                                                                data-payment_method="{{ $item->payment_method }}"
+                                                                                data-status="{{ $item->status }}"
+                                                                                data-date="{{ $item->date }}"
+                                                                                data-detail="{{ json_encode($item->detail) }}"
+                                                                                data-bs-target="#quick_view_modal">detail</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @else
+                                                                <tr>
+                                                                    <td colspan="5" align="center">No data to display
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -183,21 +209,88 @@
                                         </div>
                                         <div class="tab-pane fade" id="liton_tab_1_5">
                                             <div class="ltn__myaccount-tab-content-inner mb-50">
-                                                <p>The following addresses will be used on the checkout page by default.</p>
+
                                                 @php
                                                     use App\Models\Member;
                                                     
                                                     $member = Member::where('user_id', auth()->user()->id)->first();
                                                 @endphp
                                                 @if ($member)
-                                                    <h1>ada member</h1>
+                                                    <p>Status member
+                                                        <span
+                                                            class="text-bold {{ $member->is_active === 0 ? 'text-danger' : 'text-primary' }}">{{ $member->is_active === 0 ? 'Inactive' : 'Active' }}</span>{{ $member->is_active === 0 ? ', please wait for admin confirmation' : '' }}
+                                                    </p>
+                                                    <div class="ltn__form-box">
+                                                        <form action="" id="form-member" method="POST">
+                                                            @csrf
+                                                            <div class="row mb-50">
+                                                                <div class="col-md-12">
+                                                                    <label>Full Name:</label>
+                                                                    <input type="text" name="name"
+                                                                        value="{{ $member->name }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>NIK:</label>
+                                                                    <input type="text" name="nik"
+                                                                        value="{{ $member->nik }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Email:</label>
+                                                                    <input type="email" name="email"
+                                                                        placeholder="example@example.com"
+                                                                        value="{{ $member->email }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Telp:</label>
+                                                                    <input type="text" name="telp"
+                                                                        placeholder="08212xxxx"
+                                                                        value="{{ $member->telp }}" readonly>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Gender:</label>
+                                                                    <br>
+                                                                    <select name="gender" id="gender" disabled
+                                                                        style="widows: 100%">
+                                                                        <option value="laki-laki"
+                                                                            {{ $member->gender == 'laki-laki' ? 'selected' : '' }}>
+                                                                            Laki Laki</option>
+                                                                        <option value="perempuan"
+                                                                            {{ $member->gender == 'perempuan' ? 'selected' : '' }}>
+                                                                            Perempuan</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Image:</label>
+                                                                    <br>
+                                                                    <input type="file" name="image"
+                                                                        placeholder="Input image">
+                                                                    <input type="hidden" name="foto" disabled>
+                                                                    <img src="{{ $member->foto }}" class="img-fluid"
+                                                                        alt="">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>Address:</label>
+                                                                    <textarea readonly name="address" id="" cols="30" rows="10">{{ $member->address }}</textarea>
+                                                                </div>
+                                                                .<div class="col-md-12">
+                                                                    <button type="submit" disabled
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 @else
                                                     <div class="ltn__form-box">
-                                                        <form action="#">
+                                                        <form action="" id="form-member" method="POST">
+                                                            @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-12">
                                                                     <label>Full Name:</label>
                                                                     <input type="text" name="name">
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <label>NIK:</label>
+                                                                    <input type="text" name="nik">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label>Email:</label>
@@ -214,14 +307,24 @@
                                                                     <br>
                                                                     <select name="gender" id="gender"
                                                                         style="widows: 100%">
-                                                                        <option value="">select</option>
                                                                         <option value="laki-laki">Laki Laki</option>
                                                                         <option value="perempuan">Perempuan</option>
                                                                     </select>
                                                                 </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Image:</label>
+                                                                    <br>
+                                                                    <input type="file" name="image"
+                                                                        placeholder="Input image">
+                                                                    <input type="hidden" name="foto">
+                                                                </div>
                                                                 <div class="col-md-12">
                                                                     <label>Address:</label>
                                                                     <textarea name="address" id="" cols="30" rows="10"></textarea>
+                                                                </div>
+                                                                .<div class="col-md-12">
+                                                                    <button type="submit"
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -244,3 +347,88 @@
         @csrf
     </form>
 @endsection
+
+@push('customjs')
+    <script>
+        function getBase64(file, input) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                $(input).val(reader.result)
+            };
+            reader.onerror = function(error) {
+                console.log('Error: ', error);
+            };
+        }
+        $(document).ready(function() {
+            $("#form-member").validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    telp: {
+                        required: true
+                    },
+                    address: {
+                        required: true
+                    },
+                    gender: {
+                        required: true
+                    },
+                    nik: {
+                        required: true
+                    },
+                    image: {
+                        required: true,
+                        extension: "jpg|jpeg|png|svg"
+                    }
+                },
+                highlight: function(element) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function(element) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+
+                //add
+                errorElement: 'span',
+                errorClass: 'text-danger',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.form-control').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                submitHandler: function(form) {
+                    let formData = new FormData($(form)[0]);
+                    $.ajax({
+                        url: '{{ route('registerMember') }}',
+                        type: 'post',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(res) {
+                            console.log(res)
+                            if (res === 'success') {
+                                window.location.reload()
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr)
+                        }
+                    })
+                }
+            })
+
+
+            $("input[type=file]").on('change', function() {
+                let file = $(this)[0].files[0]
+                getBase64(file, $("input[name=foto]"))
+            })
+        })
+    </script>
+@endpush

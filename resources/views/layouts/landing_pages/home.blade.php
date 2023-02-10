@@ -3,6 +3,15 @@
 @section('content')
     @php
         use App\Models\Product;
+        function random_color_part()
+        {
+            return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
+        }
+        
+        function random_color()
+        {
+            return random_color_part() . random_color_part() . random_color_part();
+        }
     @endphp
     <!-- SLIDER AREA START (slider-6) -->
     <div class="ltn__slider-area ltn__slider-3 ltn__slider-6 section-bg-1">
@@ -30,9 +39,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                </div> -->
+                                                                                                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                    <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -65,9 +74,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                </div> -->
+                                                                                                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                    <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -181,14 +190,20 @@
                 </div>
                 <div class="row justify-content-center">
                     @foreach ($products as $row)
+                        @php
+                            $persen = ($row->harga_promo / $row->harga) * 100;
+                            $persen = ceil($persen);
+                        @endphp
                         <!-- ltn__product-item -->
                         <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                             <div class="ltn__product-item text-center">
                                 <div class="product-img">
-                                    <a href="product-details.html"><img src="{{ $row->foto }}" alt="#"></a>
+                                    <a href="{{ route('product.detail', $row->id) }}"><img src="{{ $row->foto }}"
+                                            alt="#"></a>
                                     <div class="product-badge">
                                         <ul>
-                                            <li class="badge-2">10%</li>
+                                            <li class="badge-2" style="background: #{{ random_color() }}">
+                                                {{ $persen }}%</li>
                                         </ul>
                                     </div>
                                     <div class="product-hover-action product-hover-action-2">
@@ -208,8 +223,9 @@
                                 <div class="product-info">
                                     <h2 class="product-title"><a href="product-details.html">{{ $row->name }}</a></h2>
                                     <div class="product-price">
-                                        <span>{{ number_format($row->harga, 2, ',', '.') }}</span>
-                                        <del>$21.00</del>
+                                        <span>Rp.
+                                            {{ $row->harga_promo ? number_format($row->harga_promo, 2, ',', '.') : number_format($row->harga, 2, ',', '.') }}</span>
+                                        <del>{{ $row->harga_promo ? number_format($row->harga, 2, ',', '.') : number_format($row->harga_promo, 2, ',', '.') }}</del>
                                     </div>
                                 </div>
                             </div>
