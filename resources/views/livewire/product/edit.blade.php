@@ -83,11 +83,24 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                        @error('image')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                         <input type="hidden" value="{{ $product->foto }}" name="image" id="image">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-warning" type="button" id="btn-add">Add another
-                            image</button>
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-warning btn-block" type="button" id="btn-add">Add another
+                                    image</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-danger btn-block" type="button" id="btn-remove">Remove another
+                                    image</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="row mb-5">
                         @php
@@ -137,69 +150,79 @@
                 window.location.href = url
             })
 
-            $("#form-add").validate({
-                ignore: ".ignore",
-                // rules: {
-                //     name: {
-                //         required: true,
-                //     },
-                //     harga: {
-                //         required: true,
-                //     },
-                //     harga_promo: {
-                //         required: true,
-                //     },
-                //     category_id: {
-                //         required: true,
-                //     },
-                //     deskripsi: {
-                //         required: true,
-                //     },
-                //     foto: {
-                //         required: true,
-                //     }
-                // },
-                highlight: function(element) {
-                    $(element).closest('.form-group').addClass('has-error');
-                },
-                unhighlight: function(element) {
-                    $(element).closest('.form-group').removeClass('has-error');
-                },
-                errorElement: 'span',
-                errorClass: 'help-block',
-                errorPlacement: function(error, element) {
-                    if (element.parent('.input-group').length) {
-                        error.insertAfter(element.parent());
-                    } else {
-                        error.insertAfter(element);
-                    }
-                },
-                // submitHandler: function(form) {
-                //     $(form).submit();
-                //     // let route =
-                //     //     "{{ request('id') ? route('product.update', 'id') : route('product.store') }}";
-                //     // let id = "{{ request('id') }}"
-                //     // id = Number(id)
-                //     // if (id != 0) {
-                //     //     route = route.replace('id', id)
-                //     // }
-                //     // let formData = new FormData($(form)[0]);
-                //     // // console.log(formData)
-                //     // $.ajax({
-                //     //     url: route,
-                //     //     type: "{{ isset($id) ? 'get' : 'POST' }}",
-                //     //     processData: false,
-                //     //     contentType: false,
-                //     //     data: formData,
-                //     //     success: function(res) {
-                //     //         console.log(res)
-                //     //         // if (res === 'success') {
-                //     //         //     window.location.href = "{{ route('product.index') }}"
-                //     //         // }
-                //     //     }
-                //     // })
-                // }
+            $("#btn-remove").on('click', function() {
+                let urlParams = new URLSearchParams(window.location.search);
+                let myParam = urlParams.get('count');
+                myParam = parseInt(myParam) === 0 ? 0 : parseInt(myParam) - 1
+                let url = "{{ route('product.edit', $id) }}?id={{ $id }}&count=" + myParam
+                // console.log(url)
+                window.location.href = url
             })
+
+
+            // $("#form-add").validate({
+            //     ignore: ".ignore",
+            //     // rules: {
+            //     //     name: {
+            //     //         required: true,
+            //     //     },
+            //     //     harga: {
+            //     //         required: true,
+            //     //     },
+            //     //     harga_promo: {
+            //     //         required: true,
+            //     //     },
+            //     //     category_id: {
+            //     //         required: true,
+            //     //     },
+            //     //     deskripsi: {
+            //     //         required: true,
+            //     //     },
+            //     //     foto: {
+            //     //         required: true,
+            //     //     }
+            //     // },
+            //     highlight: function(element) {
+            //         $(element).closest('.form-group').addClass('has-error');
+            //     },
+            //     unhighlight: function(element) {
+            //         $(element).closest('.form-group').removeClass('has-error');
+            //     },
+            //     errorElement: 'span',
+            //     errorClass: 'help-block',
+            //     errorPlacement: function(error, element) {
+            //         if (element.parent('.input-group').length) {
+            //             error.insertAfter(element.parent());
+            //         } else {
+            //             error.insertAfter(element);
+            //         }
+            //     },
+            //     // submitHandler: function(form) {
+            //     //     $(form).submit();
+            //     //     // let route =
+            //     //     //     "{{ request('id') ? route('product.update', 'id') : route('product.store') }}";
+            //     //     // let id = "{{ request('id') }}"
+            //     //     // id = Number(id)
+            //     //     // if (id != 0) {
+            //     //     //     route = route.replace('id', id)
+            //     //     // }
+            //     //     // let formData = new FormData($(form)[0]);
+            //     //     // // console.log(formData)
+            //     //     // $.ajax({
+            //     //     //     url: route,
+            //     //     //     type: "{{ isset($id) ? 'get' : 'POST' }}",
+            //     //     //     processData: false,
+            //     //     //     contentType: false,
+            //     //     //     data: formData,
+            //     //     //     success: function(res) {
+            //     //     //         console.log(res)
+            //     //     //         // if (res === 'success') {
+            //     //     //         //     window.location.href = "{{ route('product.index') }}"
+            //     //     //         // }
+            //     //     //     }
+            //     //     // })
+            //     // }
+            // })
 
             $("input[name=foto]").on('change', function() {
                 let value = $(this)[0].files[0]
@@ -213,6 +236,25 @@
             })
 
             resetPreview2("foto", "{{ $product->foto }}", 'Image.jpg')
+
+            let drEvent = $('.dropify').dropify();
+
+            drEvent.on('dropify.beforeClear', function(event, element) {
+                return confirm("Do you really want to delete ?");
+            });
+
+            drEvent.on('dropify.afterClear', function(event, element) {
+                let target = element.element
+                let id = $(target).data('id')
+                console.log(id)
+                if (typeof id === 'undefined') {
+                    // console.log('undefined id')
+                    $("input[name=image]").val('')
+                } else {
+                    // console.log('ada')
+                    $("#additionalImage" + id).val('')
+                }
+            });
         })
     </script>
 @endpush

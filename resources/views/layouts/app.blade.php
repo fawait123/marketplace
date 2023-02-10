@@ -40,7 +40,6 @@
                         id="vertical-menu-btn">
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
-
                     @if (count($url) == 2)
                         <div class="dropdown d-none d-sm-inline-block">
                             <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
@@ -56,7 +55,7 @@
                                 </a>
                             </div>
                         </div>
-                    @elseif(count($url) === 3)
+                    @elseif(count($url) === 3 || count($url) === 4)
                         <div class="dropdown d-none d-sm-inline-block">
                             <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
