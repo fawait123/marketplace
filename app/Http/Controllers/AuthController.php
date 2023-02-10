@@ -16,7 +16,7 @@ class AuthController extends Controller
             'password'=>'required',
         ]);
 
-        $check = User::where('email',$request->email)->first();
+        $check = User::with('member')->where('email',$request->email)->first();
 
         if(!$check){
             return redirect()->back()->withInput()->withErrors(['email'=>'These credentials do not match our records.']);

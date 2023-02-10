@@ -74,41 +74,67 @@
                                                 </form>
                                             </div>
                                         </div>
+                                        @php
+                                            use App\Models\Transaction;
+                                            
+                                            $transactions = Transaction::with('detail.product')
+                                                ->where('user_id', auth()->user()->id)
+                                                ->latest()
+                                                ->get();
+                                        @endphp
                                         <div class="tab-pane fade" id="liton_tab_1_2">
                                             <div class="ltn__myaccount-tab-content-inner">
                                                 <div class="table-responsive">
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <th>Order</th>
                                                                 <th>Date</th>
-                                                                <th>Status</th>
+                                                                <th>Payment Method</th>
                                                                 <th>Total</th>
+                                                                <th>Status</th>
                                                                 <th>Action</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Jun 22, 2019</td>
-                                                                <td>Pending</td>
-                                                                <td>$3000</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>Nov 22, 2019</td>
-                                                                <td>Approved</td>
-                                                                <td>$200</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Jan 12, 2020</td>
-                                                                <td>On Hold</td>
-                                                                <td>$990</td>
-                                                                <td><a href="cart.html">View</a></td>
-                                                            </tr>
+                                                            @if (count($transactions) > 0)
+                                                                @foreach ($transactions as $item)
+                                                                    @php
+                                                                        $additional = json_decode($item->additional);
+                                                                        $total = $item->total + $additional->price;
+                                                                    @endphp
+                                                                    <tr>
+                                                                        <td>{{ date('d M Y H:i:s', strtotime($item->date)) }}
+                                                                        </td>
+                                                                        <td>{{ $item->payment_method == 'take_away' ? 'Take Away' : 'Cash on delivery' }}
+                                                                        </td>
+                                                                        <td>Rp.
+                                                                            {{ number_format($total, 2, ',', '.') }}
+                                                                        </td>
+                                                                        <td><span
+                                                                                class="badge bg-primary">{{ $item->status }}</span>
+                                                                        </td>
+                                                                        <td><a href="" data-bs-toggle="modal"
+                                                                                data-name="{{ $item->name }}"
+                                                                                data-email="{{ $item->email }}"
+                                                                                data-phone="{{ $item->phone }}"
+                                                                                data-address="{{ $item->address }}"
+                                                                                data-note="{{ $item->note }}"
+                                                                                data-additional="{{ $item->additional }}"
+                                                                                data-total="{{ $item->total }}"
+                                                                                data-payment_method="{{ $item->payment_method }}"
+                                                                                data-status="{{ $item->status }}"
+                                                                                data-date="{{ $item->date }}"
+                                                                                data-detail="{{ json_encode($item->detail) }}"
+                                                                                data-bs-target="#quick_view_modal">detail</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            @else
+                                                                <tr>
+                                                                    <td colspan="5" align="center">No data to display
+                                                                    </td>
+                                                                </tr>
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>
