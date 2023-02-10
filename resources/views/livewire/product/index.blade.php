@@ -17,9 +17,9 @@
                                 <tr>
                                     <th width="10%">NO</th>
                                     <th>Name</th>
-                                    <th>Foto</th>
+                                    <th width="30%">Foto</th>
                                     <th>QR Code</th>
-                                    <th>deskripsi</th>
+                                    <th width="30%">deskripsi</th>
                                     <th>Harga</th>
                                     <th>Harga Promo</th>
                                     <th>Kategori</th>

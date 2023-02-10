@@ -21,7 +21,7 @@
                                     <th>Email</th>
                                     <th>Telp</th>
                                     <th>Jenis Kelamin</th>
-                                    <th>Role</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -31,13 +31,17 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name }}</td>
-                                            <td><img class="img-fluid" style="widows: 120px"
-                                                    src="{{ Storage::url('public/foto/') . $item->foto }}"
+                                            <td><img class="img-fluid" style="widows: 120px" src="{{ $item->foto }}"
                                                     alt=""></td>
                                             <td>{{ $item->user->email }}</td>
                                             <td>{{ $item->telp }}</td>
                                             <td>{{ $item->gender }}</td>
-                                            <td>{{ $item->role }}</td>
+                                            <td>
+                                                <input type="checkbox" data-id="{{ $item->id }}"
+                                                    data-status={{ $item->is_active }}
+                                                    {{ $item->is_active == 0 ? '' : 'checked' }} data-toggle="switchery"
+                                                    data-color="#df3554" data-size="small" />
+                                            </td>
                                             <td>
                                                 <a href="{{ route('member.edit', $item->id) }}" class="text-primary"><i
                                                         class="mdi mdi-lead-pencil"></i></a>
@@ -92,3 +96,29 @@
         </div>
     </div>
 </div>
+
+@push('customjs')
+    <script>
+        $(document).ready(function() {
+            $("input[type=checkbox]").on('change', function() {
+                let id = $(this).data('id')
+                let status = $(this).data('status')
+                status = status == 0 ? 1 : 0;
+                $.ajax({
+                    url: '{{ route('member.status') }}',
+                    type: 'get',
+                    data: {
+                        status: status,
+                        id: id
+                    },
+                    success: function(res) {
+                        console.log(res)
+                        if (res === 'success') {
+                            window.location.reload();
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+@endpush

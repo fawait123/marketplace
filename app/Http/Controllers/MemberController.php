@@ -128,4 +128,13 @@ class MemberController extends Controller
         $member->delete();
         return redirect()->route('member.index')->with(['message' => 'Member has been deleted']);
     }
+
+    public function status(Request $request)
+    {
+        Member::where('id',$request->id)->update([
+            'is_active'=>$request->status
+        ]);
+
+        return 'success';
+    }
 }

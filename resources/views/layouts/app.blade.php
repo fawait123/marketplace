@@ -1,7 +1,6 @@
 @php
     $url = Request::path();
     $url = explode('/', $url);
-    // dd($url);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +24,17 @@
     <link href="{{ asset('assets/css') }}/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css') }}/theme.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Plugins css -->
+    <link href="{{ asset('assets') }}/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets') }}/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets') }}/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets') }}/plugins/switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets') }}/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets') }}/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet"
+        type="text/css" />
+
     @livewireStyles
 </head>
 
@@ -106,8 +116,8 @@
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images') }}/flags/spain.jpg" alt="user-image" class="mr-1"
-                                    height="12">
+                                <img src="{{ asset('assets/images') }}/flags/spain.jpg" alt="user-image"
+                                    class="mr-1" height="12">
                                 <span class="align-middle">Spanish</span>
                             </a>
 
@@ -321,10 +331,25 @@
 
     <!--dropify-->
     <script src="{{ asset('assets') }}/plugins/dropify/dropify.min.js"></script>
-    <!-- Init js-->
+    <!-- Plugins js -->
+    <script src="{{ asset('assets') }}/plugins/autonumeric/autoNumeric-min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/moment/moment.js"></script>
+    <script src="{{ asset('assets') }}/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="{{ asset('assets') }}/plugins/select2/select2.min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/switchery/switchery.min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="{{ asset('assets') }}/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="{{ asset('assets') }}/pages/advanced-plugins-demo.js"></script>
+
     <script src="{{ asset('assets') }}/pages/fileuploads-demo.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <!-- Custom Js -->
+    <script src="{{ asset('assets') }}/pages/advanced-plugins-demo.js"></script>
     <script>
         function getBase64(file, input) {
             var reader = new FileReader();

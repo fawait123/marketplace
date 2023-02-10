@@ -13,27 +13,11 @@
                             <div class="col-md-6">
                                 <div class="ltn__shop-details-img-gallery ltn__shop-details-img-gallery-2">
                                     <div class="ltn__shop-details-small-img slick-arrow-2">
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/2.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/2.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/3.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/4.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/5.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/6.png" alt="Image">
-                                        </div>
-                                        <div class="single-small-img">
-                                            <img src="{{ asset('assets/landing_page/img') }}/product/7.png" alt="Image">
-                                        </div>
+                                        @foreach ($product->detail as $item)
+                                            <div class="single-small-img">
+                                                <img src="{{ $item->image }}" alt="Image">
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <div class="ltn__shop-details-large-img">
                                         <div class="single-large-img">
@@ -41,68 +25,42 @@
                                                 <img src="{{ $product->foto }}" alt="Image">
                                             </a>
                                         </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/2.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/2.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/3.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/3.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/4.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/4.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/5.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/5.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/6.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/6.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
-                                        <div class="single-large-img">
-                                            <a href="{{ asset('assets/landing_page/img') }}/product/7.png"
-                                                data-rel="lightcase:myCollection">
-                                                <img src="{{ asset('assets/landing_page/img') }}/product/7.png"
-                                                    alt="Image">
-                                            </a>
-                                        </div>
+                                        @foreach ($product->detail as $item)
+                                            <div class="single-large-img">
+                                                <a href="{{ $item->image }}" data-rel="lightcase:myCollection">
+                                                    <img src="{{ $item->image }}" alt="Image">
+                                                </a>
+                                            </div>
+                                        @endforeach
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="modal-product-info shop-details-info pl-0">
                                     <h3>{{ $product->name }}</h3>
+                                    <span class="text-secondary text-small">{{ ucfirst($product->category->name) }}</span>
                                     <div class="product-price-ratting mb-20">
                                         <ul>
                                             <li>
                                                 <div class="product-price">
-                                                    <span>Rp. {{ number_format($product->harga, 2, ',', '.') }}</span>
-                                                    <del>$65.00</del>
+                                                    <span>Rp.
+                                                        {{ $product->harga_promo ? number_format($product->harga_promo, 2, ',', '.') : number_format($product->harga, 2, ',', '.') }}</span>
+                                                    <del>{{ $product->harga_promo ? number_format($product->harga, 2, ',', '.') : number_format($product->harga_promo, 2, ',', '.') }}</del>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    {{-- <div class="modal-product-brief">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos repellendus
-                                            repudiandae incidunt quidem pariatur expedita, quo quis modi tempore non.</p>
-                                    </div> --}}
+                                    <div class="modal-product-brief">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                {{ QrCode::size(200)->generate($product->qrcode) }}
+                                            </div>
+                                            <div class="col-6">
+                                                <p>{{ $product->deskripsi }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
                                         <ul>
                                             <li>

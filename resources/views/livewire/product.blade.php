@@ -1,3 +1,14 @@
+@php
+    function random_color_part()
+    {
+        return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
+    }
+    
+    function random_color()
+    {
+        return random_color_part() . random_color_part() . random_color_part();
+    }
+@endphp
 <div>
     <!-- PRODUCT DETAILS AREA START -->
     <div class="ltn__product-area mb-100">
@@ -39,6 +50,10 @@
                                 <div class="row">
                                     @if (count($query) > 0)
                                         @foreach ($query as $item)
+                                            @php
+                                                $persen = ($item->harga_promo / $item->harga) * 100;
+                                                $persen = ceil($persen);
+                                            @endphp
                                             <!-- ltn__product-item -->
                                             <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
                                                 <div class="ltn__product-item text-center">
@@ -47,7 +62,9 @@
                                                                 src="{{ $item->foto }}" alt="#"></a>
                                                         <div class="product-badge">
                                                             <ul>
-                                                                <li class="badge-1">Hot</li>
+                                                                <li class="badge-1"
+                                                                    style="background: #{{ random_color() }}">
+                                                                    {{ $persen }}%</li>
                                                             </ul>
                                                         </div>
                                                         <div class="product-hover-action product-hover-action-2">
@@ -75,7 +92,8 @@
                                                         </h2>
                                                         <div class="product-price">
                                                             <span>Rp.
-                                                                {{ number_format($item->harga, 2, ',', '.') }}</span>
+                                                                {{ $item->harga_promo ? number_format($item->harga_promo, 2, ',', '.') : number_format($item->harga, 2, ',', '.') }}</span>
+                                                            <del>{{ $item->harga_promo ? number_format($item->harga, 2, ',', '.') : number_format($item->harga_promo, 2, ',', '.') }}</del>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,6 +110,10 @@
                                 <div class="row">
                                     @if (count($query) > 0)
                                         @foreach ($query as $item)
+                                            @php
+                                                $persen = ($item->harga_promo / $item->harga) * 100;
+                                                $persen = ceil($persen);
+                                            @endphp
                                             <!-- ltn__product-item -->
                                             <div class="col-lg-12">
                                                 <div class="ltn__product-item">
@@ -100,7 +122,9 @@
                                                                 src="{{ $item->foto }}" alt="#"></a>
                                                         <div class="product-badge">
                                                             <ul>
-                                                                <li class="badge-1">Hot</li>
+                                                                <li class="badge-1"
+                                                                    style="background: #{{ random_color() }}">
+                                                                    {{ $persen }}%</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -110,7 +134,8 @@
                                                         </h2>
                                                         <div class="product-price">
                                                             <span>Rp.
-                                                                {{ number_format($item->harga, 2, ',', '.') }}</span>
+                                                                {{ $item->harga_promo ? number_format($item->harga_promo, 2, ',', '.') : number_format($item->harga, 2, ',', '.') }}</span>
+                                                            <del>{{ $item->harga_promo ? number_format($item->harga, 2, ',', '.') : number_format($item->harga_promo, 2, ',', '.') }}</del>
                                                         </div>
                                                         <div class="product-hover-action product-hover-action-2">
                                                             <ul>
