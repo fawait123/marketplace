@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -73,6 +74,14 @@ Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
     Route::resource('product', ProductController::class);
     Route::resource('user',UserController::class);
     Route::resource('member', MemberController::class);
+});
+
+
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+    Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
+    Route::get('transaction/changeStatus',[TransactionController::class,'changeStatus'])->name('transaction.change.status');
+    Route::get('ransaction/create',[TransactionController::class,'index'])->name('transaction.create');
+    Route::get('/transaction/{id}/show',[TransactionController::class,'show'])->name('transaction.show');
 });
 
 
