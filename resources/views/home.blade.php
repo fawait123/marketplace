@@ -158,30 +158,30 @@
             labels: ['Total Transaction', 'Profit']
         });
 
-        var DrawSparkline = function() {
-            $("#sparkline1").sparkline([25], {
-                type: "line",
-                width: "100%",
-                height: "297",
-                chartRangeMax: 35,
-                lineColor: "#1991eb",
-                fillColor: "rgba(25,118,210,0.18)",
-                highlightLineColor: "rgba(0,0,0,.1)",
-                highlightSpotColor: "rgba(0,0,0,.2)",
-                maxSpotColor: false,
-                minSpotColor: false,
-                spotColor: false,
-                lineWidth: 1,
-            });
-        };
-        var resizeChart;
+        // var DrawSparkline = function() {
+        //     $("#sparkline1").sparkline([25], {
+        //         type: "line",
+        //         width: "100%",
+        //         height: "297",
+        //         chartRangeMax: 35,
+        //         lineColor: "#1991eb",
+        //         fillColor: "rgba(25,118,210,0.18)",
+        //         highlightLineColor: "rgba(0,0,0,.1)",
+        //         highlightSpotColor: "rgba(0,0,0,.2)",
+        //         maxSpotColor: false,
+        //         minSpotColor: false,
+        //         spotColor: false,
+        //         lineWidth: 1,
+        //     });
+        // };
+        // var resizeChart;
 
-        $(window).resize(function(e) {
-            clearTimeout(resizeChart);
-            resizeChart = setTimeout(function() {
-                DrawSparkline();
-            }, 300);
-        });
+        // $(window).resize(function(e) {
+        //     clearTimeout(resizeChart);
+        //     resizeChart = setTimeout(function() {
+        //         DrawSparkline();
+        //     }, 300);
+        // });
         $(document).ready(function() {
             DrawSparkline()
             $("input[name=from]").on('change', function() {
