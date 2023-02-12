@@ -6,7 +6,7 @@ on:
 
 jobs:
   web-deploy:
-    name: CI/CD -> Test and deploy
+    name: CI/CD -> Test and deployes
     runs-on: ubuntu-latest
     environment:
       name: "Production"

@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\HomeController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -48,9 +49,8 @@ Route::get('/product/{id}', function(Request $request,$id){
     }
     return abort(404);
 })->name('product.detail');
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
+Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth');
 
 Route::get('/contact',function(){
     return view('layouts.landing_pages.contact');
