@@ -350,6 +350,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <!-- Custom Js -->
     <script src="{{ asset('assets') }}/pages/advanced-plugins-demo.js"></script>
+    <!--calendar js-->
+    <script src="{{ asset('assets/fullcalendar/dist/index.global.min.js') }}"></script>
     <script>
         function getBase64(file, input) {
             var reader = new FileReader();

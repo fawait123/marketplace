@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookingController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -83,8 +84,11 @@ Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
 Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
     Route::get('transaction/changeStatus',[TransactionController::class,'changeStatus'])->name('transaction.change.status');
-    Route::get('ransaction/create',[TransactionController::class,'index'])->name('transaction.create');
+    Route::get('transaction/create',[TransactionController::class,'index'])->name('transaction.create');
     Route::get('/transaction/{id}/show',[TransactionController::class,'show'])->name('transaction.show');
+    // booking
+    Route::get('booking',[BookingController::class,'index'])->name('booking.index');
+    Route::get('booking/create',[BookingController::class,'create'])->name('booking.create');
 });
 
 

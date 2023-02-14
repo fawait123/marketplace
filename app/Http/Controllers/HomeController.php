@@ -43,6 +43,12 @@ class HomeController extends Controller
             return 'warning';
         }
 
+        $check2 = Booking::where('date',$request->date)->count();
+
+        if($check2 > 5){
+            return 'warning';
+        }
+
         Booking::create([
             'title'=>$request->description,
             'description'=>$request->description,
