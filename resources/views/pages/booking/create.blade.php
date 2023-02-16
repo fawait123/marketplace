@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ isset($id) ? route('category.update', $id) : route('booking.store') }}" method="post">
+                    <form action="{{ isset($id) ? route('booking.update', $id) : route('booking.store') }}" method="post">
                         @csrf
                         @if (isset($id))
                             @method('put')
@@ -15,7 +15,9 @@
                             <select name="user_id" id="user_id" class="form-control">
                                 <option value="">pilih</option>
                                 @foreach ($member as $item)
-                                    <option value="{{ $item->user_id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->user_id }}"
+                                        {{ isset($id) ? ($booking->user_id == $item->user_id ? 'selected' : '') : '' }}>
+                                        {{ $item->name }}</option>
                                 @endforeach
                             </select>
                         </div>
