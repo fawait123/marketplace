@@ -90,6 +90,11 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::get('booking',[BookingController::class,'index'])->name('booking.index');
     Route::get('booking/create',[BookingController::class,'create'])->name('booking.create');
     Route::post('booking/store',[BookingController::class,'store'])->name('booking.store');
+    Route::get('booking/search',[BookingController::class,'search'])->name('booking.search');
+    Route::get('booking/edit/{id}',[BookingController::class,'edit'])->name('booking.edit');
+    Route::get('booking/destroy/{id}',[BookingController::class,'destroy'])->name('booking.destroy');
+    Route::get('booking/status',[BookingController::class,'status'])->name('booking.status');
+    Route::put('booking/update/{id}',[BookingController::class,'update'])->name('booking.update');
 });
 
 
