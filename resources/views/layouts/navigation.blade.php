@@ -1,7 +1,10 @@
 @php
     use App\Models\Transaction;
+    use App\Models\Booking;
     
     $transaction = Transaction::where('status', 'created')->count();
+    
+    $booking = Booking::where('status', 'created')->count();
 @endphp
 
 <!--- Sidemenu -->
@@ -27,6 +30,10 @@
         <li>
             <a href="{{ route('transaction.index') }}" class="waves-effect"><i class="mdi mdi-barcode-scan"></i><span
                     class="badge badge-pill badge-primary float-right">{{ $transaction }}</span><span>Transaction</span></a>
+        </li>
+        <li>
+            <a href="{{ route('booking.index') }}" class="waves-effect"><i class="mdi mdi-barcode-scan"></i><span
+                    class="badge badge-pill badge-primary float-right">{{ $booking }}</span><span>Booking</span></a>
         </li>
     </ul>
 </div>

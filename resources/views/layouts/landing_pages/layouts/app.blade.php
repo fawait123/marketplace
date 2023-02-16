@@ -403,6 +403,39 @@
         </div>
         <!-- MODAL AREA END -->
 
+        @if (auth()->user())
+            <!-- MODAL AREA START (Quick View Modal) -->
+            <div class="ltn__modal-area ltn__quick-view-modal-area">
+                <div class="modal fade" id="modal_booking" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    <!-- <i class="fas fa-times"></i> -->
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Booking</h6>
+                                <div class="row align-items-center">
+                                    <form action="" id="form_booking">
+                                        <input type="hidden" class="form-control" name="user_id"
+                                            value="{{ auth()->user()->id }}">
+                                        <input type="text" name="date" id="booking_date" placeholder="Date"
+                                            readonly>
+                                        <input type="text" name="description" placeholder="Service Description">
+                                        <button type="button" class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                            id="btn_booking">Booking</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL AREA END -->
+        @endif
+
         <!-- MODAL AREA START (Add To Cart Modal) -->
         <div class="ltn__modal-area ltn__add-to-cart-modal-area">
             <div class="modal fade" id="add_to_cart_modal" tabindex="-1">
@@ -525,6 +558,7 @@
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="{{ asset('assets/fullcalendar/dist/index.global.min.js') }}"></script>
     <script>
         function customUrl(search, val) {
             let currentURL = document.URL

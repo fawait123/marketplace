@@ -221,7 +221,8 @@
                                                             class="text-bold {{ $member->is_active === 0 ? 'text-danger' : 'text-primary' }}">{{ $member->is_active === 0 ? 'Inactive' : 'Active' }}</span>{{ $member->is_active === 0 ? ', please wait for admin confirmation' : '' }}
                                                     </p>
                                                     <div class="ltn__form-box">
-                                                        <form action="" id="form-member" method="POST">
+                                                        <form action="{{ route('registerMember') }}" id="form-member"
+                                                            method="POST">
                                                             @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-12">
@@ -281,7 +282,8 @@
                                                     </div>
                                                 @else
                                                     <div class="ltn__form-box">
-                                                        <form action="" id="form-member" method="POST">
+                                                        <form action="{{ route('registerMember') }}" id="form-member"
+                                                            method="POST">
                                                             @csrf
                                                             <div class="row mb-50">
                                                                 <div class="col-md-12">
@@ -403,25 +405,25 @@
                         error.insertAfter(element);
                     }
                 },
-                submitHandler: function(form) {
-                    let formData = new FormData($(form)[0]);
-                    $.ajax({
-                        url: '{{ route('registerMember') }}',
-                        type: 'post',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(res) {
-                            console.log(res)
-                            if (res === 'success') {
-                                window.location.reload()
-                            }
-                        },
-                        error: function(xhr) {
-                            console.log(xhr)
-                        }
-                    })
-                }
+                // submitHandler: function(form) {
+                //     let formData = new FormData($(form)[0]);
+                //     $.ajax({
+                //         url: '{{ route('registerMember') }}',
+                //         type: 'post',
+                //         data: formData,
+                //         processData: false,
+                //         contentType: false,
+                //         success: function(res) {
+                //             console.log(res)
+                //             if (res === 'success') {
+                //                 window.location.reload()
+                //             }
+                //         },
+                //         error: function(xhr) {
+                //             console.log(xhr)
+                //         }
+                //     })
+                // }
             })
 
 

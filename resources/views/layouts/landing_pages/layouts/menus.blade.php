@@ -4,6 +4,7 @@
     <li><a href="{{ route('contact') }}">Contact</a></li>
     @if (auth()->user())
         <li><a href="{{ route('account') }}">My Account</a></li>
+        <li><a href="{{ route('booking') }}">Booking</a></li>
     @else
         <li><a href="{{ route('login') }}">Login</a></li>
     @endif

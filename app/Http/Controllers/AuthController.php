@@ -87,7 +87,7 @@ class AuthController extends Controller
     public function registerMember(Request $request)
     {
         Member::create(array_merge($request->except('image'),['user_id'=>auth()->user()->id,'is_active'=>0]));
-        return 'success';
+        return redirect()->route('welcome')->with(['message' => 'Password has been changed']);
     }
 
 }

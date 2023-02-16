@@ -183,7 +183,7 @@
         //     }, 300);
         // });
         $(document).ready(function() {
-            DrawSparkline()
+            // DrawSparkline()
             $("input[name=from]").on('change', function() {
                 let to = $("input[name=to]").val();
                 let from = $("input[name=from]").val();
@@ -202,6 +202,7 @@
                                 b: el.total
                             }
                         })
+
                         G.setData(datas)
                         let html = `From date of ${from} to ${to}`
                         $("#sub-title-cart").html(html)
