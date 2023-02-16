@@ -23,7 +23,7 @@
                 initialView: 'dayGridMonth',
                 timeZone: 'UTC',
                 events: {
-                    url: '{{ route('booking.index') }}',
+                    url: '{{ route('booking.get') }}',
                     type: 'GET',
                     data: {
                         custom_param1: 'something',

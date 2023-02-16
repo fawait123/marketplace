@@ -54,7 +54,7 @@ Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('
 Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth');
 Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth');
 Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store')->middleware('auth');
-Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.index')->middleware('auth');
+Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth');
 
 Route::get('/contact',function(){
     return view('layouts.landing_pages.contact');
@@ -89,6 +89,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     // booking
     Route::get('booking',[BookingController::class,'index'])->name('booking.index');
     Route::get('booking/create',[BookingController::class,'create'])->name('booking.create');
+    Route::post('booking/store',[BookingController::class,'store'])->name('booking.store');
 });
 
 

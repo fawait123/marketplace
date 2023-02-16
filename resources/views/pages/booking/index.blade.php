@@ -8,7 +8,7 @@
 
                     <div class="row">
 
-                        <div id='calendar' class="col-lg-12 col-md-8 mt-3 mt-lg-0"></div>
+                        <div id='calendar' class="col-lg-12 col-md-12 mt-3 mt-lg-0"></div>
 
                     </div>
                     <!-- end row -->
@@ -32,51 +32,19 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
                 initialView: 'dayGridMonth',
-                events: [{
-                        title: 'All Day Event',
-                        start: '2023-02-14',
-                        textColor: 'white',
-                        backgroundColor: '#18122B'
+                events: {
+                    url: '{{ route('booking.get') }}',
+                    type: 'GET',
+                    data: {
+                        custom_param1: 'something',
+                        custom_param2: 'somethingelse'
                     },
-                    {
-                        title: 'Long Event',
-                        start: '2023-02-11',
-                        end: '2023-02-14',
-                        textColor: '#ffff',
-                        backgroundColor: '#18122B'
+                    error: function() {
+                        alert('there was an error while fetching events!');
                     },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2023-02-13',
-                        allDay: true,
-                        textColor: '#ffff',
-                        backgroundColor: '#18122B'
-                    },
-                    {
-                        id: 999,
-                        title: 'Repeating Event',
-                        start: '2023-02-10',
-                        allDay: true,
-                        textColor: '#ffff',
-                        backgroundColor: '#18122B'
-                    },
-                    {
-                        title: 'Meeting',
-                        start: '2023-02-09',
-                        allDay: true,
-                        textColor: '#ffff',
-                        backgroundColor: '#18122B'
-                    },
-                    {
-                        title: 'Lunch',
-                        start: '2023-02-10',
-                        end: '2023-02-12',
-                        allDay: true,
-                        textColor: '#ffff',
-                        backgroundColor: '#18122B'
-                    },
-                ],
+                    // color: 'yellow', // a non-ajax option
+                    // textColor: 'black' // a non-ajax option
+                },
                 dateClick: function() {
                     alert('a day has been clicked!');
                 }
