@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\Transaction;
 use App\Helpers\Utils;
 use App\Models\Booking;
+use App\Models\Cart;
 
 class HomeController extends Controller
 {
@@ -76,5 +77,14 @@ class HomeController extends Controller
 
         return $data;
 
+    }
+
+    public function updateTotal(Request $request)
+    {
+        Cart::where('id',$request->id)->update([
+            'total'=>$request->value
+        ]);
+
+        return 'success';
     }
 }

@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/landing_page/css') }}/style.css">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/landing_page/css') }}/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -243,6 +244,11 @@
                                         <h6><a href="#">{{ $item->product->name ?? '' }}</a></h6>
                                         <span class="mini-cart-quantity">{{ $item->total }} x
                                             {{ number_format($item->product->harga ?? '', 2, ',', '.') }}</span>
+                                        <li>
+                                            <input type="number" value="{{ $item->total }}"
+                                                data-id="{{ $item->id }}" name="total"
+                                                class="input-cart-total">
+                                        </li>
                                     </div>
                                 </div>
                             @endforeach
@@ -559,6 +565,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="{{ asset('assets/fullcalendar/dist/index.global.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         function customUrl(search, val) {
             let currentURL = document.URL
@@ -734,6 +741,25 @@
                 let url = customUrl('search', val)
                 // console.log(url);
                 window.location.href = url;
+            })
+
+            $(".input-cart-total").on('input', function() {
+                let value = $(this).val()
+                let id = $(this).data('id')
+                console.log(value)
+
+                $.ajax({
+                    url: '{{ route('cart.updateTotal') }}',
+                    type: 'get',
+                    data: {
+                        id: id,
+                        value: value,
+                    },
+                    success: function(res) {
+                        console.log(res)
+                        toastr.success('Cart updated successfully')
+                    }
+                })
             })
         })
     </script>

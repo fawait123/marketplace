@@ -55,6 +55,7 @@ Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('a
 Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth');
 Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store')->middleware('auth');
 Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth');
+Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth');
 
 Route::get('/contact',function(){
     return view('layouts.landing_pages.contact');
