@@ -464,7 +464,8 @@
                                                         alt="#">
                                                 </div>
                                                 <div class="modal-product-info">
-                                                    <h5><a href="product-details.html" id="modal-title">Heart's
+                                                    <h5><a href="{{ route('product.detail', $item->id) }}"
+                                                            id="modal-title">Heart's
                                                             Desire</a></h5>
                                                     <p><span class="text-secondary" id="modal-price">Rp. 00</span></p>
                                                     <div class="btn-wrapper">

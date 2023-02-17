@@ -39,9 +39,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                        <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                        <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -74,9 +74,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                                                                                                    <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                                                                                                    <span class="call-to-circle-1"></span>
-                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                        <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                        <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -221,7 +221,8 @@
                                     </div>
                                 </div>
                                 <div class="product-info">
-                                    <h2 class="product-title"><a href="product-details.html">{{ $row->name }}</a></h2>
+                                    <h2 class="product-title"><a
+                                            href="{{ route('product.detail', $item->id) }}">{{ $row->name }}</a></h2>
                                     <div class="product-price">
                                         <span>Rp.
                                             {{ $row->harga_promo ? number_format($row->harga_promo, 2, ',', '.') : number_format($row->harga, 2, ',', '.') }}</span>
