@@ -51,7 +51,7 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     @if (count($url) == 2)
-                        <div class="dropdown d-none d-sm-inline-block">
+                        <div class="dropdown d-none d-sm-inline-block menu-create">
                             <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-plus"></i> Create New
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     @elseif(count($url) === 3 || count($url) === 4)
-                        <div class="dropdown d-none d-sm-inline-block">
+                        <div class="dropdown d-none d-sm-inline-block menu-back">
                             <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-reply"></i> Back
@@ -85,7 +85,7 @@
 
                 <div class="d-flex align-items-center">
                     @if (count($url) == 2)
-                        <div class="dropdown d-none d-sm-inline-block ml-2">
+                        <div class="dropdown d-none d-sm-inline-block ml-2 menu-search">
                             <button type="button" class="btn header-item noti-icon waves-effect"
                                 id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -395,6 +395,18 @@
             render.append($('<img />').attr('src', src).css('max-height', input.data('height') || ''));
             preview.fadeIn();
         }
+
+        $(document).ready(function() {
+            // responsive
+            let width = window.innerWidth
+            console.log(width)
+            if (width < 700) {
+                console.log('oke')
+                $(".menu-create").removeClass('d-none')
+                $(".menu-back").removeClass('d-none')
+                $(".menu-search").removeClass('d-none')
+            }
+        })
     </script>
     @stack('customjs')
     @livewireScripts
