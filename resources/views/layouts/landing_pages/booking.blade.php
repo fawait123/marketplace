@@ -47,7 +47,7 @@
             $("#btn_booking").on('click', function() {
                 let formData = $("#form_booking").serialize();
                 $.ajax({
-                    url: '{{ route('booking.store') }}',
+                    url: '{{ route('booking.store.fe') }}',
                     type: 'get',
                     data: formData,
                     beforeSend: function() {
@@ -61,7 +61,10 @@
                         //     $('#modal_booking').modal('hide')
                         // }, 1000);
                         $("input[name=description]").val('')
-                        window.location.reload();
+                        toastr.info('Booking added successfully')
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
                     },
                     complete: function(data) {
                         $("#btn_booking").attr('disabled', false);
