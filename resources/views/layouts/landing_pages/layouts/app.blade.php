@@ -464,7 +464,7 @@
                                                         alt="#">
                                                 </div>
                                                 <div class="modal-product-info">
-                                                    <h5><a href="{{ route('product.detail', $item->id) }}"
+                                                    <h5><a href="{{ route('product.detail', '__row') }}"
                                                             id="modal-title">Heart's
                                                             Desire</a></h5>
                                                     <p><span class="text-secondary" id="modal-price">Rp. 00</span></p>
@@ -606,10 +606,13 @@
                 let price = $(target).data('price')
                 console.log(price)
                 let url = "{{ route('cart.create', '::id') }}";
+                let redirect = "{{ route('product.detail', '__row') }}"
                 url = url.replace('::id', id)
+                redirect = redirect.replace('__row', id)
                 $('#add-to-cart').prop('href', url)
                 $("#modal-image").prop('src', image)
                 $("#modal-title").html(name)
+                $("#modal-title").prop('href', redirect)
                 $("#modal-price").html('Rp. ' + parseInt(price).toLocaleString('ID', 'id'))
             })
 
