@@ -61,7 +61,14 @@
                         //     $('#modal_booking').modal('hide')
                         // }, 1000);
                         $("input[name=description]").val('')
-                        toastr.info('Booking added successfully')
+                        if (res === 'success') {
+                            toastr.info('Booking added successfully')
+                        }
+
+                        if (res === 'warning') {
+                            toastr.info('you have made a reservation on the date ' + $(
+                                "#booking_date").val())
+                        }
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
