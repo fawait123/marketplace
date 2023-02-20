@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\product;
+use App\Models\Product;
 use App\Models\ProductDetail;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Contracts\View\View;
@@ -86,7 +86,7 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(product $product)
+    public function show(Product $product)
     {
         //
     }
@@ -113,7 +113,7 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, product $product)
+    public function update(Request $request, Product $product)
     {
         $validate = $request->validate([
             'name'           => 'required',
@@ -159,7 +159,7 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
         return redirect()->route('product.index')->with(['message' => 'Product has been deleted']);
