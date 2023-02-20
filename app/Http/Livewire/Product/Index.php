@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Product;
 
-use App\Models\product;
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -18,7 +18,7 @@ class Index extends Component
 
     public function render()
     {
-        $query = product::with('category');
+        $query = Product::with('category');
         $query = $query->where('name','like','%'.$this->search.'%');
         $query = $query->paginate($this->limit);
         return view('livewire.product.index',compact('query'));
