@@ -39,9 +39,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                                                                                                            <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                                                                                                            <span class="call-to-circle-1"></span>
-                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                            <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                                                            <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                                                        </div> -->
                             </div>
                         </div>
                     </div>
@@ -74,9 +74,9 @@
                                     </div>
                                 </div>
                                 <!-- <div class="slide-item-img">
-                                                                                                                                                                                                            <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
-                                                                                                                                                                                                            <span class="call-to-circle-1"></span>
-                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                            <img src="{{ asset('assets/landing_page/img') }}/slider/41-1.png" alt="#">
+                                                                                                                                                                                                                                            <span class="call-to-circle-1"></span>
+                                                                                                                                                                                                                                        </div> -->
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                 <div class="row justify-content-center">
                     @foreach ($products as $row)
                         @php
-                            $persen = ($row->harga_promo / $row->harga) * 100;
+                            $persen = ((int) $row->harga_promo / (int) $row->harga) * 100;
                             $persen = ceil($persen);
                         @endphp
                         <!-- ltn__product-item -->
