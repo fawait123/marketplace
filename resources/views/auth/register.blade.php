@@ -36,7 +36,9 @@
                                         <div class="text-center mb-5">
                                             <a href="{{ route('welcome') }}"
                                                 class="text-dark font-size-22 font-family-secondary">
-                                                <i class="mdi mdi-alpha-x-circle"></i> <b>XELORO</b>
+                                                <img src="{{ asset('assets/logo.png') }}" width="70" alt="">
+                                                <b>Mutiara
+                                                    Variasi</b>
                                             </a>
                                         </div>
                                         <h1 class="h5 mb-1">Create an Account!</h1>
