@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\MontirController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
     Route::resource('product', ProductController::class);
     Route::resource('user',UserController::class);
     Route::resource('member', MemberController::class);
+    Route::resource('montir', MontirController::class);
 });
 
 
@@ -96,6 +98,7 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::get('booking/destroy/{id}',[BookingController::class,'destroy'])->name('booking.destroy');
     Route::get('booking/status',[BookingController::class,'status'])->name('booking.status');
     Route::put('booking/update/{id}',[BookingController::class,'update'])->name('booking.update');
+    Route::post('booking/setting',[BookingController::class,'setting'])->name('booking.setting');
 });
 
 

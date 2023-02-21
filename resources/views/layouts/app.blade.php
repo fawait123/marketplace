@@ -7,14 +7,14 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Dashboard | Benkel</title>
+    <title>Mutiara Variasi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="MyraStudio" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images') }}/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('assets/logo.png') }}">
 
     <!-- Dropify css -->
     <link href="{{ asset('assets') }}/plugins/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
@@ -209,9 +209,11 @@
 
                 <div class="navbar-brand-box">
                     <a href="{{ route('home') }}" class="logo">
-                        <i class="mdi mdi-album"></i>
+                        {{-- <i class="mdi mdi-album"></i> --}}
+                        <img src="{{ asset('assets/logo.png') }}" class="img-thumbail img-rounded" width="30"
+                            alt="">
                         <span>
-                            Xeloro 1
+                            Mutiara Variasi
                         </span>
                     </a>
                 </div>

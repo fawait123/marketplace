@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Place favicon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ asset('assets/landing_page/img') }}/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/logo.png') }}" type="image/x-icon" />
     <!-- Font Icons css -->
     <link rel="stylesheet" href="{{ asset('assets/landing_page/css') }}/font-icons.css">
     <!-- plugins css -->
@@ -45,8 +45,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="site-logo">
-                                <a href="index.html"><img src="{{ asset('assets/landing_page/img') }}/logo.png"
-                                        alt="Logo"></a>
+                                <a href="{{ route('welcome') }}"><img src="{{ asset('assets/logo.png') }}"
+                                        width="90" alt="Logo"></a>
                             </div>
                         </div>
                         <div class="col header-contact-serarch-column d-none d-xl-block">
@@ -193,8 +193,8 @@
                         <div class="col header-menu-column justify-content-center">
                             <div class="sticky-logo">
                                 <div class="site-logo">
-                                    <a href="index.html"><img src="{{ asset('assets/landing_page/img') }}/logo.png"
-                                            alt="Logo"></a>
+                                    <a href="index.html"><img src="{{ asset('assets/logo.png') }}" alt="Logo"
+                                            width="70"></a>
                                 </div>
                             </div>
                             <div class="header-menu header-menu-2">
@@ -278,7 +278,7 @@
             <div class="ltn__utilize-menu-inner ltn__scrollbar">
                 <div class="ltn__utilize-menu-head">
                     <div class="site-logo">
-                        <a href="index.html"><img src="{{ asset('assets/landing_page/img') }}/logo.png"
+                        <a href="index.html"><img src="{{ asset('assets/logo.png') }}" width="70"
                                 alt="Logo"></a>
                     </div>
                     <button class="ltn__utilize-close">×</button>
