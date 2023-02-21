@@ -25,6 +25,7 @@
                 <li><a href="{{ route('product.index') }}">Produk</a></li>
                 <li><a href="{{ route('user.index') }}">User</a></li>
                 <li><a href="{{ route('member.index') }}">Member</a></li>
+                <li><a href="{{ route('montir.index') }}">Montir</a></li>
             </ul>
         </li>
         <li>

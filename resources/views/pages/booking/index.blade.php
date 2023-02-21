@@ -7,7 +7,23 @@
                 <div class="card-body">
 
                     <div class="row">
-
+                        <div class="col-12">
+                            <form action="{{ route('booking.setting') }}" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <label>Setting Booking</label>
+                                    <div class="input-group">
+                                        <input type="number" name="setting" class="form-control"
+                                            value="{{ $setting->mount }}" placeholder="Setting Booking"
+                                            aria-label="Recipient's username">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-dark waves-effect waves-light"
+                                                type="submit">Set</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div id='calendar' class="col-lg-12 col-md-12 mt-3 mt-lg-0"></div>
 
                     </div>

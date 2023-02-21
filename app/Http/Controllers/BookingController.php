@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Member;
+use App\Models\SettingBooking;
 
 class BookingController extends Controller
 {
     public function index()
     {
-        return view('pages.booking.index');
+        $setting = SettingBooking::latest()->first();
+        return view('pages.booking.index',compact('setting'));
     }
 
     public function create()
@@ -27,8 +29,9 @@ class BookingController extends Controller
         ]);
 
         $check = Booking::where('date',date('Y-m-d'))->count();
+        $setting = SettingBooking::latest()->first();
 
-        if($check > 5){
+        if($check >= $setting->mount){
             return redirect()->route('booking.index')->with(['message' => 'Booking full']);
         }
 
@@ -95,5 +98,18 @@ class BookingController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function setting(Request $request)
+    {
+        $request->validate([
+            'setting'=>'required|integer'
+        ]);
+
+        SettingBooking::where('id',1)->update([
+            'mount'=>$request->setting
+        ]);
+
+        return redirect()->route('booking.index')->with(['message' => 'Setting update successfully']);
     }
 }

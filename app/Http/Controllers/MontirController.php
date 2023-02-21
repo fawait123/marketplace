@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Montir;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class MontirController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('pages.category.index');
+        return view('pages.montir.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('pages.category.form');
+        return view('pages.montir.form');
     }
 
     /**
@@ -37,19 +37,22 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'gender' => 'required',
+            'focus' => 'required',
+            'phone' => 'required',
         ]);
 
-        Category::create($request->all());
-        return redirect()->route('category.index')->with(['message' => 'Category has been created']);
+        Montir::create($request->all());
+        return redirect()->route('montir.index')->with(['message' => 'Montir has been created']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Montir  $Montir
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Montir $Montir)
     {
         //
     }
@@ -57,40 +60,44 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Montir  $Montir
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Montir $montir)
     {
-        $id = $category->id;
-        return view('pages.category.form', compact('category', 'id'));
+        $id = $montir->id;
+        return view('pages.Montir.form', compact('montir', 'id'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Montir  $Montir
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Montir $Montir)
     {
         $request->validate([
             'name' => 'required',
+            'gender' => 'required',
+            'focus' => 'required',
+            'phone' => 'required',
         ]);
-        $category->update($request->all());
-        return redirect()->route('category.index')->with(['message' => 'Category has been updated']);
+
+        $Montir->update($request->all());
+        return redirect()->route('montir.index')->with(['message' => 'Montir has been updated']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Montir  $Montir
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Montir $Montir)
     {
-        $category->delete();
-        return redirect()->route('category.index')->with(['message' => 'Category has been deleted']);
+        $Montir->delete();
+        return redirect()->route('montir.index')->with(['message' => 'Montir has been deleted']);
     }
 }

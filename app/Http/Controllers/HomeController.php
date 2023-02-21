@@ -7,6 +7,7 @@ use App\Traits\Transaction;
 use App\Helpers\Utils;
 use App\Models\Booking;
 use App\Models\Cart;
+use App\Models\SettingBooking;
 
 class HomeController extends Controller
 {
@@ -39,6 +40,7 @@ class HomeController extends Controller
 
     public function bookingStore(Request $request)
     {
+        $setting = SettingBooking::latest()->first();
         $check = Booking::where('user_id',$request->user_id)->where('date',$request->date)->first();
         if($check){
             return 'warning';
@@ -46,8 +48,8 @@ class HomeController extends Controller
 
         $check2 = Booking::where('date',$request->date)->count();
 
-        if($check2 > 5){
-            return 'warning';
+        if($check2 >= $setting->mount){
+            return 'full';
         }
 
         Booking::create([
@@ -63,14 +65,14 @@ class HomeController extends Controller
 
     public function bookingGet()
     {
-        $get =  Booking::all();
+        $get =  Booking::with('user')->get();
         $data = collect([]);
 
         $no = 1;
         foreach ($get as $item) {
             $data->push([
                 'id'=>$no++,
-                'title'=>$item->title,
+                'title'=>$item->title. ', '.$item->user->name,
                 'start'=>$item->date
             ]);
         }

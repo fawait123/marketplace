@@ -69,6 +69,9 @@
                             toastr.info('you have made a reservation on the date ' + $(
                                 "#booking_date").val())
                         }
+                        if (res === 'full') {
+                            toastr.info('Booking full')
+                        }
                         setTimeout(() => {
                             window.location.reload();
                         }, 1000);
