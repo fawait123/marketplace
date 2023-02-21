@@ -41,26 +41,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validate = $request->validate([
+            'name'           => 'required',
+            'foto'           => 'required|file|mimes:jpeg,jpg,png,gif',
+            'deskripsi'      => 'required',
+            'harga'          => 'required',
+            'harga'          => 'required|integer',
+            'harga_promo'    => 'integer',
+            'category_id'    => 'required',
+            'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
+        ],
+        [
+            'name.required'        => 'Name required',
+            'foto.required'        => 'Image required',
+            'foto.image'        => 'Files in the form of images',
+            'foto.mimes'        => 'Image extensions in jpeg jpg png svg',
+            'deskripsi.required'   => 'Description required',
+            'harga.required'       => 'Price required',
+            'harga.integer'       => 'Price is number',
+            'harga_promo.integer'       => 'Promo price is number',
+            'category_id.required'     => 'Category required',
+        ]
+    );
         try {
-            $validate = $request->validate([
-                'name'           => 'required',
-                'foto'           => 'required|file|mimes:jpeg,jpg,png,gif',
-                'deskripsi'      => 'required',
-                'harga'          => 'required',
-                'category_id'    => 'required',
-                'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
-            ],
-            [
-                'name.required'        => 'Name required',
-                'foto.required'        => 'Image required',
-                'foto.image'        => 'Files in the form of images',
-                'foto.mimes'        => 'Image extensions in jpeg jpg png svg',
-                'deskripsi.required'   => 'Description required',
-                'harga.required'       => 'Price required',
-                'category_id.required'     => 'Category required',
-            ]
-        );
-
             $product = Product::create(array_merge($request->except('image'),['foto'=>$request->image,'qrcode'=>AutoGenerate::code('PRD')]));
             if($request->filled('additionalImage')){
                 $additionalImage = $request->additionalImage;
@@ -113,27 +116,30 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $validate = $request->validate([
+            'name'           => 'required',
+            'foto'           => 'image|mimes:jpeg,jpg,png,gif',
+            'deskripsi'      => 'required',
+            'harga'          => 'required|integer',
+            'harga_promo'    => 'integer',
+            'category_id'    => 'required',
+            'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
+            'image'=>'required',
+        ],
+        [
+            'name.required'        => 'Name required',
+            'foto.required'        => 'Image required',
+            'foto.image'        => 'Files in the form of images',
+            'foto.mimes'        => 'Image extensions in jpeg jpg png svg',
+            'deskripsi.required'   => 'Description required',
+            'harga.required'       => 'Price required',
+            'harga.integer'       => 'Price is number',
+            'harga_promo.integer'       => 'Promo price is number',
+            'category_id.required'     => 'Category required',
+            'image.required'        => 'Image required',
+        ]
+    );
         try {
-            $validate = $request->validate([
-                'name'           => 'required',
-                'foto'           => 'image|mimes:jpeg,jpg,png,gif',
-                'deskripsi'      => 'required',
-                'harga'          => 'required',
-                'category_id'    => 'required',
-                'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
-                'image'=>'required',
-            ],
-            [
-                'name.required'        => 'Name required',
-                'foto.required'        => 'Image required',
-                'foto.image'        => 'Files in the form of images',
-                'foto.mimes'        => 'Image extensions in jpeg jpg png svg',
-                'deskripsi.required'   => 'Description required',
-                'harga.required'       => 'Price required',
-                'category_id.required'     => 'Category required',
-                'image.required'        => 'Image required',
-            ]
-        );
             $product->update(array_merge($request->all(),['foto'=>$request->image]));
             if($request->filled('additionalImage')){
                 $additionalImage = array_filter($request->additionalImage, fn($value) => !is_null($value) && $value !== '');
