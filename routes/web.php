@@ -12,6 +12,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\MontirController;
+use App\Http\Controllers\OrderController;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -44,6 +45,9 @@ Route::get('/', function(){
 Route::get('/product', function(){
     return view('layouts.landing_pages.product');
 })->name('product');
+Route::get('/order-mechanic', function(){
+    return view('layouts.landing_pages.order_mechanic');
+})->name('order.mechanic');
 Route::get('/product/{id}', function(Request $request,$id){
     $product = Product::find($id);
     if($product){
@@ -57,6 +61,8 @@ Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middl
 Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store.fe')->middleware('auth');
 Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth');
 Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth');
+// route order
+Route::post('/order/store',[OrderController::class,'storeFe'])->name('order.storeFe')->middleware('auth');
 
 Route::get('/contact',function(){
     return view('layouts.landing_pages.contact');

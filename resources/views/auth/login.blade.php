@@ -28,13 +28,17 @@
                     <div class="d-flex align-items-center min-vh-100">
                         <div class="w-100 d-block bg-white shadow-lg rounded my-5">
                             <div class="row">
-                                <div class="col-lg-5 d-none d-lg-block bg-login rounded-left"></div>
+                                <div class="col-lg-5 d-none d-lg-block bg-login rounded-left">
+
+                                </div>
                                 <div class="col-lg-7">
                                     <div class="p-5">
                                         <div class="text-center mb-5">
                                             <a href="{{ route('welcome') }}"
                                                 class="text-dark font-size-22 font-family-secondary">
-                                                <i class="mdi mdi-alpha-x-circle"></i> <b>XELORO</b>
+                                                <img src="{{ asset('assets/logo.png') }}" width="70" alt="">
+                                                <b>Mutiara
+                                                    Variasi</b>
                                             </a>
                                         </div>
                                         <h1 class="h5 mb-1">Welcome Back!</h1>

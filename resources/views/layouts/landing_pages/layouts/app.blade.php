@@ -25,6 +25,43 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/landing_page/css') }}/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        .provider {
+            position: fixed;
+            background: rgba(198, 195, 195, 0.6);
+            z-index: 9999;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -45,7 +82,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="site-logo">
-                                <a href="{{ route('welcome') }}"><img src="{{ asset('assets/logo.png') }}"
+                                <a href="{{ route('welcome') }}"><img src="{{ asset('assets/logo2.png') }}"
                                         width="90" alt="Logo"></a>
                             </div>
                         </div>
@@ -193,7 +230,7 @@
                         <div class="col header-menu-column justify-content-center">
                             <div class="sticky-logo">
                                 <div class="site-logo">
-                                    <a href="index.html"><img src="{{ asset('assets/logo.png') }}" alt="Logo"
+                                    <a href="index.html"><img src="{{ asset('assets/logo2.png') }}" alt="Logo"
                                             width="70"></a>
                                 </div>
                             </div>
@@ -278,7 +315,7 @@
             <div class="ltn__utilize-menu-inner ltn__scrollbar">
                 <div class="ltn__utilize-menu-head">
                     <div class="site-logo">
-                        <a href="index.html"><img src="{{ asset('assets/logo.png') }}" width="70"
+                        <a href="index.html"><img src="{{ asset('assets/logo2.png') }}" width="70"
                                 alt="Logo"></a>
                     </div>
                     <button class="ltn__utilize-close">×</button>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71daf4fbf3ec80cac55e737e2ae80c48",
+    "content-hash": "d13d4c2b83c60a8bef36aa66a7891d7e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5585,6 +5585,111 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "whatsapp/chat-api",
+            "version": "2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mgp25/Chat-API.git",
+                "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mgp25/Chat-API/zipball/48ecf4f61636ab075301f39413cc2617d063b4dc",
+                "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-gd": "*",
+                "ext-openssl": "*",
+                "ext-pdo": "*",
+                "ext-sockets": "*",
+                "ext-sqlite3": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chat API Contributing Team",
+                    "homepage": "https://github.com/WHAnonymous/Chat-API/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "The PHP WhatsApp library",
+            "keywords": [
+                "Chat-API",
+                "whatsapi",
+                "whatsapp"
+            ],
+            "support": {
+                "issues": "https://github.com/WHAnonymous/Chat-API/issues",
+                "source": "https://github.com/WHAnonymous/Chat-API",
+                "wiki": "https://github.com/WHAnonymous/Chat-API/wiki"
+            },
+            "abandoned": true,
+            "time": "2015-08-20T23:17:02+00:00"
+        },
+        {
+            "name": "xaamin/whatsapi",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xaamin/whatsapi.git",
+                "reference": "d76182597f998ce73523af4c3ecb978449eabedb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xaamin/whatsapi/zipball/d76182597f998ce73523af4c3ecb978449eabedb",
+                "reference": "d76182597f998ce73523af4c3ecb978449eabedb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "whatsapp/chat-api": "^2.5"
+            },
+            "suggest": {
+                "illuminate/support": "For use on Laravel 5."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xaamin\\Whatsapi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamín Martínez Mateos",
+                    "email": "bmxamin@gmail.com"
+                }
+            ],
+            "description": "Wrapper for Whatsapp messenger",
+            "keywords": [
+                "Messenger",
+                "chat",
+                "laravel",
+                "whatsapi",
+                "whatsapp"
+            ],
+            "support": {
+                "issues": "https://github.com/xaamin/whatsapi/issues",
+                "source": "https://github.com/xaamin/whatsapi/tree/v1.0.5"
+            },
+            "time": "2015-12-20T21:57:51+00:00"
         }
     ],
     "packages-dev": [

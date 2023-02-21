@@ -5,6 +5,7 @@
     @if (auth()->user())
         <li><a href="{{ route('account') }}">My Account</a></li>
         <li><a href="{{ route('booking') }}">Booking</a></li>
+        <li><a href="{{ route('order.mechanic') }}">Order Mechanic</a></li>
     @else
         <li><a href="{{ route('login') }}">Login</a></li>
     @endif
