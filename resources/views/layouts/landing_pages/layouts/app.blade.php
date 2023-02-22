@@ -25,6 +25,11 @@
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/landing_page/css') }}/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    {{-- maps --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <style>
         .provider {
             position: fixed;
@@ -597,8 +602,9 @@
     <!-- preloader area end -->
 
     <!-- All JS Plugins -->
-    <script src="{{ asset('assets/landing_page/js') }}/plugins.js"></script>
-    <!-- Main JS -->
+    <script src="{{ asset('assets/landing_page/js/plugins.js') }}"></script>
+    <!-- Main JS
+        -->
     <script src="{{ asset('assets/landing_page/js') }}/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>

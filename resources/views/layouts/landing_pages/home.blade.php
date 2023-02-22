@@ -27,20 +27,27 @@
                                     <div class="slide-item-info-inner ltn__slide-animation">
                                         <div class="slide-item-info">
                                             <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color:white">Fresh Flower</h1>
+                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                    Bondowoso </h1>
                                                 <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
-                                                    style="color:white !important">
-                                                    Natural & Beautiful Flower Here</h6>
+                                                    style="color: white !important">
+                                                    Toko Variasi Termurah & Terlengkap Di Bondowoso</h6>
                                                 <div class="slide-brief animated">
-                                                    <p style="color:white">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit, sed
-                                                        do eiusmod tempor incididunt ut labore.</p>
+                                                    <p style="color: white;text-align: justify">Mutiara Variasi Bondowoso
+                                                        menjual dan melayani
+                                                        pemasangan variasi dan aksesoris kendaraan.
+                                                        Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
+                                                        harga terjangkau.</p>
                                                 </div>
+                                                {{-- <div class="btn-wrapper animated">
+                                                    <a href="service.html" class="theme-btn-1 btn btn-round">Shop
+                                                        Now</a>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="slide-item-img">                                                                                                                                                                                                           </div> -->
+                                <!-- <div class="slide-item-img">                                                                                                                                                                                                                                                              </div> -->
                             </div>
                         </div>
                     </div>
@@ -57,14 +64,17 @@
                                     <div class="slide-item-info-inner ltn__slide-animation">
                                         <div class="slide-item-info">
                                             <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color: white">Fresh Flower</h1>
+                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                    Bondowoso </h1>
                                                 <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
                                                     style="color: white !important">
-                                                    Natural & Beautiful Flower Here</h6>
+                                                    Toko Variasi Termurah & Terlengkap Di Bondowoso</h6>
                                                 <div class="slide-brief animated">
-                                                    <p style="color: white">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit, sed
-                                                        do eiusmod tempor incididunt ut labore.</p>
+                                                    <p style="color: white;text-align: justify">Mutiara Variasi Bondowoso
+                                                        menjual dan melayani
+                                                        pemasangan variasi dan aksesoris kendaraan.
+                                                        Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
+                                                        harga terjangkau.</p>
                                                 </div>
                                                 {{-- <div class="btn-wrapper animated">
                                                     <a href="service.html" class="theme-btn-1 btn btn-round">Shop
@@ -80,6 +90,7 @@
                     </div>
                 </div>
             </div>
+            <!-- ltn__slide-item  -->
             <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
                 data-bs-bg="{{ asset('assets/banner/banner_3.jpg') }}">
                 <div class="ltn__slide-item-inner">
@@ -90,14 +101,17 @@
                                     <div class="slide-item-info-inner ltn__slide-animation">
                                         <div class="slide-item-info">
                                             <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color:white">Fresh Flower</h1>
+                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                    Bondowoso </h1>
                                                 <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
                                                     style="color: white !important">
-                                                    Natural & Beautiful Flower Here</h6>
+                                                    Toko Variasi Termurah & Terlengkap Di Bondowoso</h6>
                                                 <div class="slide-brief animated">
-                                                    <p style="color: white">Lorem ipsum dolor sit amet, consectetur
-                                                        adipisicing elit, sed
-                                                        do eiusmod tempor incididunt ut labore.</p>
+                                                    <p style="color: white;text-align: justify">Mutiara Variasi Bondowoso
+                                                        menjual dan melayani
+                                                        pemasangan variasi dan aksesoris kendaraan.
+                                                        Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
+                                                        harga terjangkau.</p>
                                                 </div>
                                                 {{-- <div class="btn-wrapper animated">
                                                     <a href="service.html" class="theme-btn-1 btn btn-round">Shop
@@ -107,13 +121,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="slide-item-img">                                                                                                                                                                                                         </div> -->
+                                <!-- <div class="slide-item-img">                                                                                                                                                                                                                                                              </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--  -->
         </div>
     </div>
     <!-- SLIDER AREA END -->
