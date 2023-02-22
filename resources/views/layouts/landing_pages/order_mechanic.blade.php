@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.landing_pages.layouts.breadcrumb')
-    @if (env('APP_DEBUG') == true)
+    @if (!env('APP_DEBUG'))
         <!-- LOGIN AREA START -->
         <div class="provider">
             <div class="loader">
@@ -26,11 +26,23 @@
                                 <label>Name</label>
                                 <input type="text" name="name" value="{{ auth()->user()->member->name ?? '' }}"
                                     placeholder="Found in your order confirmation email.">
+                                <label>Email</label>
+                                <input type="text" name="email" value="{{ auth()->user()->member->email ?? '' }}"
+                                    placeholder="Email you used during checkout.">
                                 <label>Phone</label>
                                 <input type="text" name="phone" value="{{ auth()->user()->member->telp ?? '' }}"
                                     placeholder="Email you used during checkout.">
-                                <input type="text" name="latitude" placeholder="Email you used during checkout.">
-                                <input type="text" name="longitude" placeholder="Email you used during checkout.">
+                                <label>Select Montir</label><br>
+                                <select name="montir_id" id="montir_id">
+                                    <option value="">select</option>
+                                    @foreach ($mechanic as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="latitude" placeholder="Email you used during checkout.">
+                                <input type="hidden" name="longitude" placeholder="Email you used during checkout.">
+                                <br>
+                                <br>
                                 <div class="btn-wrapper mt-0 text-center">
                                     <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">
                                         Order</button>
@@ -43,7 +55,7 @@
         </div>
         <!-- LOGIN AREA END -->
     @else
-        <h1 class="text-center">Comming Soon</h1>
+        <h1 class="text-center">Comming Soon {{ env('APP_DEBUG') ? 'TRUE' : 'FALSE' }}</h1>
     @endif
 @endsection
 
