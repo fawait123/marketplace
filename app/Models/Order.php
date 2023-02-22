@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+
+    public function montir()
+    {
+        return $this->belongsTo(Montir::class,'montir_id');
+    }
 }

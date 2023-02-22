@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Helpers\AutoGenerate;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -85,6 +88,18 @@ class OrderController extends Controller
 
     public function storeFe(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'phone'=>'required',
+            'montir_id'=>'required',
+            'latitude'=>"required",
+            'longitude'=>"required",
+        ]);
+
+        $order = Order::create(array_merge($request->except('_token'),['order_id'=>AutoGenerate::code('ORD'),'status'=>'created','user_id'=>auth()->user()->id,'date'=>date('Y-m-d')]));
+        $findOrder = Order::with('montir')->find($order->id);
+        Mail::to($request->email)->send(new OrderMail($findOrder));
+        return redirect()->route('welcome')->with(['message'=>'Order created']);
     }
 }

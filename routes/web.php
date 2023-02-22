@@ -15,6 +15,8 @@ use App\Http\Controllers\MontirController;
 use App\Http\Controllers\OrderController;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Montir;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 
@@ -25,6 +27,39 @@ Route::get('/login',function(){
 Route::get('/register',function(){
     return view('auth.register');
 })->name('register');
+
+Route::get('/', function(){
+    $categories = Category::all();
+    return view('layouts.landing_pages.home',compact('categories'));
+})->name('welcome');
+
+
+Route::get('/product', function(){
+    return view('layouts.landing_pages.product');
+})->name('product');
+
+
+Route::get('/order-mechanic', function(){
+    $mechanic = Montir::latest()->get();
+    return view('layouts.landing_pages.order_mechanic',compact('mechanic'));
+})->name('order.mechanic');
+
+Route::get('/product/{id}', function(Request $request,$id){
+    $product = Product::find($id);
+    if($product){
+        return view('layouts.landing_pages.product_detail',compact('product'));
+    }
+    return abort(404);
+})->name('product.detail');
+
+Route::get('/contact',function(){
+    return view('layouts.landing_pages.contact');
+})->name('contact');
+
+Route::get('/account',function(){
+    return view('layouts.landing_pages.account');
+})->name('account')->middleware('auth');
+
 
 Route::post('/login',[AuthController::class,'login'])->name('login.action');
 Route::post('/register',[AuthController::class,'register'])->name('register.action');
@@ -38,23 +73,7 @@ Route::get('/checkout',[CheckoutController::class,'index'])->name('checkout.inde
 Route::post('/order',[CheckoutController::class,'order'])->name('checkout.order');
 
 
-Route::get('/', function(){
-    $categories = Category::all();
-    return view('layouts.landing_pages.home',compact('categories'));
-})->name('welcome');
-Route::get('/product', function(){
-    return view('layouts.landing_pages.product');
-})->name('product');
-Route::get('/order-mechanic', function(){
-    return view('layouts.landing_pages.order_mechanic');
-})->name('order.mechanic');
-Route::get('/product/{id}', function(Request $request,$id){
-    $product = Product::find($id);
-    if($product){
-        return view('layouts.landing_pages.product_detail',compact('product'));
-    }
-    return abort(404);
-})->name('product.detail');
+
 Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
 Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth');
 Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth');
@@ -63,14 +82,6 @@ Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking
 Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth');
 // route order
 Route::post('/order/store',[OrderController::class,'storeFe'])->name('order.storeFe')->middleware('auth');
-
-Route::get('/contact',function(){
-    return view('layouts.landing_pages.contact');
-})->name('contact');
-
-Route::get('/account',function(){
-    return view('layouts.landing_pages.account');
-})->name('account')->middleware('auth');
 
 
 // cart
