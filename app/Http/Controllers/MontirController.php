@@ -40,6 +40,7 @@ class MontirController extends Controller
             'gender' => 'required',
             'focus' => 'required',
             'phone' => 'required',
+            'email' => 'required',
         ]);
 
         Montir::create($request->all());
@@ -83,6 +84,7 @@ class MontirController extends Controller
             'gender' => 'required',
             'focus' => 'required',
             'phone' => 'required',
+            'email' => 'required',
         ]);
 
         $Montir->update($request->all());

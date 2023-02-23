@@ -17,6 +17,10 @@
                                 <tr>
                                     <th width="10%">NO</th>
                                     <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Spesialis</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -26,6 +30,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->name }}</td>
+                                            <td>{{ $item->gender }}</td>
+                                            <td>{{ $item->focus }}</td>
+                                            <td>{{ $item->phone }}</td>
+                                            <td>{{ $item->email }}</td>
                                             <td>
                                                 <a href="{{ route('montir.edit', $item->id) }}" class="text-primary"><i
                                                         class="mdi mdi-lead-pencil"></i></a>
