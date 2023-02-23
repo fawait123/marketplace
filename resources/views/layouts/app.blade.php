@@ -34,6 +34,8 @@
         type="text/css" />
     <link href="{{ asset('assets') }}/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet"
         type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/leaflet/leaflet.css') }}">
+    <script src="{{ asset('assets/leaflet/leaflet.js') }}"></script>
 
     @livewireStyles
 </head>
@@ -51,35 +53,39 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
                     @if (count($url) == 2)
-                        <div class="dropdown d-none d-sm-inline-block menu-create">
-                            <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-plus"></i> Create New
-                                <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu">
+                        @if (end($url) !== 'transaction' && end($url) !== 'order')
+                            <div class="dropdown d-none d-sm-inline-block menu-create">
+                                <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-plus"></i> Create New
+                                    <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
+                                </button>
+                                <div class="dropdown-menu">
 
-                                <!-- item-->
-                                <a href="{{ route(end($url) . '.create') }}" class="dropdown-item notify-item">
-                                    {{ ucfirst(end($url)) }}
-                                </a>
+                                    <!-- item-->
+                                    <a href="{{ route(end($url) . '.create') }}" class="dropdown-item notify-item">
+                                        {{ ucfirst(end($url)) }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    @elseif(count($url) === 3 || count($url) === 4)
-                        <div class="dropdown d-none d-sm-inline-block menu-back">
-                            <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="mdi mdi-reply"></i> Back
-                                <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                            </button>
-                            <div class="dropdown-menu">
+                        @endif
+                    @elseif(count($url) === 3 && count($url) === 4)
+                        @if ($url[1] != 'transaction' || $url[1] != 'order')
+                            <div class="dropdown d-none d-sm-inline-block menu-back">
+                                <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-reply"></i> Back
+                                    <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
+                                </button>
+                                <div class="dropdown-menu">
 
-                                <!-- item-->
-                                <a href="{{ route($url[1] . '.index') }}" class="dropdown-item notify-item">
-                                    {{ ucfirst($url[1]) }}
-                                </a>
+                                    <!-- item-->
+                                    <a href="{{ route($url[1] . '.index') }}" class="dropdown-item notify-item">
+                                        {{ ucfirst($url[1]) }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @endif
                 </div>
 

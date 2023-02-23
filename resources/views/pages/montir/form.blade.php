@@ -34,7 +34,16 @@
                                 </div>
                             @enderror
                         </div>
-
+                        <div class="form-group">
+                            <label for="montir">Email</label>
+                            <input type="email" name="email" value="{{ isset($id) ? $montir->email : '' }}"
+                                class="form-control @error('email') is-invalid @enderror">
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="montir">Phone</label>
                             <input type="text" name="phone" value="{{ isset($id) ? $montir->phone : '' }}"

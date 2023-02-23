@@ -117,6 +117,15 @@ Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
     Route::get('booking/status',[BookingController::class,'status'])->name('booking.status');
     Route::put('booking/update/{id}',[BookingController::class,'update'])->name('booking.update');
     Route::post('booking/setting',[BookingController::class,'setting'])->name('booking.setting');
+
+    // order mechanic
+
+    Route::get('order',[OrderController::class,'index'])->name('order.index');
+    Route::get('order/changeStatus',[OrderController::class,'changeStatus'])->name('order.change.status');
+    Route::get('order/create',[OrderController::class,'index'])->name('order.create');
+    Route::get('order/{id}/show',[OrderController::class,'show'])->name('order.show');
+    Route::get('share/{id}',[OrderController::class,'share'])->name('order.share');
+    Route::get('complete/{id}',[OrderController::class,'complete'])->name('order.complete');
 });
 
 

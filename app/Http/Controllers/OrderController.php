@@ -6,6 +6,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Helpers\AutoGenerate;
 use App\Mail\OrderMail;
+use App\Mail\LocationMail;
+use App\Mail\ReplyMail;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -17,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.order.index');
     }
 
     /**
@@ -101,5 +103,26 @@ class OrderController extends Controller
         $findOrder = Order::with('montir')->find($order->id);
         Mail::to($request->email)->send(new OrderMail($findOrder));
         return redirect()->route('welcome')->with(['message'=>'Order created']);
+    }
+
+
+    public function share(Request $request, $id)
+    {
+        $order = Order::with('montir')->find($id);
+        $order->update([
+            'status'=>'process'
+        ]);
+        Mail::to($order->email)->send(new ReplyMail($order));
+        Mail::to($order->montir->email)->send(new LocationMail($order));
+        return redirect()->route('order.index')->with(['message'=>'Location shared']);
+    }
+
+    public function complete(Request $request,$id)
+    {
+        $order = Order::with('montir')->find($id);
+        $order->update([
+            'status'=>'complete'
+        ]);
+        return redirect()->route('order.index')->with(['message'=>'Transaction completed successfully']);
     }
 }
