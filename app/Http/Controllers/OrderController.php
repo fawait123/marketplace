@@ -103,7 +103,7 @@ class OrderController extends Controller
         $order = Order::create(array_merge($request->except('_token'),['order_id'=>AutoGenerate::code('ORD'),'status'=>'created','user_id'=>auth()->user()->id,'date'=>date('Y-m-d')]));
         $findOrder = Order::with('montir')->find($order->id);
         event(new RealtimeNotification($request->name.' melakukan order mechanic'));
-        // Mail::to($request->email)->send(new OrderMail($findOrder));
+        Mail::to($request->email)->send(new OrderMail($findOrder));
         return redirect()->route('welcome')->with(['message'=>'Order created']);
     }
 
