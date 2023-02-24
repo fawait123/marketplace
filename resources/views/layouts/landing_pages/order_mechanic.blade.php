@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.landing_pages.layouts.breadcrumb')
-    @if (!env('APP_DEBUG'))
+    @if (env('APP_DEBUG'))
         <!-- LOGIN AREA START -->
         <div class="provider">
             <div class="loader">

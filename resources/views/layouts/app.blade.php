@@ -416,6 +416,26 @@
             }
         })
     </script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var source = "{{ asset('assets/ringtone/iphone_ding.mp3') }}";
+            var audio = new Audio(); // use the constructor in JavaScript, just easier that way
+            audio.src = source;
+
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('e8acd88ab62f8fdcb423', {
+                cluster: 'ap1'
+            });
+
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('my-event', function(data) {
+                audio.play();
+                toastr.info(data.message);
+            });
+        })
+    </script>
     @stack('customjs')
     @livewireScripts
     @if ($message = Session::get('message'))
