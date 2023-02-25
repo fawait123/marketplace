@@ -101,7 +101,7 @@
                                     </div>
                                     <div class="header-feature-info">
                                         <h6>Phone</h6>
-                                        <p><a href="tel:0123456789">+0123-456-789</a></p>
+                                        <p><a href="tel:0123456789">+62 82-336-160-182</a></p>
                                     </div>
                                 </div>
                                 <!-- header-search-2 -->
