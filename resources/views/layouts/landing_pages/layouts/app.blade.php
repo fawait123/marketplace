@@ -2,6 +2,7 @@
     
     use App\Models\Cart;
     use App\Models\Product;
+    use App\Helpers\Utils;
 @endphp
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -184,7 +185,7 @@
                                                     ->get();
                                                 $totals = 0;
                                                 foreach ($count as $item) {
-                                                    $totals += $item->total * $item->product->harga;
+                                                    $totals += $item->total * Utils::price($item->product->harga, $item->product->harga_promo);
                                                 }
                                             @endphp
                                             <!-- mini-cart 2 -->
@@ -273,7 +274,7 @@
                         @if (count($data) > 0)
                             @foreach ($data as $item)
                                 @php
-                                    $total += ($item->product->harga ?? 0) * $item->total;
+                                    $total += (Utils::price($item->product->harga, $item->product->harga_promo) ?? 0) * $item->total;
                                 @endphp
                                 <div class="mini-cart-item clearfix">
                                     <div class="mini-cart-img">
@@ -285,7 +286,7 @@
                                     <div class="mini-cart-info">
                                         <h6><a href="#">{{ $item->product->name ?? '' }}</a></h6>
                                         <span class="mini-cart-quantity">{{ $item->total }} x
-                                            {{ number_format($item->product->harga ?? '', 2, ',', '.') }}</span>
+                                            {{ number_format(Utils::price($item->product->harga, $item->product->harga_promo) ?? '', 2, ',', '.') }}</span>
                                         <li>
                                             <input type="number" value="{{ $item->total }}"
                                                 data-id="{{ $item->id }}" name="total"

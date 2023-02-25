@@ -7,7 +7,7 @@
         {
             return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
         }
-
+        
         function random_color()
         {
             return random_color_part() . random_color_part() . random_color_part();
@@ -18,7 +18,7 @@
         <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white---">
             <!-- ltn__slide-item  -->
             <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
-                data-bs-bg="{{ asset('assets/banner/banner_1.jpg') }}">
+                data-bs-bg="{{ asset('assets/banner/banner_new_1.jpg') }}">
                 <div class="ltn__slide-item-inner">
                     <div class="container">
                         <div class="row">
@@ -189,21 +189,21 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="ltn__banner-item">
                         <div class="ltn__banner-img">
-                            <a href="#"><img src="{{ asset('assets/banner/top_1.jpg') }}" alt="Banner Image"></a>
+                            <a href="#"><img src="{{ asset('assets/banner/top_1.png') }}" alt="Banner Image"></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="ltn__banner-item">
                         <div class="ltn__banner-img">
-                            <a href="#"><img src="{{ asset('assets/banner/top_2.jpg') }}" alt="Banner Image"></a>
+                            <a href="#"><img src="{{ asset('assets/banner/top_2.png') }}" alt="Banner Image"></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="ltn__banner-item">
                         <div class="ltn__banner-img">
-                            <a href="#"><img src="{{ asset('assets/banner/top_3.jpg') }}" alt="Banner Image"></a>
+                            <a href="#"><img src="{{ asset('assets/banner/top_3.png') }}" alt="Banner Image"></a>
                         </div>
                     </div>
                 </div>
