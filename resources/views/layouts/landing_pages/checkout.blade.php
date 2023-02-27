@@ -99,7 +99,7 @@
                                     @endphp
                                     @foreach ($cart as $item)
                                         @php
-                                            $total += Utils::price($item->product->harga, $item->product->harga_promo);
+                                            $total += Utils::price($item->product->harga, $item->product->harga_promo) * $item->total;
                                         @endphp
                                         <tr>
                                             <td>{{ $item->product->name }} <strong>× {{ $item->total }}</strong></td>
