@@ -43,7 +43,7 @@
                                             <td>{{ $item->deskripsi }}</td>
                                             <td>{{ $item->harga }}</td>
                                             <td>{{ $item->harga_promo }}</td>
-                                            <td>{{ $item->category->name }}</td>
+                                            <td>{{ $item->category->name ?? '' }}</td>
                                             <td>{{ $item->stok }}</td>
                                             <td>
                                                 <a href="{{ route('product.edit', $item->id) }}?id={{ $item->id }}"
