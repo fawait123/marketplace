@@ -9,6 +9,8 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Helpers\AutoGenerate;
+use DataTables;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends Controller
 {
@@ -167,5 +169,69 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('product.index')->with(['message' => 'Product has been deleted']);
+    }
+
+    public function json(Request $request)
+    {
+        $columns = array(
+            0 =>'name',
+            1 =>'foto',
+            2=> 'qrcode',
+            3=> 'deskripsi',
+            5=> 'harga',
+            6=> 'harga_promo',
+            7=> 'kategori',
+        );
+
+        $totalFiltered = Product::query();
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $products = Product::query();
+        $products = $products->with('category');
+        if(!empty($request->input('search.value'))){
+            $search = $request->input('search.value');
+            $products = $products->where('name', 'like','%'.$search.'%');
+            $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
+
+        }
+        $products = $products->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
+
+        $data = array();
+        if(!empty($products)){
+            foreach ($products as $key=>$product){
+            $edit =  route('product.edit',$product->id);
+            $destroy =  route('product.destroy',$product->id);
+
+            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['name'] = $product->name;
+            $nestedData['foto'] = "<img style='width: 200px' src='{$product->foto}'
+            class='img-thumbnail' alt=''>";
+            $nestedData['deskripsi'] = substr(strip_tags($product->deskripsi),0,50)."...";
+            $nestedData['harga'] = number_format($product->harga,2,',','.');
+            $nestedData['harga_promo'] = number_format($product->harga_promo,2,',','.');
+            $nestedData['ketegori'] = $product->category->name ?? '';
+            $nestedData['options'] = "&emsp;<a href='{$edit}'
+            class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
+                                    &emsp;<a href='#' data-toggle='modal'
+                                    data-target='#exampleModal'
+                                    class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
+            $data[] = $nestedData;
+
+            }
+        }
+
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval(Product::count()),
+            "recordsFiltered" => intval($totalFiltered->count()),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
     }
 }

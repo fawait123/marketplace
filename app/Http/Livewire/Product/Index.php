@@ -20,7 +20,7 @@ class Index extends Component
     {
         $query = Product::with('category');
         $query = $query->where('name','like','%'.$this->search.'%');
-        $query = $query->paginate($this->limit);
+        $query = $query->latest()->paginate($this->limit);
         return view('livewire.product.index',compact('query'));
     }
 
