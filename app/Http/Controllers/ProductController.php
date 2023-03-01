@@ -9,7 +9,6 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Helpers\AutoGenerate;
-use DataTables;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends Controller
