@@ -15,7 +15,7 @@ class Member extends Component
     {
         $query = ModelMember::query();
         $query = $query->where('name','like','%'.$this->search.'%');
-        $query = $query->paginate($this->limit);
+        $query = $query->latest()->paginate($this->limit);
         return view('livewire.member',compact('query'));
     }
 }
