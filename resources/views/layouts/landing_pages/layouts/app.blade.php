@@ -472,11 +472,41 @@
                                             value="{{ auth()->user()->id }}">
                                         <input type="text" name="date" id="booking_date" placeholder="Date"
                                             readonly>
+                                        <input type="text" name="merk" placeholder="Merk">
                                         <input type="text" name="description" placeholder="Service Description">
                                         <button type="button" class="btn theme-btn-1 btn-effect-1 text-uppercase"
                                             id="btn_booking">Booking</button>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL AREA END -->
+
+            <!-- MODAL AREA START (Quick View Modal) -->
+            <div class="ltn__modal-area ltn__quick-view-modal-area">
+                <div class="modal fade" id="modal_booking_info" tabindex="-1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    <!-- <i class="fas fa-times"></i> -->
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Booking Info <span id="modal_date"></span> </h6>
+                                <ol class="list-group list-group-numbered" id="body_modal_detail">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Subheading</div>
+                                            Content for list item
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">14</span>
+                                    </li>
+                                </ol>
                             </div>
                         </div>
                     </div>

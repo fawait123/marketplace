@@ -2,6 +2,11 @@
 
 @section('content')
     @include('layouts.landing_pages.layouts.breadcrumb')
+    <div class="provider d-none">
+        <div class="loader">
+            Loading...
+        </div>
+    </div>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-12 mb-3">
@@ -34,12 +39,49 @@
                     },
                     // color: 'yellow', // a non-ajax option
                     // textColor: 'black' // a non-ajax option
+                },
+                eventDoubleClick: function(calEvent, jsEvent, view) {
+                    alert('Event: ' + calEvent.title);
                 }
             });
             calendar.on('dateClick', function(info) {
+                $('.provider').removeClass('d-none')
                 let date = info.dateStr
-                $("#booking_date").val(date)
-                $('#modal_booking').modal('show')
+                $.ajax({
+                    url: '{{ route('booking.check') }}',
+                    type: "get",
+                    data: {
+                        date: date
+                    },
+                    success: function(res) {
+                        $('.provider').addClass('d-none')
+                        if (res.data1) {
+                            let data1 = res.data1
+                            let html = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">${data1.title}</div>
+                                            <u>${data1.user.name}</u>, ${data1.merk}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${data1.status}</span>
+                                    </li>`;
+                            res.data2.map((el) => {
+                                html += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">${el.title}</div>
+                                            ${el.user.name}, ${el.merk}
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${el.status}</span>
+                                    </li>`;
+                            })
+                            $("#modal_date").html(date)
+                            $("#body_modal_detail").html(html)
+                            $('#modal_booking_info').modal('show')
+                        } else {
+                            $("#booking_date").val(date)
+                            $('#modal_booking').modal('show')
+                        }
+                    }
+                })
             });
             calendar.render();
 

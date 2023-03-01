@@ -75,12 +75,13 @@ Route::post('/order',[CheckoutController::class,'order'])->name('checkout.order'
 
 
 
-Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth');
+
 Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth');
 Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth');
 Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store.fe')->middleware('auth');
 Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth');
 Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth');
+Route::get('/booking/check',[HomeController::class,'check'])->name('booking.check')->middleware('auth');
 // route order
 Route::post('/order/store',[OrderController::class,'storeFe'])->name('order.storeFe')->middleware('auth');
 
@@ -91,7 +92,10 @@ Route::group(['prefix'=>'cart','middleware'=>'auth'],function(){
     Route::get('/remove/{id}',[CartController::class,'remove'])->name('cart.remove');
 });
 
-Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
+
+// ================================================== ADMIN =================================================================
+Route::get('/home', [HomeController::class,'index'])->name('home')->middleware('auth')->middleware('role:admin');
+Route::group(['prefix' => 'master','middleware'=>['auth','role:admin']], function () {
     Route::get('/product/ubah/{id}',[ProductController::class,'update'])->name('product.ubah');
     Route::get('/member/status',[MemberController::class,'status'])->name('member.status');
     Route::resource('category', CategoryController::class);
@@ -102,7 +106,7 @@ Route::group(['prefix' => 'master','middleware'=>'auth'], function () {
 });
 
 
-Route::group(['prefix'=>'admin','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'admin','middleware'=>['auth','role:admin']],function(){
     Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
     Route::get('transaction/changeStatus',[TransactionController::class,'changeStatus'])->name('transaction.change.status');
     Route::get('transaction/create',[TransactionController::class,'index'])->name('transaction.create');
