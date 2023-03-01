@@ -137,4 +137,74 @@ class MemberController extends Controller
 
         return 'success';
     }
+
+
+    public function json(Request $request)
+    {
+        $columns = array(
+            0 =>'nik',
+            0 =>'name',
+            1 =>'address',
+            2=> 'telp',
+            3=> 'gender',
+            5=> 'foto',
+            6=> 'email',
+            7=> 'is_active',
+        );
+
+        $totalFiltered = Member::query();
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $members = Member::query();
+        $members = $members->with('user');
+        if(!empty($request->input('search.value'))){
+            $search = $request->input('search.value');
+            $members = $members->where('name', 'like','%'.$search.'%');
+            $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
+
+        }
+        $members = $members->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
+
+        $data = array();
+        if(!empty($members)){
+            foreach ($members as $key=>$member){
+            $edit =  route('member.edit',$member->id);
+            $destroy =  route('member.destroy',$member->id);
+            $status = $member->is_active == 1 ? 'checked' : '';
+
+            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['name'] = $member->name;
+            $nestedData['foto'] = "<img style='width: 200px' src='{$member->foto}'
+            class='img-thumbnail' alt=''>";
+            $nestedData['telp'] = $member->telp;
+            $nestedData['gender'] = $member->gender;
+            $nestedData['email'] = $member->email;
+            $nestedData['nik'] = $member->nik;
+            $nestedData['status'] = "<input type='checkbox' data-id='{$member->id}'
+            data-status='{$member->is_active}'
+            {$status} data-toggle='switchery'
+            data-color='#df3554' data-size='small' />";
+            $nestedData['options'] = "&emsp;<a href='{$edit}'
+            class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
+                                    &emsp;<a href='#' data-toggle='modal'
+                                    data-target='#exampleModal'
+                                    class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
+            $data[] = $nestedData;
+            }
+        }
+
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval(Member::count()),
+            "recordsFiltered" => intval($totalFiltered->count()),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
+    }
 }
