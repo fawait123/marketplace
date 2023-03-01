@@ -39,7 +39,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Booking Event</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Booking Info <span id="modal_date"></span> </h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -104,8 +104,8 @@
                                     routeDestroy = routeDestroy.replace('__row', el.id)
                                     html += `<li class="list-group-item d-flex justify-content-between align-items-start">
                                                 <div class="ms-2 me-auto">
-                                                    <div class="fw-bold">${el.title} ${el.date}</div>
-                                                    ${el.status} <br>
+                                                    <div class="fw-bold">${el.title}</div>
+                                                    ${el.user.name}, ${el.merk} <br><br>
                                                     <select name="status" id="status" class="status">
                                                         <option value="created"  data-id="${el.id}" ${el.status==='created' ? 'selected':''}>Created</option>
                                                         <option value="process"  data-id="${el.id}"  ${el.status==='process' ? 'selected':''}>Process</option>
@@ -129,6 +129,7 @@
                             } else {
                                 html += '<h6>No data to display</h6>'
                             }
+                            $("#modal_date").html(info.dateStr)
                             $("#booking-content").html(html)
 
                             $("#exampleModal").modal('show')

@@ -58,6 +58,7 @@ class HomeController extends Controller
             'user_id'=>$request->user_id,
             'date'=>$request->date,
             'status'=>'created',
+            'merk'=>$request->merk
         ]);
 
         return 'success';
@@ -88,5 +89,20 @@ class HomeController extends Controller
         ]);
 
         return 'success';
+    }
+
+    public function check(Request $request)
+    {
+        $check = Booking::with('user')->where('date',date('Y-m-d',strtotime($request->date)))->where('user_id',auth()->user()->id)->first();
+        $check2;
+        if($check){
+           $check2 =  Booking::with('user')->whereNotIn('user_id',[$check->user_id])->where('date',date('Y-m-d',strtotime($request->date)))->get();
+        }else{
+            $check2 = Booking::with('user')->where('date',date('Y-m-d',strtotime($request->date)))->get();
+        }
+        return [
+            'data1'=>$check,
+            'data2'=>$check2,
+        ];
     }
 }

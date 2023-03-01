@@ -49,7 +49,7 @@ class BookingController extends Controller
 
     public function search(Request $request)
     {
-        return Booking::where('date',$request->date)->get();
+        return Booking::with('user')->where('date',$request->date)->get();
     }
 
     public function status(Request $request)
