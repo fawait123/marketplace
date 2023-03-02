@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Helpers\AutoGenerate;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Helpers\Utils;
 
 class ProductController extends Controller
 {
@@ -64,15 +65,18 @@ class ProductController extends Controller
             'category_id.required'     => 'Category required',
         ]
     );
+
         try {
-            $product = Product::create(array_merge($request->except('image'),['foto'=>$request->image,'qrcode'=>AutoGenerate::code('PRD')]));
-            if($request->filled('additionalImage')){
-                $additionalImage = $request->additionalImage;
-                $additionalImage = array_filter($additionalImage, fn($value) => !is_null($value) && $value !== '');
+            $file = $request->file('foto');
+            $foto = Utils::upload($file);
+            $product = Product::create(array_merge($request->except('image'),['foto'=>$foto,'qrcode'=>AutoGenerate::code('PRD')]));
+            if($request->hasFile('additionalImageFile')){
+                $additionalImage = $request->file('additionalImageFile');
                 for ($i=0; $i < count($additionalImage); $i++) {
+                    $additionalFoto = Utils::upload($additionalImage[$i]);
                     ProductDetail::create([
                         'product_id' => $product->id,
-                        'image'=>$additionalImage[$i]
+                        'image'=>$additionalFoto
                     ]);
                 }
             }
@@ -99,9 +103,19 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
+
+
+     public function ubah(Request $request)
+     {
+        if($request->filled('id')){
+            return view('pages.product.edit');
+        }
+
+        return abort(404);
+     }
     public function edit(Product $product)
     {
-        if($product && request('id')){
+        if($product){
             return view('pages.product.edit');
         }
 
@@ -125,7 +139,6 @@ class ProductController extends Controller
             'harga_promo'    => 'integer',
             'category_id'    => 'required',
             'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
-            'image'=>'required',
         ],
         [
             'name.required'        => 'Name required',
@@ -137,22 +150,27 @@ class ProductController extends Controller
             'harga.integer'       => 'Price is number',
             'harga_promo.integer'       => 'Promo price is number',
             'category_id.required'     => 'Category required',
-            'image.required'        => 'Image required',
         ]
     );
         try {
-            $product->update(array_merge($request->all(),['foto'=>$request->image]));
-            if($request->filled('additionalImage')){
-                $additionalImage = array_filter($request->additionalImage, fn($value) => !is_null($value) && $value !== '');
-                ProductDetail::where('product_id', $product->id)->delete();
+            $fileName = $product->foto;
+            if($request->hasFile('foto')){
+                $file = $request->file('foto');
+                $fileName = Utils::upload($file);
+            }
+
+
+            $product->update(array_merge($request->all(),['foto'=>$fileName]));
+            if($request->hasFile('additionalImageFile')){
+                $additionalImage = $request->file('additionalImageFile');
                 for ($i=0; $i < count($additionalImage); $i++) {
-                    ProductDetail::create([
-                        'product_id' => $product->id,
-                        'image'=>$additionalImage[$i]
+                    $additionalFoto = Utils::upload($additionalImage[$i]);
+                    ProductDetail::where('id',$request->id[$i])->update([
+                        'image'=>$additionalFoto
                     ]);
                 }
             }
-            return redirect()->route('product.index')->with(['message' => 'product has ben created']);
+            return redirect()->route('product.index')->with(['message' => 'product has ben updated']);
         } catch (\Throwable $th) {
             return back()->with(['message' => $th->getMessage()]);
         }
@@ -197,18 +215,20 @@ class ProductController extends Controller
             $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
 
         }
+
         $products = $products->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
 
         $data = array();
         if(!empty($products)){
             foreach ($products as $key=>$product){
-            $edit =  route('product.edit',$product->id);
+            $edit =  route('product.ubah').'?id='.$product->id;
             $destroy =  route('product.destroy',$product->id);
+            $src = Utils::url($product->foto);
 
             $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
             $nestedData['name'] = $product->name;
-            $nestedData['foto'] = "<img style='width: 200px' src='{$product->foto}'
-            class='img-thumbnail' alt=''>";
+            $nestedData['foto'] = "<img style='width: 200px' src='{$src}'
+            class='img-thumbnail' alt='No Image'>";
             $nestedData['deskripsi'] = substr(strip_tags($product->deskripsi),0,50)."...";
             $nestedData['harga'] = number_format($product->harga,2,',','.');
             $nestedData['harga_promo'] = number_format($product->harga_promo,2,',','.');

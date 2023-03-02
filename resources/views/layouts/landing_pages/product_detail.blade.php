@@ -4,6 +4,9 @@
 @section('content')
     <!-- SHOP DETAILS AREA START -->
     @include('layouts.landing_pages.layouts.breadcrumb')
+    @php
+        use App\Helpers\Utils;
+    @endphp
     <div class="ltn__shop-details-area pb-70">
         <div class="container">
             <div class="row">
@@ -15,20 +18,20 @@
                                     <div class="ltn__shop-details-small-img slick-arrow-2">
                                         @foreach ($product->detail as $item)
                                             <div class="single-small-img">
-                                                <img src="{{ $item->image }}" alt="Image">
+                                                <img src="{{ Utils::url($item->image) }}" alt="No Image">
                                             </div>
                                         @endforeach
                                     </div>
                                     <div class="ltn__shop-details-large-img">
                                         <div class="single-large-img">
-                                            <a href="{{ $product->foto }}" data-rel="lightcase:myCollection">
-                                                <img src="{{ $product->foto }}" alt="Image">
+                                            <a href="{{ Utils::url($product->foto) }}" data-rel="lightcase:myCollection">
+                                                <img src="{{ Utils::url($product->foto) }}" alt="Image">
                                             </a>
                                         </div>
                                         @foreach ($product->detail as $item)
                                             <div class="single-large-img">
-                                                <a href="{{ $item->image }}" data-rel="lightcase:myCollection">
-                                                    <img src="{{ $item->image }}" alt="Image">
+                                                <a href="{{ Utils::url($item->image) }}" data-rel="lightcase:myCollection">
+                                                    <img src="{{ Utils::url($item->image) }}" alt="Image">
                                                 </a>
                                             </div>
                                         @endforeach

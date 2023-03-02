@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ isset($id) ? route('member.update', $id) : route('member.store') }}" method="post"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" id="form-add">
                         @csrf
                         @if (isset($id))
                             @method('put')
@@ -18,7 +18,7 @@
                                 <option value="">pilih</option>
                                 @foreach ($users as $item)
                                     <option value="{{ $item->id }}" data-email="{{ $item->email }}"
-                                        {{ isset($id) ? ($member->user_id == $item->id ? 'selected' : '') : '' }}
+                                        {{ (isset($id) ? (($member->user_id == $item->id ? 'selected' : old('user_id') == $item->id) ? 'selected' : '') : old('user_id') == $item->id) ? 'selected' : '' }}
                                         data-name="{{ $item->name }}">{{ $item->name }}
                                     </option>
                                 @endforeach
@@ -48,10 +48,12 @@
                             <select name="gender" class="form-control @error('gender') is-invalid @enderror">
                                 <option value="">pilih</option>
                                 <option value="laki-laki"
-                                    {{ isset($id) ? ($member->gender == 'laki-laki' ? 'selected' : '') : '' }}>Laki-Laki
+                                    {{ (isset($id) ? (($member->gender == 'laki-laki' ? 'selected' : old('gender') == 'laki-laki') ? 'selected' : '') : old('gender') == 'laki-laki') ? 'selected' : '' }}>
+                                    Laki-Laki
                                 </option>
                                 <option value="Perempuan"
-                                    {{ isset($id) ? ($member->gender == 'perempuan' ? 'selected' : '') : '' }}>Perempuan
+                                    {{ (isset($id) ? (($member->gender == 'perempuan' ? 'selected' : old('gender') == 'perempuan') ? 'selected' : '') : old('gender') == 'perempuan') ? 'selected' : '' }}>
+                                    Perempuan
                                 </option>
                             </select>
                             @error('gender')
@@ -106,6 +108,21 @@
                 $("input[name=name]").val(name)
                 console.log(email);
             })
+
+
+            $("input[type='file']").dropify()
+
+            $("#form-add").on('submit', function() {
+                $("button[type='submit']").prop('disabled', true)
+            })
         })
     </script>
+
+    @if (isset($id))
+        <script>
+            $(document).ready(function() {
+                resetPreview2("foto", URL_GOOGLE_DRIVE + "{{ $member->foto }}", 'Image.jpg')
+            })
+        </script>
+    @endif
 @endpush

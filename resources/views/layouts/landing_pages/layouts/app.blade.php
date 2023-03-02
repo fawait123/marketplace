@@ -1,8 +1,6 @@
 @php
-    
     use App\Models\Cart;
     use App\Models\Product;
-    use App\Helpers\Utils;
 @endphp
 <!doctype html>
 <html class="no-js" lang="zxx">
