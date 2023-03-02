@@ -225,7 +225,7 @@ class ProductController extends Controller
             $destroy =  route('product.destroy',$product->id);
             $src = Utils::url($product->foto);
 
-            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['no'] = (str_split($start)[0]) * $limit + $key + 1;
             $nestedData['name'] = $product->name;
             $nestedData['foto'] = "<img style='width: 200px' src='{$src}'
             class='img-thumbnail' alt='No Image'>";

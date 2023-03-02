@@ -177,7 +177,7 @@ class MemberController extends Controller
             $destroy =  route('member.destroy',$member->id);
             $status = $member->is_active == 1 ? 'checked' : '';
             $src = Utils::url($member->foto);
-            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['no'] = (str_split($start)[0]) * $limit + $key + 1;
             $nestedData['name'] = $member->name;
             $nestedData['foto'] = "<img style='width: 200px' src='{$src}'
             class='img-thumbnail' alt='No Image'>";

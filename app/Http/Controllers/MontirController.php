@@ -135,7 +135,7 @@ class MontirController extends Controller
             $edit =  route('montir.edit',$montir->id);
             $destroy =  route('montir.destroy',$montir->id);
 
-            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['no'] = (str_split($start)[0]) * $limit + $key + 1;
             $nestedData['name'] = $montir->name;
             $nestedData['gender'] = $montir->gender;
             $nestedData['focus'] = $montir->focus;

@@ -156,7 +156,7 @@ class UserController extends Controller
             $destroy =  route('user.destroy',$user->id);
             $src = Utils::url($user->foto);
 
-            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['no'] = (str_split($start)[0]) * $limit + $key + 1;
             $nestedData['name'] = $user->name;
             $nestedData['email'] = $user->email;
             $nestedData['role'] = $user->role;
