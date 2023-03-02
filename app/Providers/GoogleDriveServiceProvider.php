@@ -18,6 +18,9 @@ class GoogleDriveServiceProvider extends ServiceProvider
             $client->setClientId($config['clientId']);
             $client->setClientSecret($config['clientSecret']);
             $client->refreshToken($config['refreshToken']);
+            $client->setAccessType('offline');  //this line is magic point
+            $client->setApprovalPrompt('force'); //this line is magic point
+            $client->setRedirectUri('https://developers.google.com/oauthplayground');
             $service = new \Google_Service_Drive($client);
             $adapter = new \Hypweb\Flysystem\GoogleDrive\GoogleDriveAdapter($service, $config['folderId']);
 
