@@ -93,4 +93,56 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('category.index')->with(['message' => 'Category has been deleted']);
     }
+
+
+    public function json(Request $request)
+    {
+        $columns = array(
+            0 =>'name',
+        );
+
+        $totalFiltered = Category::query();
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $categories = Category::query();
+        if(!empty($request->input('search.value'))){
+            $search = $request->input('search.value');
+            $categories = $categories->where('name', 'like','%'.$search.'%');
+            $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
+
+        }
+        $categories = $categories->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
+
+        $data = array();
+        if(!empty($categories)){
+            foreach ($categories as $key=>$category){
+            $edit =  route('category.edit',$category->id);
+            $destroy =  route('category.destroy',$category->id);
+
+            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['name'] = $category->name;
+            $nestedData['options'] = "&emsp;<a href='{$edit}'
+            class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
+                                    &emsp;<a href='#' data-toggle='modal'
+                                    data-target='#exampleModal' data-url='{$destroy}'
+                                    class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
+            $data[] = $nestedData;
+
+            }
+        }
+
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval(Category::count()),
+            "recordsFiltered" => intval($totalFiltered->count()),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
+    }
 }

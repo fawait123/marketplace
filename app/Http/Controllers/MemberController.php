@@ -186,12 +186,12 @@ class MemberController extends Controller
             $nestedData['nik'] = $member->nik;
             $nestedData['status'] = "<input type='checkbox' data-id='{$member->id}'
             data-status='{$member->is_active}'
-            {$status} data-toggle='switchery'
+            {$status} data-toggle='switchery' onload='new Switchery(this[0], this.attr('data')'
             data-color='#df3554' data-size='small' />";
             $nestedData['options'] = "&emsp;<a href='{$edit}'
             class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
                                     &emsp;<a href='#' data-toggle='modal'
-                                    data-target='#exampleModal'
+                                    data-target='#exampleModal' data-url='{$destroy}'
                                     class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
             $data[] = $nestedData;
             }

@@ -92,7 +92,7 @@
 
                 <div class="d-flex align-items-center">
                     @if (count($url) == 2)
-                        <div class="dropdown d-none d-sm-inline-block ml-2 menu-search">
+                        {{-- <div class="dropdown d-none d-sm-inline-block ml-2 menu-search">
                             <button type="button" class="btn header-item noti-icon waves-effect"
                                 id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
@@ -115,7 +115,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                     @endif
 
                     <div class="dropdown d-inline-block">
@@ -123,8 +123,8 @@
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images') }}/flags/spain.jpg" alt="user-image"
-                                    class="mr-1" height="12">
+                                <img src="{{ asset('assets/images') }}/flags/spain.jpg" alt="user-image" class="mr-1"
+                                    height="12">
                                 <span class="align-middle">Spanish</span>
                             </a>
 
@@ -304,6 +304,35 @@
     </div>
     <!-- END layout-wrapper -->
 
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ route('montir.destroy', '__row') }}" method="POST" id="form-delete">
+                    @csrf
+                    @method('delete')
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete
+                            Confirmation</h5>
+                        <button type="button" class="close waves-effect waves-light" data-dismiss="modal"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want to delete data ?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect waves-light"
+                            data-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Overlay-->
     <div class="menu-overlay"></div>
 
@@ -436,6 +465,17 @@
                 audio.play();
                 toastr.info(data.message);
             });
+
+
+
+            // modal delete
+
+            $('#exampleModal').on('show.bs.modal', function(e) {
+                let target = e.relatedTarget
+                let url = $(target).data('url')
+                // console.log('id', url)
+                $("#form-delete").attr('action', url)
+            })
         })
     </script>
     @stack('customjs')
