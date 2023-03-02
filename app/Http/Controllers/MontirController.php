@@ -102,4 +102,63 @@ class MontirController extends Controller
         $Montir->delete();
         return redirect()->route('montir.index')->with(['message' => 'Montir has been deleted']);
     }
+
+    public function json(Request $request)
+    {
+        $columns = array(
+            0 =>'name',
+            1 =>'gender',
+            2 =>'focus',
+            3 =>'phone',
+            4 =>'email',
+        );
+
+        $totalFiltered = Montir::query();
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $montirs = Montir::query();
+        if(!empty($request->input('search.value'))){
+            $search = $request->input('search.value');
+            $montirs = $montirs->where('name', 'like','%'.$search.'%');
+            $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
+
+        }
+        $montirs = $montirs->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
+
+        $data = array();
+        if(!empty($montirs)){
+            foreach ($montirs as $key=>$montir){
+            $edit =  route('montir.edit',$montir->id);
+            $destroy =  route('montir.destroy',$montir->id);
+
+            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['name'] = $montir->name;
+            $nestedData['gender'] = $montir->gender;
+            $nestedData['focus'] = $montir->focus;
+            $nestedData['phone'] = $montir->phone;
+            $nestedData['email'] = $montir->email;
+            $nestedData['options'] = "&emsp;<a href='{$edit}'
+            class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
+                                    &emsp;<a href='#' data-toggle='modal'
+                                    data-target='#exampleModal' data-url='{$destroy}'
+                                    class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
+            $data[] = $nestedData;
+
+            }
+        }
+
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval(Montir::count()),
+            "recordsFiltered" => intval($totalFiltered->count()),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
+    }
 }

@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="scrollbar-width: none;">
                         <table class="table-bordered table-striped table" id="table-member">
                             <thead>
                                 <tr>
@@ -19,7 +19,6 @@
                             </thead>
                         </table>
                     </div>
-                    {{ $query->links('vendor.livewire.simple-bootstrap') }}
                 </div>
             </div>
         </div>

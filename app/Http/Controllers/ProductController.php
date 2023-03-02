@@ -216,7 +216,7 @@ class ProductController extends Controller
             $nestedData['options'] = "&emsp;<a href='{$edit}'
             class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
                                     &emsp;<a href='#' data-toggle='modal'
-                                    data-target='#exampleModal'
+                                    data-target='#exampleModal' data-url='{$destroy}'
                                     class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
             $data[] = $nestedData;
 

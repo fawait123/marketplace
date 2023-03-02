@@ -124,4 +124,62 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index')->with(['message' => 'User has been deleted']);
     }
+
+    public function json(Request $request)
+    {
+        $columns = array(
+            0 =>'name',
+            1 =>'email',
+            2=> 'role',
+            3=> 'foto',
+        );
+
+        $totalFiltered = User::query();
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        $users = User::query();
+        if(!empty($request->input('search.value'))){
+            $search = $request->input('search.value');
+            $users = $users->where('name', 'like','%'.$search.'%');
+            $totalFiltered = $totalFiltered->where('name', 'like','%'.$search.'%');
+
+        }
+        $users = $users->offset($start)->limit($limit)->orderBy($order,$dir)->latest()->get();
+
+        $data = array();
+        if(!empty($users)){
+            foreach ($users as $key=>$user){
+            $edit =  route('user.edit',$user->id);
+            $destroy =  route('user.destroy',$user->id);
+
+            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['name'] = $user->name;
+            $nestedData['email'] = $user->email;
+            $nestedData['role'] = $user->role;
+            $nestedData['foto'] = "<img style='width: 200px' src='{$user->foto}'
+            class='img-thumbnail' alt=''>";
+            $nestedData['options'] = "&emsp;<a href='{$edit}'
+            class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
+                                    &emsp;<a href='#' data-toggle='modal'
+                                    data-target='#exampleModal' data-url='{$destroy}'
+                                    class='text-danger'><i class='mdi mdi-trash-can-outline'></i></a>";
+            $data[] = $nestedData;
+
+            }
+        }
+
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval(User::count()),
+            "recordsFiltered" => intval($totalFiltered->count()),
+            "data"            => $data
+        );
+
+        return json_encode($json_data);
+    }
 }

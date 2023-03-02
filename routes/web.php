@@ -100,6 +100,9 @@ Route::group(['prefix' => 'master','middleware'=>['auth','role:admin']], functio
     Route::get('/member/status',[MemberController::class,'status'])->name('member.status');
     Route::get('/product/json',[ProductController::class,'json'])->name('product.json');
     Route::get('/member/json',[MemberController::class,'json'])->name('member.json');
+    Route::get('/category/json',[CategoryController::class,'json'])->name('category.json');
+    Route::get('/user/json',[UserController::class,'json'])->name('user.json');
+    Route::get('/montir/json',[MontirController::class,'json'])->name('montir.json');
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('user',UserController::class);
