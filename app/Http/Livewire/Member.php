@@ -7,15 +7,9 @@ use App\Models\Member as ModelMember;
 
 class Member extends Component
 {
-    public $search = '';
-    public $limit = 10;
 
-    protected $queryString= ['search','limit'];
     public function render()
     {
-        $query = ModelMember::query();
-        $query = $query->where('name','like','%'.$this->search.'%');
-        $query = $query->latest()->paginate($this->limit);
-        return view('livewire.member',compact('query'));
+        return view('livewire.member');
     }
 }
