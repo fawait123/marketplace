@@ -1,4 +1,5 @@
 @php
+    use App\Helpers\Utils;
     $url = Request::path();
     $url = explode('/', $url);
 @endphp
@@ -37,6 +38,9 @@
     <link rel="stylesheet" href="{{ asset('assets/datatable/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/leaflet/leaflet.css') }}">
     <script src="{{ asset('assets/leaflet/leaflet.js') }}"></script>
+    <script>
+        let URL_GOOGLE_DRIVE = 'https://drive.google.com/uc?export=view&id=';
+    </script>
 
     @livewireStyles
 </head>
@@ -155,8 +159,7 @@
                         <button type="button" class="btn header-item waves-effect" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img class="rounded-circle header-profile-user"
-                                src="{{ auth()->user()->foto != null ? Storage::url('public/foto/' . auth()->user()->foto) : null }}"
-                                alt="Header Avatar">
+                                src="{{ Utils::url(auth()->user()->foto) }}" alt="Header Avatar">
                             <span class="d-none d-sm-inline-block ml-1">{{ auth()->user()->name }}</span>
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                         </button>

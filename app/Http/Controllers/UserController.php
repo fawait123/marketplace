@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Helpers\Utils;
+
 
 class UserController extends Controller
 {
@@ -39,18 +41,16 @@ class UserController extends Controller
             [
                 "name"      => "required",
                 "email"     => "required|email:dns|unique:users,email",
-                "password"     => "required",
-                "foto"           =>['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5048'],
+                "password"     => "required|same:password_confirmation",
+                "foto"           =>['required','image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5048'],
                 "role" => "required",
-                "password_confirmation" => "same:password"
             ],
         );
-        $foto = $request->file('foto');
-        $filename = $foto->hashName();
-        $validatedData['foto'] = $filename;
-        $validatedData['password'] = bcrypt($request->password);
 
-        $foto->storeAs('public/foto', $foto->hashName());
+        $foto = $request->file('foto');
+        $fileName = Utils::upload($foto);
+        $validatedData['foto'] = $fileName;
+        $validatedData['password'] = bcrypt($request->password);
         $storeUser = User::create($validatedData);
         return redirect()->route('user.index')->with(['message' => 'User has been created']);
 
@@ -99,8 +99,7 @@ class UserController extends Controller
         );
         if($request->hasFile('foto')){
             $foto = $request->file('foto');
-            $filename = $foto->hashName();
-            $foto->storeAs('public/foto', $filename);
+            $filename = Utils::upload($foto);
             $request['images'] = $filename;
         }else{
             $request['images'] = $user->foto;
@@ -155,13 +154,14 @@ class UserController extends Controller
             foreach ($users as $key=>$user){
             $edit =  route('user.edit',$user->id);
             $destroy =  route('user.destroy',$user->id);
+            $src = Utils::url($user->foto);
 
             $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
             $nestedData['name'] = $user->name;
             $nestedData['email'] = $user->email;
             $nestedData['role'] = $user->role;
-            $nestedData['foto'] = "<img style='width: 200px' src='{$user->foto}'
-            class='img-thumbnail' alt=''>";
+            $nestedData['foto'] = "<img style='width: 200px' src='{$src}'
+            class='img-thumbnail' alt='No Image'>";
             $nestedData['options'] = "&emsp;<a href='{$edit}'
             class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
                                     &emsp;<a href='#' data-toggle='modal'

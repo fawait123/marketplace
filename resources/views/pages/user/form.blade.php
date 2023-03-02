@@ -5,14 +5,14 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ isset($id) ? route('user.update', $id) : route('user.store') }}" method="post"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data" id="form-add">
                         @csrf
                         @if (isset($id))
                             @method('put')
                         @endif
                         <div class="form-group">
                             <label for="category">Nama</label>
-                            <input type="text" name="name" value="{{ isset($id) ? $user->name : '' }}"
+                            <input type="text" name="name" value="{{ isset($id) ? $user->name : old('name') }}"
                                 class="form-control @error('name') is-invalid @enderror">
                             @error('name')
                                 <div class="invalid-feedback">
@@ -20,7 +20,7 @@
                                 </div>
                             @enderror
                             <label for="email">Email</label>
-                            <input type="text" name="email" value="{{ isset($id) ? $user->email : '' }}"
+                            <input type="text" name="email" value="{{ isset($id) ? $user->email : old('email') }}"
                                 class="form-control @error('name') is-invalid @enderror">
                             @error('email')
                                 <div class="invalid-feedback">
@@ -28,10 +28,12 @@
                                 </div>
                             @enderror
                             <label for="role">Role</label>
-                            <select name="role" value="{{ isset($id) ? $user->role : '' }}"
-                                class="form-control @error('role') is-invalid @enderror">
-                                <option value="admin">Admin</option>
-                                <option value="user">user</option>
+                            <select name="role" class="form-control @error('role') is-invalid @enderror">
+                                <option value="admin" {{ isset($id) ? ($user->role == 'admin' ? 'selected' : '') : '' }}>
+                                    Admin
+                                </option>
+                                <option value="user" {{ isset($id) ? ($user->role == 'user' ? 'selected' : '') : '' }}>
+                                    user</option>
                             </select>
                             @error('role')
                                 <div class="invalid-feedback">
@@ -61,7 +63,7 @@
                             @enderror
 
                             <label for="foto">Photo</label>
-                            <input type="file" name="foto" id="foto" value="{{ isset($id) ? $user->foto : '' }}"
+                            <input type="file" name="foto" id="foto"
                                 class="form-control @error('foto') is-invalid @enderror">
                             @error('foto')
                                 <div class="invalid-feedback">
@@ -78,3 +80,22 @@
         </div>
     </div>
 @endsection
+
+@push('customjs')
+    <script>
+        $(document).ready(function() {
+            $("#form-add").on('submit', function() {
+                $("button[type='submit']").prop('disabled', true)
+            });
+            $("input[type='file']").dropify()
+        })
+    </script>
+
+    @if (isset($id))
+        <script>
+            $(document).ready(function() {
+                resetPreview2("foto", URL_GOOGLE_DRIVE + "{{ $user->foto }}", 'Image.jpg')
+            })
+        </script>
+    @endif
+@endpush

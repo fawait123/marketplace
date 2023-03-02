@@ -3,6 +3,7 @@
 @section('content')
     @php
         use App\Models\Product;
+        use App\Helpers\Utils;
         function random_color_part()
         {
             return str_pad(dechex(mt_rand(0, 255)), 2, '0', STR_PAD_LEFT);
@@ -239,8 +240,8 @@
                         <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                             <div class="ltn__product-item text-center">
                                 <div class="product-img">
-                                    <a href="{{ route('product.detail', $row->id) }}"><img src="{{ $row->foto }}"
-                                            alt="#"></a>
+                                    <a href="{{ route('product.detail', $row->id) }}"><img
+                                            src="{{ Utils::url($row->foto) }}" alt="No Image"></a>
                                     <div class="product-badge">
                                         <ul>
                                             <li class="badge-2" style="background: #{{ random_color() }}">

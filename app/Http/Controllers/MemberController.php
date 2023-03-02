@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Helpers\Utils;
+
+
 
 class MemberController extends Controller
 {
@@ -50,10 +53,9 @@ class MemberController extends Controller
             ],
         );
         $foto = $request->file('foto');
-        $filename = $foto->hashName();
+        $filename = Utils::upload($foto);
         $request['images'] = $filename;
 
-        $foto->storeAs('public/foto', $foto->hashName());
         $storeUser = Member::create(array_merge($request->except('foto'),['foto'=>$request->images]));
         return redirect()->route('member.index')->with(['message' => 'Member has been created']);
 
@@ -107,9 +109,8 @@ class MemberController extends Controller
 
         if($request->hasFile('foto')){
             $foto = $request->file('foto');
-            $filename = $foto->hashName();
+            $filename = Utils::upload($foto);
             $request['images'] = $filename;
-            $foto->storeAs('public/foto', $foto->hashName());
         }else{
             $request['images'] = $member->foto;
         }
@@ -175,11 +176,11 @@ class MemberController extends Controller
             $edit =  route('member.edit',$member->id);
             $destroy =  route('member.destroy',$member->id);
             $status = $member->is_active == 1 ? 'checked' : '';
-
+            $src = Utils::url($member->foto);
             $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
             $nestedData['name'] = $member->name;
-            $nestedData['foto'] = "<img style='width: 200px' src='{$member->foto}'
-            class='img-thumbnail' alt=''>";
+            $nestedData['foto'] = "<img style='width: 200px' src='{$src}'
+            class='img-thumbnail' alt='No Image'>";
             $nestedData['telp'] = $member->telp;
             $nestedData['gender'] = $member->gender;
             $nestedData['email'] = $member->email;

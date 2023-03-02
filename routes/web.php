@@ -18,7 +18,12 @@ use App\Models\Product;
 use App\Models\Montir;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
+
+Route::get('test', function() {
+    Storage::disk('google')->put('test.txt', 'Hello World');
+});
 
 Route::get('/login',function(){
     return view('auth.login');
@@ -99,6 +104,7 @@ Route::group(['prefix' => 'master','middleware'=>['auth','role:admin']], functio
     Route::get('/product/ubah/{id}',[ProductController::class,'update'])->name('product.ubah');
     Route::get('/member/status',[MemberController::class,'status'])->name('member.status');
     Route::get('/product/json',[ProductController::class,'json'])->name('product.json');
+    Route::get('/product/edit',[ProductController::class,'ubah'])->name('product.ubah');
     Route::get('/member/json',[MemberController::class,'json'])->name('member.json');
     Route::get('/category/json',[CategoryController::class,'json'])->name('category.json');
     Route::get('/user/json',[UserController::class,'json'])->name('user.json');

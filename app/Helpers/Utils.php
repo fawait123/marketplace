@@ -3,6 +3,7 @@ namespace App\Helpers;
 use App\Models\Transaction as ModelTransaction;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Storage;
 
 
 class Utils{
@@ -58,5 +59,20 @@ class Utils{
             ]);
         }
         return $data;
+    }
+
+    public static function url($url)
+    {
+        return 'https://drive.google.com/uc?export=view&id='. $url ;
+    }
+
+
+    public static function upload($file)
+    {
+        $uploaded = Storage::disk('google')->put($file->getClientOriginalName(), $file->getContent());
+        $meta = Storage::disk("google")
+                ->getAdapter()
+                ->getMetadata($file->getClientOriginalName());
+        return $meta['path'];
     }
 }

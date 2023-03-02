@@ -43,7 +43,8 @@
                         <select class="form-control category_id" id="category_id" name="category_id">
                             @foreach ($category as $ktg)
                                 <option value="{{ $ktg['id'] }}"
-                                    {{ $product->category_id == $ktg->id ? 'selected' : '' }}>{{ $ktg['name'] }}
+                                    {{ isset($id) ? ($product->category_id == $ktg->id ? 'selected' : '') : '' }}>
+                                    {{ $ktg['name'] }}
                                 </option>
                             @endforeach
                         </select>
@@ -53,16 +54,6 @@
                             </div>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="product">Stok</label>
-                        <input type="text" name="stok" value="{{ isset($id) ? $product->stok : '' }}"
-                            class="form-control @error('stok') is-invalid @enderror">
-                        @error('stok')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
                     <div class="form-group">
                         <label for="product">Description</label>
                         <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" id="" cols="30"
@@ -109,23 +100,20 @@
                         @foreach ($product->detail as $item)
                             <div class="col-6 mb-3">
                                 <input type="file" data-id="{{ $no + $loop->iteration }}"
-                                    class="dropify additionalImage"
+                                    class="dropify additionalImage" name="additionalImageFile[]"
                                     id="additionalImagePrev{{ $no + $loop->iteration }}">
-                                <input type="hidden" name="additionalImage[]" value="{{ $item->image }}"
-                                    id="additionalImage{{ $no + $loop->iteration }}">
+                                <input type="hidden" name="id[]" value="{{ $item->id }}">
                             </div>
                             @push('customjs')
                                 <script>
-                                    resetPreview("{{ $no + $loop->iteration }}", "{{ $item->image }}", 'Image.jpg')
+                                    resetPreview("{{ $no + $loop->iteration }}", URL_GOOGLE_DRIVE + "{{ $item->image }}", 'Image.jpg')
                                 </script>
                             @endpush
                         @endforeach
                         @for ($i = 0; $i < $count; $i++)
                             <div class="col-6 mb-3">
-                                <input type="file" id="foto" data-id="{{ $i }}"
-                                    class="dropify additionalImage">
-                                <input type="hidden" name="additionalImage[]" value=""
-                                    id="additionalImage{{ $i }}">
+                                <input type="file" name="additionalImage[]" id="foto"
+                                    data-id="{{ $i }}" class="dropify additionalImage">
                             </div>
                         @endfor
                     </div>
@@ -159,83 +147,7 @@
                 window.location.href = url
             })
 
-
-            // $("#form-add").validate({
-            //     ignore: ".ignore",
-            //     // rules: {
-            //     //     name: {
-            //     //         required: true,
-            //     //     },
-            //     //     harga: {
-            //     //         required: true,
-            //     //     },
-            //     //     harga_promo: {
-            //     //         required: true,
-            //     //     },
-            //     //     category_id: {
-            //     //         required: true,
-            //     //     },
-            //     //     deskripsi: {
-            //     //         required: true,
-            //     //     },
-            //     //     foto: {
-            //     //         required: true,
-            //     //     }
-            //     // },
-            //     highlight: function(element) {
-            //         $(element).closest('.form-group').addClass('has-error');
-            //     },
-            //     unhighlight: function(element) {
-            //         $(element).closest('.form-group').removeClass('has-error');
-            //     },
-            //     errorElement: 'span',
-            //     errorClass: 'help-block',
-            //     errorPlacement: function(error, element) {
-            //         if (element.parent('.input-group').length) {
-            //             error.insertAfter(element.parent());
-            //         } else {
-            //             error.insertAfter(element);
-            //         }
-            //     },
-            //     // submitHandler: function(form) {
-            //     //     $(form).submit();
-            //     //     // let route =
-            //     //     //     "{{ request('id') ? route('product.update', 'id') : route('product.store') }}";
-            //     //     // let id = "{{ request('id') }}"
-            //     //     // id = Number(id)
-            //     //     // if (id != 0) {
-            //     //     //     route = route.replace('id', id)
-            //     //     // }
-            //     //     // let formData = new FormData($(form)[0]);
-            //     //     // // console.log(formData)
-            //     //     // $.ajax({
-            //     //     //     url: route,
-            //     //     //     type: "{{ isset($id) ? 'get' : 'POST' }}",
-            //     //     //     processData: false,
-            //     //     //     contentType: false,
-            //     //     //     data: formData,
-            //     //     //     success: function(res) {
-            //     //     //         console.log(res)
-            //     //     //         // if (res === 'success') {
-            //     //     //         //     window.location.href = "{{ route('product.index') }}"
-            //     //     //         // }
-            //     //     //     }
-            //     //     // })
-            //     // }
-            // })
-
-            $("input[name=foto]").on('change', function() {
-                let value = $(this)[0].files[0]
-                getBase64(value, $("input[name=image]"))
-            })
-
-            $(".additionalImage").on('change', function() {
-                let id = $(this).data('id')
-                let value = $(this)[0].files[0]
-                getBase64(value, $("#additionalImage" + id))
-            })
-
-            resetPreview2("foto", "{{ $product->foto }}", 'Image.jpg')
+            resetPreview2("foto", URL_GOOGLE_DRIVE + "{{ $product->foto }}", 'Image.jpg')
 
             let drEvent = $('.dropify').dropify();
 
@@ -255,6 +167,10 @@
                     $("#additionalImage" + id).val('')
                 }
             });
+
+            $("#form-add").on('submit', function() {
+                $("button[type='submit']").prop('disabled', true);
+            })
         })
     </script>
 @endpush
