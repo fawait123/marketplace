@@ -123,7 +123,7 @@ class CategoryController extends Controller
             $edit =  route('category.edit',$category->id);
             $destroy =  route('category.destroy',$category->id);
 
-            $nestedData['no'] = ($request->input('draw') -1) * $limit + $key + 1;
+            $nestedData['no'] = (str_split($start)[0]) * $limit + $key + 1;
             $nestedData['name'] = $category->name;
             $nestedData['options'] = "&emsp;<a href='{$edit}'
             class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
