@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive" style="scrollbar-width: none;">
+                    <div class="table-responsive scrollbar-none">
                         <table class="table table-bordered table-striped" id="table-products">
                             <thead>
                                 <tr>

@@ -41,6 +41,19 @@
     <script>
         let URL_GOOGLE_DRIVE = 'https://drive.google.com/uc?export=view&id=';
     </script>
+    <style>
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            /* Internet Explorer 10+ */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
+    </style>
 
     @livewireStyles
 </head>

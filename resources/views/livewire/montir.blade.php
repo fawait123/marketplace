@@ -11,7 +11,7 @@
                     </select>
                     <br>
                     <br>
-                    <div class="table-responsive" style="scrollbar-width: none;">
+                    <div class="table-responsive scrollbar-none">
                         <table class="table-bordered table-striped table" id="table-montir">
                             <thead>
                                 <tr>
