@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Member;
 use Illuminate\Support\Facades\Hash;
+use App\Helpers\Utils;
 
 class AuthController extends Controller
 {
@@ -86,7 +87,9 @@ class AuthController extends Controller
 
     public function registerMember(Request $request)
     {
-        Member::create(array_merge($request->except('image'),['user_id'=>auth()->user()->id,'is_active'=>0]));
+        $image = $request->file('image');
+        $fileName = Utils::upload($image);
+        Member::create(array_merge($request->except('image'),['user_id'=>auth()->user()->id,'is_active'=>0,'foto'=>$fileName]));
         return redirect()->route('welcome')->with(['message' => 'Password has been changed']);
     }
 
