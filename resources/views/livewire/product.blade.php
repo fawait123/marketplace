@@ -75,7 +75,7 @@
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#add_to_cart_modal"
                                                                         data-id="{{ $item->id }}"
-                                                                        data-image="{{ $item->foto }}"
+                                                                        data-image="{{ Utils::url($item->foto) }}"
                                                                         data-name="{{ $item->name }}"
                                                                         data-price="{{ $item->harga }}">
                                                                         <span class="cart-text d-none d-xl-block">Add to
@@ -145,7 +145,7 @@
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#add_to_cart_modal"
                                                                         data-id="{{ $item->id }}"
-                                                                        data-image="{{ $item->foto }}"
+                                                                        data-image="{{ Utils::url($item->foto) }}"
                                                                         data-name="{{ $item->name }}"
                                                                         data-price="{{ $item->harga }}">
                                                                         <span class="cart-text d-none d-xl-block">Add to
@@ -154,7 +154,6 @@
                                                                                 class="icon-handbag"></i></span>
                                                                     </a>
                                                                 </li>
-
                                                             </ul>
                                                         </div>
                                                     </div>

@@ -318,7 +318,6 @@
                                                                     <br>
                                                                     <input type="file" name="image"
                                                                         placeholder="Input image">
-                                                                    <input type="hidden" name="foto">
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <label>Address:</label>
@@ -405,31 +404,6 @@
                         error.insertAfter(element);
                     }
                 },
-                // submitHandler: function(form) {
-                //     let formData = new FormData($(form)[0]);
-                //     $.ajax({
-                //         url: '{{ route('registerMember') }}',
-                //         type: 'post',
-                //         data: formData,
-                //         processData: false,
-                //         contentType: false,
-                //         success: function(res) {
-                //             console.log(res)
-                //             if (res === 'success') {
-                //                 window.location.reload()
-                //             }
-                //         },
-                //         error: function(xhr) {
-                //             console.log(xhr)
-                //         }
-                //     })
-                // }
-            })
-
-
-            $("input[type=file]").on('change', function() {
-                let file = $(this)[0].files[0]
-                getBase64(file, $("input[name=foto]"))
             })
         })
     </script>

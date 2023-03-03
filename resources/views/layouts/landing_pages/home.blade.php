@@ -252,7 +252,8 @@
                                         <ul>
                                             <li class="add-to-cart">
                                                 <a href="#" title="Add to Cart" data-bs-toggle="modal"
-                                                    data-id="{{ $row->id }}" data-image="{{ $row->foto }}"
+                                                    data-id="{{ $row->id }}"
+                                                    data-image="{{ Utils::url($row->foto) }}"
                                                     data-name="{{ $row->name }}" data-price="{{ $row->harga }}"
                                                     data-bs-target="#add_to_cart_modal">
                                                     <span class="cart-text d-none d-xl-block">Add to Cart</span>
