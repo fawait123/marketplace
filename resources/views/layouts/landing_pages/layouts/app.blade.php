@@ -1,6 +1,7 @@
 @php
     use App\Models\Cart;
     use App\Models\Product;
+    use App\Helpers\Utils;
 @endphp
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -277,7 +278,8 @@
                                 <div class="mini-cart-item clearfix">
                                     <div class="mini-cart-img">
                                         <a href="{{ route('product.detail', $item->id) }}"><img
-                                                src="{{ $item->product->foto ?? '' }}" alt="Image"></a>
+                                                src="{{ Utils::url($item->product->foto) ?? '' }}"
+                                                alt="Image"></a>
                                         <a href="{{ route('cart.remove', $item->id) }}"><span
                                                 class="mini-cart-item-delete"><i class="icon-trash"></i></span></a>
                                     </div>
