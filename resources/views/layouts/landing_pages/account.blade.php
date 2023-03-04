@@ -76,6 +76,7 @@
                                         </div>
                                         @php
                                             use App\Models\Transaction;
+                                            use App\Helpers\Utils;
                                             
                                             $transactions = Transaction::with('detail.product')
                                                 ->where('user_id', auth()->user()->id)
@@ -262,86 +263,77 @@
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <label>Image:</label>
-                                                                    <br>
-                                                                    <input type="file" name="image"
-                                                                        placeholder="Input image">
-                                                                    <input type="hidden" name="foto" disabled>
-                                                                    <img src="{{ $member->foto }}" class="img-fluid"
-                                                                        alt="">
+                                                                    <img src="{{ Utils::url($member->foto) }}"
+                                                                        class="img-thumbnail" alt="No Image">
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <label>Address:</label>
                                                                     <textarea readonly name="address" id="" cols="30" rows="10">{{ $member->address }}</textarea>
                                                                 </div>
-                                                                .<div class="col-md-12">
-                                                                    <button type="submit" disabled
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
-                                                                </div>
                                                             </div>
-                                                        </form>
                                                     </div>
-                                                @else
-                                                    <div class="ltn__form-box">
-                                                        <form action="{{ route('registerMember') }}" id="form-member"
-                                                            method="POST">
-                                                            @csrf
-                                                            <div class="row mb-50">
-                                                                <div class="col-md-12">
-                                                                    <label>Full Name:</label>
-                                                                    <input type="text" name="name">
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label>NIK:</label>
-                                                                    <input type="text" name="nik">
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Email:</label>
-                                                                    <input type="email" name="email"
-                                                                        placeholder="example@example.com">
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Telp:</label>
-                                                                    <input type="text" name="telp"
-                                                                        placeholder="08212xxxx">
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Gender:</label>
-                                                                    <br>
-                                                                    <select name="gender" id="gender"
-                                                                        style="widows: 100%">
-                                                                        <option value="laki-laki">Laki Laki</option>
-                                                                        <option value="perempuan">Perempuan</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <label>Image:</label>
-                                                                    <br>
-                                                                    <input type="file" name="image"
-                                                                        placeholder="Input image">
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label>Address:</label>
-                                                                    <textarea name="address" id="" cols="30" rows="10"></textarea>
-                                                                </div>
-                                                                .<div class="col-md-12">
-                                                                    <button type="submit"
-                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                @endif
+                                                    </form>
                                             </div>
+                                        @else
+                                            <div class="ltn__form-box">
+                                                <form action="{{ route('registerMember') }}" id="form-member"
+                                                    method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="row mb-50">
+                                                        <div class="col-md-12">
+                                                            <label>Full Name:</label>
+                                                            <input type="text" name="name">
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label>NIK:</label>
+                                                            <input type="text" name="nik">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Email:</label>
+                                                            <input type="email" name="email"
+                                                                placeholder="example@example.com">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Telp:</label>
+                                                            <input type="text" name="telp" placeholder="08212xxxx">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Gender:</label>
+                                                            <br>
+                                                            <select name="gender" id="gender" style="widows: 100%">
+                                                                <option value="laki-laki">Laki Laki</option>
+                                                                <option value="perempuan">Perempuan</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Image:</label>
+                                                            <br>
+                                                            <input type="file" name="image" class="dropify"
+                                                                placeholder="Input image">
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label>Address:</label>
+                                                            <textarea name="address" id="" cols="30" rows="10"></textarea>
+                                                        </div>
+                                                        .<div class="col-md-12">
+                                                            <button type="submit"
+                                                                class="btn theme-btn-1 btn-effect-1 text-uppercase">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- PRODUCT TAB AREA END -->
                 </div>
+                <!-- PRODUCT TAB AREA END -->
             </div>
         </div>
+    </div>
     </div>
     <!-- WISHLIST AREA START -->
     <form action="{{ route('logout') }}" id="form-logout" method="POST">
@@ -361,6 +353,8 @@
                 console.log('Error: ', error);
             };
         }
+
+
         $(document).ready(function() {
             $("#form-member").validate({
                 rules: {
@@ -384,7 +378,6 @@
                     },
                     image: {
                         required: true,
-                        extension: "jpg|jpeg|png|svg"
                     }
                 },
                 highlight: function(element) {
@@ -404,6 +397,23 @@
                         error.insertAfter(element);
                     }
                 },
+            })
+
+            $(".dropify").on('change', function() {
+                if ($(this).prop('files').length > 0) {
+                    let file = $(this).prop('files')[0]
+
+                    if (!file.type.toLowerCase().includes('image')) {
+                        toastr.info('Files are just images')
+                        $('.dropify').val('')
+                    }
+                } else {
+                    toastr.info('Upload cancelled')
+                }
+            })
+
+            $("#form-member").on('submit', function() {
+                $("button[type='submit']").prop('disabled', true)
             })
         })
     </script>
