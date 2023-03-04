@@ -46,7 +46,7 @@ Route::get('/product', function(){
 
 Route::get('/order-mechanic', function(){
     $mechanic = Montir::latest()->get();
-    $order = Order::where('date',date('Y-m-d'))->where('status','!=','completed')->first();
+    $order = Order::where('date',date('Y-m-d'))->where('status','!=','complete')->first();
     return view('layouts.landing_pages.order_mechanic',compact('mechanic','order'));
 })->name('order.mechanic');
 

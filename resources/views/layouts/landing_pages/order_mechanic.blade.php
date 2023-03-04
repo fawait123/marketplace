@@ -148,6 +148,10 @@
 
             $(document).ready(function() {
                 getLocation()
+
+                $(".contact-form-box").on('submit', function() {
+                    $("button[type='submit']").prop('disabled', true)
+                })
             })
         </script>
     @endpush
