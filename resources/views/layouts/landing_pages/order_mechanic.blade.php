@@ -12,7 +12,8 @@
         </div>
         <div class="ltn__login-area mb-100">
             <div class="container">
-                <h1 id="showError" class="text-center"></h1>
+                <div id="showError" class="text-center"></div>
+
                 <div class="row" id="showForm">
                     <div class="col-lg-8 offset-lg-2">
                         @if ($order)
@@ -103,6 +104,7 @@
             let x = document.getElementById('showError')
 
             function getLocation() {
+                console.log('loooo', navigator)
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(showPosition, showError);
                 } else {
@@ -124,22 +126,25 @@
             function showError(error) {
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        x.innerHTML = "User denied the request for Geolocation."
+                        x.innerHTML =
+                            "<h1>User denied the request for Geolocation.</h1><button id='allow-location'>Allow Location</button>"
                         $('#showForm').addClass('d-none');
                         $('.provider').addClass('d-none');
                         break;
                     case error.POSITION_UNAVAILABLE:
-                        x.innerHTML = "Location information is unavailable."
+                        x.innerHTML =
+                            "<h1>Location information is unavailable.</h1><button id='allow-location'>Allow Location</button>"
                         $('#showForm').addClass('d-none');
                         $('.provider').addClass('d-none');
                         break;
                     case error.TIMEOUT:
-                        x.innerHTML = "The request to get user location timed out."
+                        x.innerHTML =
+                            "<h1>The request to get user location timed out.</h1><button id='allow-location'>Allow Location</button>"
                         $('#showForm').addClass('d-none');
                         $('.provider').addClass('d-none');
                         break;
                     case error.UNKNOWN_ERROR:
-                        x.innerHTML = "An unknown error occurred."
+                        x.innerHTML = "<h1>An unknown error occurred.</h1><button id='allow-location'>Allow Location</button>"
                         $('#showForm').addClass('d-none');
                         $('.provider').addClass('d-none');
                         break;
@@ -151,6 +156,20 @@
 
                 $(".contact-form-box").on('submit', function() {
                     $("button[type='submit']").prop('disabled', true)
+                })
+
+                $(document).on('click', '#allow-location', function() {
+                    navigator.permissions.query({
+                        name: "geolocation"
+                    }).then((result) => {
+                        console.log(result)
+                        if (result.state === "granted") {
+                            showLocalNewsWithGeolocation();
+                        } else if (result.state === "prompt") {
+                            showButtonToEnableLocalNews();
+                        }
+                        // Don't do anything if the permission was denied.
+                    });
                 })
             })
         </script>
