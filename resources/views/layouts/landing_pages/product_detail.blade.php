@@ -56,10 +56,7 @@
                                     </div>
                                     <div class="modal-product-brief">
                                         <div class="row">
-                                            <div class="col-6">
-                                                {{ QrCode::size(200)->generate($product->qrcode) }}
-                                            </div>
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 <p>{{ $product->deskripsi }}</p>
                                             </div>
                                         </div>
