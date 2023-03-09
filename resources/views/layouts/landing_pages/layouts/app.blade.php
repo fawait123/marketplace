@@ -745,7 +745,7 @@
                                     Payment Method
                                 </div>
                                 <div class="col-6">
-                                    : ${address}
+                                    : ${payment_method == 'take_away' ? 'Take Away' : 'Cash On Delivery'}
                                 </div>
                                 <div class="col-6">
                                     Status
