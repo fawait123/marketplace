@@ -30,12 +30,12 @@ class AuthController extends Controller
 
 
         if($check->role == 'admin'){
-            auth()->login($check);
+            auth()->login($check,true);
             return redirect()->route('home');
         }
 
-        auth()->login($check);
-        return redirect()->route('welcome');
+        auth()->login($check,true);
+        return redirect()->route('product');
 
     }
 
