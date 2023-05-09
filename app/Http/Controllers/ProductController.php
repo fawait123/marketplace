@@ -239,6 +239,7 @@ class ProductController extends Controller
             $nestedData['harga'] = number_format($product->harga,2,',','.');
             $nestedData['harga_promo'] = number_format($product->harga_promo,2,',','.');
             $nestedData['ketegori'] = $product->category->name ?? '';
+            $nestedData['stok'] = $product->stok == null ? 0 : $product->stok;
             $nestedData['options'] = "&emsp;<a href='{$edit}'
             class='text-primary'><i class='mdi mdi-lead-pencil'></i></a>
                                     &emsp;<a href='#' data-toggle='modal'

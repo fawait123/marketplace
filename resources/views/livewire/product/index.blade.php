@@ -13,6 +13,7 @@
                                     <th>Description</th>
                                     <th>Price</th>
                                     <th>Promo Price</th>
+                                    <th>Stok</th>
                                     <th>Category</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,6 +54,9 @@
                     },
                     {
                         data: "harga_promo"
+                    },
+                    {
+                        data: "stok"
                     },
                     {
                         data: "ketegori"
