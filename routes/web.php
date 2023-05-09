@@ -48,7 +48,7 @@ Route::get('/order-mechanic', function(){
     $mechanic = Montir::latest()->get();
     $order = Order::where('date',date('Y-m-d'))->where('status','!=','complete')->first();
     return view('layouts.landing_pages.order_mechanic',compact('mechanic','order'));
-})->name('order.mechanic');
+})->name('order.mechanic')->middleware('role:user')->middleware('auth');
 
 Route::get('/product/{id}', function(Request $request,$id){
     $product = Product::find($id);
@@ -64,14 +64,14 @@ Route::get('/contact',function(){
 
 Route::get('/account',function(){
     return view('layouts.landing_pages.account');
-})->name('account')->middleware('auth');
+})->name('account')->middleware('auth')->middleware('role:user');;
 
 
 Route::post('/login',[AuthController::class,'login'])->name('login.action');
 Route::post('/register',[AuthController::class,'register'])->name('register.action');
 Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth');
-Route::post('/changePassword',[AuthController::class,'changePassword'])->name('changePassword')->middleware('auth');
-Route::post('/register/member',[AuthController::class,'registerMember'])->name('registerMember')->middleware('auth');
+Route::post('/changePassword',[AuthController::class,'changePassword'])->name('changePassword')->middleware('auth')->middleware('role:user');
+Route::post('/register/member',[AuthController::class,'registerMember'])->name('registerMember')->middleware('auth')->middleware('role:user');
 
 
 // transaction
@@ -81,18 +81,18 @@ Route::post('/order',[CheckoutController::class,'order'])->name('checkout.order'
 
 
 
-Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth');
-Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth');
-Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store.fe')->middleware('auth');
-Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth');
-Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth');
-Route::get('/booking/check',[HomeController::class,'check'])->name('booking.check')->middleware('auth');
+Route::get('/cart', [HomeController::class,'cart'])->name('cart')->middleware('auth')->middleware('role:user');
+Route::get('/booking',[HomeController::class,'booking'])->name('booking')->middleware('auth')->middleware('role:user');
+Route::get('/booking/store',[HomeController::class,'bookingStore'])->name('booking.store.fe')->middleware('auth')->middleware('role:user');
+Route::get('/booking/index',[HomeController::class,'bookingGet'])->name('booking.get')->middleware('auth')->middleware('role:user');
+Route::get('/cart/updatetotal',[HomeController::class,'updateTotal'])->name('cart.updateTotal')->middleware('auth')->middleware('role:user');
+Route::get('/booking/check',[HomeController::class,'check'])->name('booking.check')->middleware('auth')->middleware('role:user');
 // route order
-Route::post('/order/store',[OrderController::class,'storeFe'])->name('order.storeFe')->middleware('auth');
+Route::post('/order/store',[OrderController::class,'storeFe'])->name('order.storeFe')->middleware('auth')->middleware('role:user');
 
 
 // cart
-Route::group(['prefix'=>'cart','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'cart','middleware'=>['auth','role:user']],function(){
     Route::get('/add/{id}',[CartController::class,'add'])->name('cart.create');
     Route::get('/remove/{id}',[CartController::class,'remove'])->name('cart.remove');
 });

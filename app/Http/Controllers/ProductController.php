@@ -51,6 +51,7 @@ class ProductController extends Controller
             'harga'          => 'required|integer',
             'harga_promo'    => 'integer',
             'category_id'    => 'required',
+            'stok'          =>'required|integer',
             'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
         ],
         [
@@ -63,6 +64,8 @@ class ProductController extends Controller
             'harga.integer'       => 'Price is number',
             'harga_promo.integer'       => 'Promo price is number',
             'category_id.required'     => 'Category required',
+            'stok.required'=>'Stok required',
+            'stok.integer'=>'Stok is number'
         ]
     );
 
@@ -137,6 +140,7 @@ class ProductController extends Controller
             'deskripsi'      => 'required',
             'harga'          => 'required|integer',
             'harga_promo'    => 'integer',
+            'stok'          =>'required|integer',
             'category_id'    => 'required',
             'additionalImageFile.*'=>'image|mimes:jpg,jpeg,png,jfif,svg',
         ],
@@ -150,6 +154,8 @@ class ProductController extends Controller
             'harga.integer'       => 'Price is number',
             'harga_promo.integer'       => 'Promo price is number',
             'category_id.required'     => 'Category required',
+            'stok.required'=>'Stok required',
+            'stok.integer'=>'Stok is number'
         ]
     );
         try {

@@ -72,6 +72,14 @@
                                                     <span>ADD TO CART</span>
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ route('product') }}"
+                                                    class="theme-btn-3 btn btn-effect-2 d-add-to-cart" title="Back"
+                                                    data-id="{{ $product->id }}" data-image="{{ $product->foto }}"
+                                                    data-name="{{ $product->name }}" data-price="{{ $product->harga }}">
+                                                    <span>Back</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="ltn__safe-checkout d-none">

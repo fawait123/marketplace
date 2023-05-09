@@ -39,11 +39,22 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="product">Stok</label>
+                        <input type="text" name="stok" value="{{ old('stok') }}"
+                            class="form-control @error('stok') is-invalid @enderror">
+                        @error('stok')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="product">Category</label>
                         <select class="form-control category_id" id="category_id" name="category_id">
                             @foreach ($category as $ktg)
                                 <option value="{{ $ktg['id'] }}"
-                                    {{ old('category_id') == $ktg->id ? 'selected' : '' }}>{{ $ktg['name'] }}</option>
+                                    {{ old('category_id') == $ktg->id ? 'selected' : '' }}>{{ $ktg['name'] }}
+                                </option>
                             @endforeach
                         </select>
                         @error('category_id')
