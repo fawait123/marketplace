@@ -58,7 +58,8 @@
                                             <!-- ltn__product-item -->
                                             <div class="col-xl-3 col-lg-4 col-sm-6 col-12">
                                                 <div class="ltn__product-item text-center">
-                                                    <div class="product-img">
+                                                    <div class="product-img"
+                                                        style="position: relative; overflow:hidden;">
                                                         <a href="{{ route('product.detail', $item->id) }}"><img
                                                                 src="{{ Utils::url($item->foto) }}" alt="No Image"></a>
                                                         <div class="product-badge">
@@ -87,10 +88,19 @@
                                                             </ul>
                                                         </div>
                                                     </div>
+                                                    @if ($item->stok == null || $item->stok == 0)
+                                                        <div
+                                                            style="width: 100%;background: rgba(0, 0, 0, 0.514);height:100%;position: absolute;top:0;display: flex; justify-content: center; align-items: center;">
+                                                            <span
+                                                                style="color: white;font-weight: bold; font-size: 16px;">Stok
+                                                                Habis</span>
+                                                        </div>
+                                                    @endif
                                                     <div class="product-info">
                                                         <h2 class="product-title"><a
-                                                                href="product-details.html">{{ $item->name }}</a>
+                                                                href="{{ route('product.detail', $item->id) }}">{{ $item->name }}</a>
                                                         </h2>
+                                                        <span>{{ $item->stok == null || $item->stok == 0 ? 'Stok Habis' : $item->stok . ' In Stok' }}</span>
                                                         <div class="product-price">
                                                             <span>Rp.
                                                                 {{ $item->harga_promo ? number_format($item->harga_promo, 2, ',', '.') : number_format($item->harga, 2, ',', '.') }}</span>
@@ -118,7 +128,8 @@
                                             <!-- ltn__product-item -->
                                             <div class="col-lg-12">
                                                 <div class="ltn__product-item">
-                                                    <div class="product-img">
+                                                    <div class="product-img"
+                                                        style="position: relative; overflow: hidden;">
                                                         <a href="{{ route('product.detail', $item->id) }}"><img
                                                                 src="{{ Utils::url($item->foto) }}" alt="No Image"></a>
                                                         <div class="product-badge">
@@ -129,6 +140,14 @@
                                                             </ul>
                                                         </div>
                                                     </div>
+                                                    @if ($item->stok == null || $item->stok == 0)
+                                                        <div
+                                                            style="width: 100%;background: rgba(0, 0, 0, 0.514);height:100%;position: absolute;top:0;display: flex; justify-content: center; align-items: center;">
+                                                            <span
+                                                                style="color: white;font-weight: bold; font-size: 16px;">Stok
+                                                                Habis</span>
+                                                        </div>
+                                                    @endif
                                                     <div class="product-info">
                                                         <h2 class="product-title"><a
                                                                 href="product-details.html">{{ $item->name }}</a>

@@ -176,7 +176,7 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    @if (auth()->user())
+                                    @if (auth()->user() && auth()->user()->role == 'user')
                                         <li>
                                             @php
                                                 $count = Cart::with('product')
