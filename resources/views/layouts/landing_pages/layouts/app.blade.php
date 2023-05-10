@@ -184,7 +184,9 @@
                                                     ->get();
                                                 $totals = 0;
                                                 foreach ($count as $item) {
-                                                    $totals += $item->total * Utils::price($item->product->harga, $item->product->harga_promo);
+                                                    if ($item->product->stok != null || $item->product->stok > 0):
+                                                        $totals += $item->total * Utils::price($item->product->harga, $item->product->harga_promo);
+                                                    endif;
                                                 }
                                             @endphp
                                             <!-- mini-cart 2 -->
@@ -273,9 +275,11 @@
                         @if (count($data) > 0)
                             @foreach ($data as $item)
                                 @php
-                                    $total += (Utils::price($item->product->harga, $item->product->harga_promo) ?? 0) * $item->total;
+                                    if ($item->product->stok != null || $item->product->stok > 0):
+                                        $total += (Utils::price($item->product->harga, $item->product->harga_promo) ?? 0) * $item->total;
+                                    endif;
                                 @endphp
-                                <div class="mini-cart-item clearfix">
+                                <div class="mini-cart-item clearfix" style="position: relative;overflow: hidden;">
                                     <div class="mini-cart-img">
                                         <a href="{{ route('product.detail', $item->id) }}"><img
                                                 src="{{ Utils::url($item->product->foto) ?? '' }}"
@@ -293,6 +297,12 @@
                                                 class="input-cart-total">
                                         </li>
                                     </div>
+                                    @if ($item->product->stok == null || $item->product->stok == 0)
+                                        <div
+                                            style="background: rgba(0, 0, 0, 0.486);position: absolute;top:0;left:0;right:0;bottom:0;display: flex; justify-content: center; align-items: center;">
+                                            <span style="color: white;font-weight: bold;">Stok Kosong</span>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         @else

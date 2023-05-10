@@ -19,6 +19,39 @@
         <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white---">
             <!-- ltn__slide-item  -->
             <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
+                data-bs-bg="{{ asset('assets/banner/banner_new_3.png') }}">
+                <div class="ltn__slide-item-inner">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 align-self-center">
+                                <div class="slide-item-info">
+                                    <div class="slide-item-info-inner ltn__slide-animation">
+                                        <div class="slide-item-info">
+                                            <div class="slide-item-info-inner ltn__slide-animation">
+                                                {{-- <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                    Bondowoso </h1>
+                                                <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
+                                                    style="color: white !important">
+                                                    Toko Variasi Termurah & Terlengkap Di Bondowoso</h6>
+                                                <div class="slide-brief animated">
+                                                    <p style="color: white;text-align: justify">Mutiara Variasi Bondowoso
+                                                        menjual dan melayani
+                                                        pemasangan variasi dan aksesoris kendaraan.
+                                                        Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
+                                                        harga terjangkau.</p>
+                                                </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="slide-item-img">                                                                                                                                                                                                                                                              </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ltn__slide-item  -->
+            <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
                 data-bs-bg="{{ asset('assets/banner/banner_new_1.jpg') }}">
                 <div class="ltn__slide-item-inner">
                     <div class="container">
@@ -28,7 +61,7 @@
                                     <div class="slide-item-info-inner ltn__slide-animation">
                                         <div class="slide-item-info">
                                             <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                {{-- <h1 class="slide-title animated" style="color: white">Mutiara Variasi
                                                     Bondowoso </h1>
                                                 <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
                                                     style="color: white !important">
@@ -38,12 +71,8 @@
                                                         menjual dan melayani
                                                         pemasangan variasi dan aksesoris kendaraan.
                                                         Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
-                                                        harga terjangkau.</p>
-                                                </div>
-                                                {{-- <div class="btn-wrapper animated">
-                                                    <a href="service.html" class="theme-btn-1 btn btn-round">Shop
-                                                        Now</a>
-                                                </div> --}}
+                                                        harga terjangkau.</p> --}}
+                                                {{-- </div> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -56,7 +85,7 @@
             </div>
             <!-- ltn__slide-item  -->
             <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
-                data-bs-bg="{{ asset('assets/banner/banner_2.jpg') }}">
+                data-bs-bg="{{ asset('assets/banner/banner_new_4.png') }}">
                 <div class="ltn__slide-item-inner">
                     <div class="container">
                         <div class="row">
@@ -65,7 +94,7 @@
                                     <div class="slide-item-info-inner ltn__slide-animation">
                                         <div class="slide-item-info">
                                             <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
+                                                {{-- <h1 class="slide-title animated" style="color: white">Mutiara Variasi
                                                     Bondowoso </h1>
                                                 <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
                                                     style="color: white !important">
@@ -76,47 +105,6 @@
                                                         pemasangan variasi dan aksesoris kendaraan.
                                                         Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
                                                         harga terjangkau.</p>
-                                                </div>
-                                                {{-- <div class="btn-wrapper animated">
-                                                    <a href="service.html" class="theme-btn-1 btn btn-round">Shop
-                                                        Now</a>
-                                                </div> --}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="slide-item-img">                                                                                                                                                                                                                                                              </div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ltn__slide-item  -->
-            <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
-                data-bs-bg="{{ asset('assets/banner/banner_3.jpg') }}">
-                <div class="ltn__slide-item-inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12 align-self-center">
-                                <div class="slide-item-info">
-                                    <div class="slide-item-info-inner ltn__slide-animation">
-                                        <div class="slide-item-info">
-                                            <div class="slide-item-info-inner ltn__slide-animation">
-                                                <h1 class="slide-title animated" style="color: white">Mutiara Variasi
-                                                    Bondowoso </h1>
-                                                <h6 class="slide-sub-title ltn__body-color slide-title-line animated"
-                                                    style="color: white !important">
-                                                    Toko Variasi Termurah & Terlengkap Di Bondowoso</h6>
-                                                <div class="slide-brief animated">
-                                                    <p style="color: white;text-align: justify">Mutiara Variasi Bondowoso
-                                                        menjual dan melayani
-                                                        pemasangan variasi dan aksesoris kendaraan.
-                                                        Mutiara Variasi Bondowoso menawarkan jasa dan produk variasi dengan
-                                                        harga terjangkau.</p>
-                                                </div>
-                                                {{-- <div class="btn-wrapper animated">
-                                                    <a href="service.html" class="theme-btn-1 btn btn-round">Shop
-                                                        Now</a>
                                                 </div> --}}
                                             </div>
                                         </div>
@@ -141,20 +129,20 @@
                         class="ltn__feature-item-box-wrap ltn__feature-item-box-wrap-2 ltn__border section-bg-6 position-relative">
                         <div class="ltn__feature-item ltn__feature-item-8">
                             <div class="ltn__feature-icon">
-                                <img src="{{ asset('assets/landing_page/img') }}/icons/svg/8-trolley.svg" alt="#">
+                                <img src="{{ asset('assets/landing_page/img') }}/icons/svg/9-money.svg" alt="#">
                             </div>
                             <div class="ltn__feature-info">
-                                <h4>Free shipping</h4>
-                                <p>On all orders over $49.00</p>
+                                <h4>Lowest Price</h4>
+                                <p>Harga Paling Murah</p>
                             </div>
                         </div>
                         <div class="ltn__feature-item ltn__feature-item-8">
                             <div class="ltn__feature-icon">
-                                <img src="{{ asset('assets/landing_page/img') }}/icons/svg/9-money.svg" alt="#">
+                                <img src="{{ asset('assets/landing_page/img') }}/icons/svg/8-trolley.svg" alt="#">
                             </div>
                             <div class="ltn__feature-info">
-                                <h4>15 days returns</h4>
-                                <p>Moneyback guarantee</p>
+                                <h4>Online Support</h4>
+                                <p>Layanan Support Yang Cepat</p>
                             </div>
                         </div>
                         <div class="ltn__feature-item ltn__feature-item-8">
@@ -163,8 +151,8 @@
                                     alt="#">
                             </div>
                             <div class="ltn__feature-info">
-                                <h4>Secure checkout</h4>
-                                <p>Protected by Paypal</p>
+                                <h4>100% Guaranteed</h4>
+                                <p>Produk Asli</p>
                             </div>
                         </div>
                         <div class="ltn__feature-item ltn__feature-item-8">
@@ -172,8 +160,8 @@
                                 <img src="{{ asset('assets/landing_page/img') }}/icons/svg/11-gift-card.svg" alt="#">
                             </div>
                             <div class="ltn__feature-info">
-                                <h4>Offer & gift here</h4>
-                                <p>On all orders over</p>
+                                <h4>Payment Secure</h4>
+                                <p>Kami memastikan pembayaran yang aman</p>
                             </div>
                         </div>
                     </div>
