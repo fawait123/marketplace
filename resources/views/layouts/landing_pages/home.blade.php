@@ -142,7 +142,7 @@
                             </div>
                             <div class="ltn__feature-info">
                                 <h4>Online Support</h4>
-                                <p>Layanan Support Yang Cepat</p>
+                                <p>Dukungan Online</p>
                             </div>
                         </div>
                         <div class="ltn__feature-item ltn__feature-item-8">
@@ -161,7 +161,7 @@
                             </div>
                             <div class="ltn__feature-info">
                                 <h4>Payment Secure</h4>
-                                <p>Kami memastikan pembayaran yang aman</p>
+                                <p>Pembayaran Aman</p>
                             </div>
                         </div>
                     </div>
@@ -277,3 +277,14 @@
         <!-- PRODUCT SLIDER AREA END -->
     @endforeach
 @endsection
+
+@push('customjs')
+    <script>
+        $(document).ready(function() {
+            let width = window.innerWidth
+            if (width < 600) {
+                console.log('ganti gambar')
+            }
+        })
+    </script>
+@endpush
