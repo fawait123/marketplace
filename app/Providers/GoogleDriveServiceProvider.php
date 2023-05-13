@@ -8,7 +8,7 @@ class GoogleDriveServiceProvider extends ServiceProvider
 {
     private $clientID = '1027089166382-s1idi5jgg7ji0g3o1f3ojf1jrl8fucf5.apps.googleusercontent.com';
     private $clientSecret = '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';
-    private $refreshToken = '1//04XqAZxLAA-gxCgYIARAAGAQSNwF-L9IrvDKw4_AEiD8c2RZxpVqotjHmTJO_1aSpbJsn7CX7_kRnNTbJa_ZLwCItETc51-5u5Ig';
+    private $refreshToken = '1//04yBQp8-gd-olCgYIARAAGAQSNwF-L9IrIfMWqx5HBUKN7uCOIhbfIIUNaFyBAqAyi8Tvx4A258hN0NP0qyH08g4h6PYfdGSfIfs';
     private $folderId = '117wP23mE_FsYYNjhXuEC07LxoLLnidqq';
     /**
      * Bootstrap the application services.
