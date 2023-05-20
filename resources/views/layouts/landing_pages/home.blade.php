@@ -19,7 +19,7 @@
         <div class="ltn__slide-one-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white---">
             <!-- ltn__slide-item  -->
             <div class="ltn__slide-item ltn__slide-item-8 text-color-white---- bg-image bg-overlay-theme-black-80---"
-                data-bs-bg="{{ asset('assets/banner/banner_new_3.png') }}">
+                data-bs-bg="{{ asset('assets/banner/banner_top.png') }}">
                 <div class="ltn__slide-item-inner">
                     <div class="container">
                         <div class="row">
